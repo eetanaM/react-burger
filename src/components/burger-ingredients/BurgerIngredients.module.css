@@ -1,0 +1,12 @@
+.burger_ingredients_container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: 912px;
+    left: 340px;
+}
+
+.tab_menu {
+    display: flex;
+}
