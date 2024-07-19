@@ -9,9 +9,9 @@ function App() {
   return (
     <>
       <AppHeader />
-      <main className="main_block">
+      <main className="main_container">
         <BurgerIngredients ingredientsDetails={ingredientsDetails}/>
-        <BurgerConstructor />
+        <BurgerConstructor ingredientsDetails={ingredientsDetails}/>
       </main>
     </>
   );

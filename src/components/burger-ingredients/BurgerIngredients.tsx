@@ -22,20 +22,20 @@ export default function BurgerIngredients({ ingredientsDetails }) {
             )
         })
     }
-    const [current, setCurrent] = React.useState('one')
+    const [current, setCurrent] = React.useState('buns')
     return (
         <section className={`${styles.burger_ingredients_container} pt-10`}>
             <h1 className={`text text_type_main-large`}>
                 Соберите бургер
             </h1>
             <div className={`${styles.tab_menu} pt-5`}>
-                <Tab value="Булки" active={current === 'Булки'} onClick={setCurrent}>
+                <Tab value="buns" active={current === 'buns'} onClick={setCurrent}>
                     Булки
                 </Tab>
-                <Tab value="Соусы" active={current === 'Соусы'} onClick={setCurrent}>
+                <Tab value="sauces" active={current === 'sauces'} onClick={setCurrent}>
                     Соусы
                 </Tab>
-                <Tab value="Начинки" active={current === 'Начинки'} onClick={setCurrent}>
+                <Tab value="main" active={current === 'main'} onClick={setCurrent}>
                     Начинки
                 </Tab>
             </div>
