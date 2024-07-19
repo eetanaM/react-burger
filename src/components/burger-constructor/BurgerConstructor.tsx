@@ -1,9 +1,25 @@
 import React from "react";
 import styles from "./BurgerConstructor.module.css"
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types';
 
-export default function BurgerConstructor({ ingredientsDetails }) {
+interface ingredients {
+    ingredientsDetails: {
+        _id: string;
+        name: string;
+        type: string;
+        proteins:number;
+        fat: number;
+        carbohydrates: number;
+        calories: number;
+        price: number;
+        image: string;
+        image_mobile: string;
+        image_large: string;
+        __v: number;
+    }[]
+}
+
+export default function BurgerConstructor({ ingredientsDetails }: ingredients) {
     // Hardcoded ingredients array just for reference
     const chosenIngredients = [ingredientsDetails[5], ingredientsDetails[4], ingredientsDetails[7], ingredientsDetails[8], ingredientsDetails[8]]
 
@@ -76,21 +92,4 @@ export default function BurgerConstructor({ ingredientsDetails }) {
             </div>
         </section>
     )
-}
-
-BurgerConstructor.propTypes = {
-    ingredientsDetails: PropTypes.shape({
-        _id: PropTypes.string,
-        name: PropTypes.string,
-        type: PropTypes.string,
-        proteins:PropTypes.number,
-        fat: PropTypes.number,
-        carbohydrates: PropTypes.number,
-        calories: PropTypes.number,
-        price: PropTypes.number,
-        image: PropTypes.string,
-        image_mobile: PropTypes.string,
-        image_large: PropTypes.string,
-        __v: PropTypes.number,
-    })
 }
