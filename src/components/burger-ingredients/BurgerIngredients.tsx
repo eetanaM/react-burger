@@ -1,30 +1,15 @@
 import React from "react";
 import { Counter, CurrencyIcon, Tab, } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css"
+import IngredientType from "../../utils/type";
 
-interface ingredients {
-    ingredientsDetails: {
-        _id: string;
-        name: string;
-        type: string;
-        proteins:number;
-        fat: number;
-        carbohydrates: number;
-        calories: number;
-        price: number;
-        image: string;
-        image_mobile: string;
-        image_large: string;
-        __v: number;
-    }[]
-}
 
-export default function BurgerIngredients({ ingredientsDetails }: ingredients) {
+export default function BurgerIngredients({ ingredientsDetails }: IngredientType) {
     const bunsDetails = ingredientsDetails.filter(ingredient => ingredient.type === "bun");
     const mainDetails = ingredientsDetails.filter(ingredient => ingredient.type === "main");
     const sauceDetails = ingredientsDetails.filter(ingredient => ingredient.type === "sauce");
 
-    function IngredientCards({ ingredientsDetails }: ingredients): JSX.Element {
+    function IngredientCards({ ingredientsDetails }: IngredientType): JSX.Element {
         return (
             /*
             Не знаком с TS, решение нашел в сети, поэтому не уверен, что оно легитимно, но если возвращать массив, TS жалуется на инвалидность элементов:
@@ -33,9 +18,9 @@ export default function BurgerIngredients({ ingredientsDetails }: ingredients) {
             Поэтому возвращаю не массивом, а отдельным JSX элементом
             */
             <>
-                {ingredientsDetails.map(ingredient => {
+                {ingredientsDetails.map((ingredient, index) => {
                 return (
-                    <div className={`${styles.ingredient_card_details}`}>
+                    <div className={`${styles.ingredient_card_details}`} key={index}>
                         <img src={ingredient.image} alt={`${ingredient.name} preview`} className="ml-4 mr-4" />
                         <div className={`${styles.currency}`}>
                             <span className="text text_type_main-default">{ingredient.price}</span>

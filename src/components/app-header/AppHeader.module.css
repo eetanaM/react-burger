@@ -2,6 +2,7 @@
     display: flex;
     flex-flow: row wrap;
     box-sizing: border-box;
+    justify-content: center;
 
     height: 88px;
     background: #1C1C21;
@@ -11,13 +12,12 @@
 .main_section {
     position: relative;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 
-    width: 1280px;
     height: 56px;
-    left: 320px;
 }
+
 
 .navigation {
     display: flex;

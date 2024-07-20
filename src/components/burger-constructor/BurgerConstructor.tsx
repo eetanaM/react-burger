@@ -1,33 +1,18 @@
 import React from "react";
 import styles from "./BurgerConstructor.module.css"
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import IngredientType from "../../utils/type";
 
-interface ingredients {
-    ingredientsDetails: {
-        _id: string;
-        name: string;
-        type: string;
-        proteins:number;
-        fat: number;
-        carbohydrates: number;
-        calories: number;
-        price: number;
-        image: string;
-        image_mobile: string;
-        image_large: string;
-        __v: number;
-    }[]
-}
 
-export default function BurgerConstructor({ ingredientsDetails }: ingredients) {
+export default function BurgerConstructor({ ingredientsDetails }: IngredientType) {
     // Hardcoded ingredients array just for reference
     const chosenIngredients = [ingredientsDetails[5], ingredientsDetails[4], ingredientsDetails[7], ingredientsDetails[8], ingredientsDetails[8]]
 
     const totalIngredientsPrice = chosenIngredients.reduce((acc, ingredient) => acc + ingredient.price, 0)
 
-    const constructedBurgerIngredients = chosenIngredients.map(ingredient => {
+    const constructedBurgerIngredients = chosenIngredients.map((ingredient, index) => {
         return (
-            <li className={`${styles.list_element} mb-4`}>
+            <li className={`${styles.list_element} mb-4`} key={index}>
                 <DragIcon type="primary" />
                 <ConstructorElement
                     text={ingredient.name}
@@ -41,10 +26,7 @@ export default function BurgerConstructor({ ingredientsDetails }: ingredients) {
 
     return (
         <section className={`${styles.burger_constructor_container} pt-25 pl-4 ml-10`}>
-            <div
-                style={{ display: 'flex', flexDirection: 'column'}}
-                className="mb-10"
-            >
+            <div className={`${styles.burger_constructor_ingredients_container} mb-10`}>
                 <div className="pl-8 pr-4">
                     <ConstructorElement
                         type="top"
@@ -54,10 +36,7 @@ export default function BurgerConstructor({ ingredientsDetails }: ingredients) {
                         thumbnail={ingredientsDetails[0].image}
                     />
                 </div>
-                <ul
-                    style={{listStyleImage: `${DragIcon}`}}
-                    className={`${styles.burger_constructor_ingredients} custom-scroll`}
-                >
+                <ul className={`${styles.burger_constructor_ingredients} custom-scroll`}>
                     {constructedBurgerIngredients}
                 </ul>
                 <div className="pl-8 pr-4">
@@ -70,16 +49,7 @@ export default function BurgerConstructor({ ingredientsDetails }: ingredients) {
                     />
                 </div>
             </div>
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'end',
-                    marginBottom: '52px'
-                }}
-                className="mr-4"
-            >
+            <div className={`${styles.order_info} mr-4`}>
                 <div className="mr-10">
                     <span className="text text_type_digits-medium mr-2">
                         {ingredientsDetails[0].price + totalIngredientsPrice+ ingredientsDetails[0].price}
