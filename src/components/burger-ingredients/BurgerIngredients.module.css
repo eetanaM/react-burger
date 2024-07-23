@@ -53,7 +53,7 @@
     align-items: center;
     width: 272px;
     padding-bottom: 32px;
-    row-gap: 4px
+    row-gap: 4px;
 }
 
 .ingredient_card_details:hover {

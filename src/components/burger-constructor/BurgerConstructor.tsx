@@ -4,6 +4,7 @@ import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktiku
 import IngredientType from "../../utils/type";
 
 
+
 export default function BurgerConstructor({ ingredientsDetails }: IngredientType) {
     // Hardcoded ingredients array just for reference
     const chosenIngredients = [ingredientsDetails[5], ingredientsDetails[4], ingredientsDetails[7], ingredientsDetails[8], ingredientsDetails[8]]

@@ -9,6 +9,7 @@ const SERVER_URL = "https://norma.nomoreparties.space/api/ingredients"
 function App() {
   const [ingredientsDetails, setIngredientsDetails] = React.useState([])
 
+
   React.useEffect(() => {
     try {
       fetch(SERVER_URL)
@@ -19,7 +20,6 @@ function App() {
       console.log("Ошибка запроса на сервер")
     }
   }, []);
-
   return (
     <>
       <AppHeader />

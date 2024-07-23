@@ -2,12 +2,16 @@ import React from "react";
 import { Counter, CurrencyIcon, Tab, } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css"
 import IngredientType from "../../utils/type";
+import Modal from "../modal/Modal";
 
 
 export default function BurgerIngredients({ ingredientsDetails }: IngredientType) {
+    const [isModalVisible, setIsModalVisible] = React.useState(true)
+
     const bunsDetails = ingredientsDetails.filter(ingredient => ingredient.type === "bun");
     const mainDetails = ingredientsDetails.filter(ingredient => ingredient.type === "main");
     const sauceDetails = ingredientsDetails.filter(ingredient => ingredient.type === "sauce");
+
 
     function IngredientCards({ ingredientsDetails }: IngredientType): JSX.Element {
         return (
@@ -20,7 +24,7 @@ export default function BurgerIngredients({ ingredientsDetails }: IngredientType
             <>
                 {ingredientsDetails.map((ingredient, index) => {
                 return (
-                    <div className={`${styles.ingredient_card_details}`} key={index}>
+                    <div className={`${styles.ingredient_card_details}`} key={index} onClick={onModalOpen}>
                         <img src={ingredient.image} alt={`${ingredient.name} preview`} className="ml-4 mr-4" />
                         <div className={`${styles.currency}`}>
                             <span className="text text_type_main-default">{ingredient.price}</span>
@@ -33,6 +37,15 @@ export default function BurgerIngredients({ ingredientsDetails }: IngredientType
             </>
         )
     }
+
+    function onModalClose() {
+        setIsModalVisible(false);
+    }
+
+    function onModalOpen() {
+        setIsModalVisible(true);
+    }
+
     const [current, setCurrent] = React.useState('buns')
     return (
         <section className={`${styles.burger_ingredients_container} pt-10`}>
@@ -70,6 +83,7 @@ export default function BurgerIngredients({ ingredientsDetails }: IngredientType
                     </div>
                 </li>
             </ul>
+            {isModalVisible && <Modal onModalClose={onModalClose}></Modal>}
         </section>
     )
 }
