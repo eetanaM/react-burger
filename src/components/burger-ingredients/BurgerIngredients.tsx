@@ -1,52 +1,33 @@
 import React from "react";
-import { Counter, CurrencyIcon, Tab, } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Counter, Tab, } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css"
 import IngredientType from "../../utils/type";
 import Modal from "../modal/Modal";
+import IngredientCards from "./IngredientCards";
+import IngredientDetails from "../ingredient-details/IngredientDetails";
 
 
 export default function BurgerIngredients({ ingredientsDetails }: IngredientType) {
-    const [isModalVisible, setIsModalVisible] = React.useState(true)
+    const [isModalVisible, setIsModalVisible] = React.useState(false)
+    const [current, setCurrent] = React.useState('buns')
+    const [ingredientToPopId, setIngredientToPopId] = React.useState<string>('')
 
     const bunsDetails = ingredientsDetails.filter(ingredient => ingredient.type === "bun");
     const mainDetails = ingredientsDetails.filter(ingredient => ingredient.type === "main");
     const sauceDetails = ingredientsDetails.filter(ingredient => ingredient.type === "sauce");
 
 
-    function IngredientCards({ ingredientsDetails }: IngredientType): JSX.Element {
-        return (
-            /*
-            Не знаком с TS, решение нашел в сети, поэтому не уверен, что оно легитимно, но если возвращать массив, TS жалуется на инвалидность элементов:
-                'IngredientCards' cannot be used as a JSX component.
-                Its return type 'Element[]' is not a valid JSX element.
-            Поэтому возвращаю не массивом, а отдельным JSX элементом
-            */
-            <>
-                {ingredientsDetails.map((ingredient, index) => {
-                return (
-                    <div className={`${styles.ingredient_card_details}`} key={index} onClick={onModalOpen}>
-                        <img src={ingredient.image} alt={`${ingredient.name} preview`} className="ml-4 mr-4" />
-                        <div className={`${styles.currency}`}>
-                            <span className="text text_type_main-default">{ingredient.price}</span>
-                            <CurrencyIcon type="primary"/>
-                        </div>
-                        <span className="text text_type_main-default">{ingredient.name}</span>
-                    </div>
-                )
-                })}
-            </>
-        )
-    }
-
-    function onModalClose() {
+    const onModalClose = React.useCallback(() => {
+        setIngredientToPopId('')
         setIsModalVisible(false);
-    }
+    },[]);
 
-    function onModalOpen() {
+    const onModalOpen = React.useCallback((index:any) => {
+        console.log(index)
+        setIngredientToPopId(index)
         setIsModalVisible(true);
-    }
+    },[]);
 
-    const [current, setCurrent] = React.useState('buns')
     return (
         <section className={`${styles.burger_ingredients_container} pt-10`}>
             <h1 className={`text text_type_main-large`}>
@@ -67,23 +48,40 @@ export default function BurgerIngredients({ ingredientsDetails }: IngredientType
                 <li className={`${styles.ingredient_card_container} pb-10`}>
                     <h2 className="text text_type_main-medium">Булки</h2>
                     <div className={`${styles.ingredient_card}`}>
-                        <IngredientCards ingredientsDetails={bunsDetails}/>
+                        <IngredientCards
+                            ingredientsDetails={bunsDetails}
+                            onModalOpen={onModalOpen}
+                        />
                     </div>
                 </li>
                 <li className={`${styles.ingredient_card_container} pb-10`}>
                     <h2 className="text text_type_main-medium">Соусы</h2>
                     <div className={`${styles.ingredient_card}`}>
-                        <IngredientCards ingredientsDetails={sauceDetails}/>
+                        <IngredientCards
+                            ingredientsDetails={sauceDetails}
+                            onModalOpen={onModalOpen}
+                        />
                     </div>
                 </li>
                 <li className={`${styles.ingredient_card_container} pb-10`}>
                     <h2 className="text text_type_main-medium">Начинки</h2>
                     <div className={`${styles.ingredient_card}`}>
-                        <IngredientCards ingredientsDetails={mainDetails}/>
+                        <IngredientCards
+                            ingredientsDetails={mainDetails}
+                            onModalOpen={onModalOpen}
+                        />
                     </div>
                 </li>
             </ul>
-            {isModalVisible && <Modal onModalClose={onModalClose}></Modal>}
+            {isModalVisible && <Modal
+                onModalClose={onModalClose}
+            >
+               <IngredientDetails
+                currentIngredient={ingredientsDetails.find(
+                    ingredient => ingredient._id === ingredientToPopId
+                )}
+               />
+            </Modal>}
         </section>
     )
 }

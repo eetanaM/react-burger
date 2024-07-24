@@ -1,0 +1,30 @@
+.content_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.content_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    width:100%;
+}
+
+.content_main {
+    text-align: center;
+    width:100%;
+}
+
+.content_info_list {
+    margin: 0;
+    padding: 4px;
+    list-style: none;
+}
+
+.content_info_list li {
+    display: inline-block;
+    margin-right: 5px;
+}
