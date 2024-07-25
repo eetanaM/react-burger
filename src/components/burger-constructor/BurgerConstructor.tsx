@@ -2,10 +2,23 @@ import React from "react";
 import styles from "./BurgerConstructor.module.css"
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import IngredientType from "../../utils/type";
+import Modal from "../modal/Modal";
+import OrderDetails from "../order-details/OrderDetails";
 
 
 
 export default function BurgerConstructor({ ingredientsDetails }: IngredientType) {
+    const [isModalVisible, setIsModalVisible] = React.useState(false)
+    const [orderId, setOrderId] = React.useState('034536')
+
+    const onModalClose = React.useCallback(() => {
+        setIsModalVisible(false);
+    },[]);
+
+    const onModalOpen = React.useCallback(() => {
+        setIsModalVisible(true);
+    },[]);
+
     // Hardcoded ingredients array just for reference
     const chosenIngredients = [ingredientsDetails[5], ingredientsDetails[4], ingredientsDetails[7], ingredientsDetails[8], ingredientsDetails[8]]
 
@@ -57,10 +70,15 @@ export default function BurgerConstructor({ ingredientsDetails }: IngredientType
                     </span>
                     <CurrencyIcon type="primary"/>
                 </div>
-                <Button htmlType="button" type="primary" size="medium">
+                <Button htmlType="button" type="primary" size="medium" onClick={onModalOpen}>
                     Оформить заказ
                 </Button>
             </div>
+            {isModalVisible &&
+            <Modal onModalClose={onModalClose}>
+                <OrderDetails onModalClose={onModalClose} orderId={orderId}/>
+            </Modal>
+            }
         </section>
     )
 }

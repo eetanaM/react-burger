@@ -22,9 +22,8 @@ export default function BurgerIngredients({ ingredientsDetails }: IngredientType
         setIsModalVisible(false);
     },[]);
 
-    const onModalOpen = React.useCallback((index:any) => {
-        console.log(index)
-        setIngredientToPopId(index)
+    const onModalOpen = React.useCallback((id:string) => {
+        setIngredientToPopId(id)
         setIsModalVisible(true);
     },[]);
 
@@ -77,9 +76,10 @@ export default function BurgerIngredients({ ingredientsDetails }: IngredientType
                 onModalClose={onModalClose}
             >
                <IngredientDetails
-                currentIngredient={ingredientsDetails.find(
-                    ingredient => ingredient._id === ingredientToPopId
-                )}
+                    currentIngredient = {ingredientsDetails.find(
+                        ingredient => ingredient._id === ingredientToPopId
+                    )}
+                    onModalClose={onModalClose}
                />
             </Modal>}
         </section>
