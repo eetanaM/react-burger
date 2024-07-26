@@ -1,6 +1,5 @@
-export default interface IngredientType {
-    ingredientsDetails: {
-        _id: string;
+type IngredientsDetails = {
+    _id: string;
         name: string;
         type: string;
         proteins:number;
@@ -12,5 +11,36 @@ export default interface IngredientType {
         image_mobile: string;
         image_large: string;
         __v: number;
-    }[]
 }
+
+interface IngredientProps {
+    ingredientsDetails: IngredientsDetails[]
+}
+
+interface IngredientCardProps extends IngredientProps {
+    onModalOpen: (id:string) => void
+}
+
+interface ModalProps {
+    onModalClose: () => void,
+    children?: React.ReactNode,
+}
+
+interface IngredientDetailsProps {
+    currentIngredient: IngredientsDetails,
+    onModalClose: () => void,
+}
+
+interface OrderDetailsProps {
+    onModalClose: () => void,
+    orderId: string,
+}
+
+export type {
+    IngredientProps,
+    ModalProps,
+    IngredientCardProps,
+    IngredientDetailsProps,
+    IngredientsDetails,
+    OrderDetailsProps
+};

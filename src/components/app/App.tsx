@@ -4,40 +4,50 @@ import AppHeader from '../app-header/AppHeader';
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../burger-constructor/BurgerConstructor';
 
-const SERVER_URL = "https://norma.nomoreparties.space/api/ingredients"
+const SERVER_URL: string = "https://norma.nomoreparties.space/api/ingredients"
 
-function App() {
+export default function App() {
   const [ingredientsDetails, setIngredientsDetails] = React.useState([])
-  const [loading, setLoading]:any = React.useState<boolean>(false)
-  const [error, setError] = React.useState<any>('')
+  const [loading, setLoading] = React.useState(false)
+  const [error, setError] = React.useState('')
 
 
   React.useEffect(() => {
-    try {
-      setError(null);
+      setError('');
       setLoading(true);
 
       fetch(SERVER_URL)
-        .then(res => res.json())
-        .then(data => setIngredientsDetails(data.data))
+        .then(res => {
+          if (!res.ok) {
+            throw new Error("Request error occured!")
+          }
+          return res.json()}
+        )
+        .then(ingredients => setIngredientsDetails(ingredients.data))
+        .catch((error) => {
+          console.log(error.message);
+          setError(error.message);
+          setLoading(false);
+        })
 
       setLoading(false);
-    }
-    catch(error) {
-      setError(error);
-      setLoading(false);
-    }
-  }, [error]);
+  }, []);
 
   if (loading) {
     return (
+      <>
+        <AppHeader />
       <h1 className="text text_type_main-large">Загрузка...</h1>
+      </>
     )
   }
 
   if (error) {
     return (
-      <h1 className="text text_type_main-large">Ошибка загрузки данных</h1>
+      <>
+        <AppHeader />
+        <h1 className="text text_type_main-large">Ошибка загрузки данных</h1>
+      </>
     )
   }
 
@@ -53,5 +63,3 @@ function App() {
     </>
   );
 }
-
-export default App;

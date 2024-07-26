@@ -1,13 +1,13 @@
 import React from "react";
 import styles from "./BurgerConstructor.module.css"
 import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import IngredientType from "../../utils/type";
+import { IngredientProps } from "../../utils/type";
 import Modal from "../modal/Modal";
 import OrderDetails from "../order-details/OrderDetails";
 
 
 
-export default function BurgerConstructor({ ingredientsDetails }: IngredientType) {
+export default function BurgerConstructor({ ingredientsDetails }: IngredientProps) {
     const [isModalVisible, setIsModalVisible] = React.useState(false)
     const [orderId, setOrderId] = React.useState('034536')
 

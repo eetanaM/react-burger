@@ -2,8 +2,9 @@ import React from "react";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import done from '../../images/done.svg'
 import styles from "./OrderDetails.module.css"
+import { OrderDetailsProps } from "../../utils/type";
 
-export default function OrderDetails({ onModalClose, orderId }: any) {
+export default function OrderDetails({ onModalClose, orderId }: OrderDetailsProps) {
     return (
         <div className={`${styles.content_container} pr-10 pl-10`}>
             <div className={`${styles.content_header} mt-15`}>

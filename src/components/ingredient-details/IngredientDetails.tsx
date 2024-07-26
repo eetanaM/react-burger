@@ -1,8 +1,9 @@
 import React from "react";
 import styles from "./IngredientDetails.module.css"
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
+import { IngredientDetailsProps } from "../../utils/type";
 
-export default function IngredientDetails({ currentIngredient, onModalClose }:any) {
+export default function IngredientDetails({ currentIngredient, onModalClose }: IngredientDetailsProps) {
     return (
         <div className={`${styles.content_container} pr-10 pl-10`}>
             <div className={`${styles.content_header} mt-10 pt-3 pb-3`}>

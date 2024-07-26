@@ -1,28 +1,33 @@
 import React from "react";
-import { Counter, Tab, } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css"
-import IngredientType from "../../utils/type";
+import { IngredientProps, IngredientsDetails } from "../../utils/type";
 import Modal from "../modal/Modal";
-import IngredientCards from "./IngredientCards";
+import IngredientCards from "./ingredient-cards/IngredientCards";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
 
 
-export default function BurgerIngredients({ ingredientsDetails }: IngredientType) {
+export default function BurgerIngredients({ ingredientsDetails }: IngredientProps) {
     const [isModalVisible, setIsModalVisible] = React.useState(false)
     const [current, setCurrent] = React.useState('buns')
-    const [ingredientToPopId, setIngredientToPopId] = React.useState<string>('')
+    const [ingredientToPopId, setIngredientToPopId] = React.useState('')
 
     const bunsDetails = ingredientsDetails.filter(ingredient => ingredient.type === "bun");
     const mainDetails = ingredientsDetails.filter(ingredient => ingredient.type === "main");
     const sauceDetails = ingredientsDetails.filter(ingredient => ingredient.type === "sauce");
 
+    // || ingredientsDetails[0] - временно, для исключения возврата undefiend в currentIngredient
+    const currentIngredient: IngredientsDetails = ingredientsDetails.find(
+        ingredient => ingredient._id === ingredientToPopId
+    ) || ingredientsDetails[0]
 
-    const onModalClose = React.useCallback(() => {
+
+    const onModalClose: () => void = React.useCallback((): void => {
         setIngredientToPopId('')
         setIsModalVisible(false);
     },[]);
 
-    const onModalOpen = React.useCallback((id:string) => {
+    const onModalOpen: (id: string) => void = React.useCallback((id:string):void => {
         setIngredientToPopId(id)
         setIsModalVisible(true);
     },[]);
@@ -44,7 +49,7 @@ export default function BurgerIngredients({ ingredientsDetails }: IngredientType
                 </Tab>
             </div>
             <ul className={`${styles.ingredients_list} pt-10 custom-scroll`}>
-                <li className={`${styles.ingredient_card_container} pb-10`}>
+                <li className={`${styles.ingredient_cards_container} pb-10`}>
                     <h2 className="text text_type_main-medium">Булки</h2>
                     <div className={`${styles.ingredient_card}`}>
                         <IngredientCards
@@ -53,7 +58,7 @@ export default function BurgerIngredients({ ingredientsDetails }: IngredientType
                         />
                     </div>
                 </li>
-                <li className={`${styles.ingredient_card_container} pb-10`}>
+                <li className={`${styles.ingredient_cards_container} pb-10`}>
                     <h2 className="text text_type_main-medium">Соусы</h2>
                     <div className={`${styles.ingredient_card}`}>
                         <IngredientCards
@@ -62,7 +67,7 @@ export default function BurgerIngredients({ ingredientsDetails }: IngredientType
                         />
                     </div>
                 </li>
-                <li className={`${styles.ingredient_card_container} pb-10`}>
+                <li className={`${styles.ingredient_cards_container} pb-10`}>
                     <h2 className="text text_type_main-medium">Начинки</h2>
                     <div className={`${styles.ingredient_card}`}>
                         <IngredientCards
@@ -76,9 +81,7 @@ export default function BurgerIngredients({ ingredientsDetails }: IngredientType
                 onModalClose={onModalClose}
             >
                <IngredientDetails
-                    currentIngredient = {ingredientsDetails.find(
-                        ingredient => ingredient._id === ingredientToPopId
-                    )}
+                    currentIngredient = {currentIngredient}
                     onModalClose={onModalClose}
                />
             </Modal>}
