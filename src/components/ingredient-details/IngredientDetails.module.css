@@ -1,0 +1,19 @@
+.content_main {
+    text-align: center;
+    width:100%;
+}
+
+.content_main_info_list {
+    list-style: none;
+    padding-inline-start: 0;
+}
+
+.content_main_info_list li {
+    display: inline-block;
+    min-width: 112px;
+    margin-right: 20px;
+}
+
+.content_main_info_list li:last-child {
+    margin-right: 0;
+}
