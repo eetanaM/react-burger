@@ -1,25 +1,25 @@
 import React from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./BurgerIngredients.module.css"
-import { IngredientProps, IngredientsDetails } from "../../utils/type";
+import { IngredientProps } from "../../utils/type";
 import Modal from "../modal/Modal";
 import IngredientCards from "./ingredient-cards/IngredientCards";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
 
 
-export default function BurgerIngredients({ ingredientsDetails }: IngredientProps) {
+export default function BurgerIngredients({ ingredients }: IngredientProps) {
     const [isModalVisible, setIsModalVisible] = React.useState(false)
     const [current, setCurrent] = React.useState('buns')
     const [ingredientToPopId, setIngredientToPopId] = React.useState('')
 
-    const bunsDetails = ingredientsDetails.filter(ingredient => ingredient.type === "bun");
-    const mainDetails = ingredientsDetails.filter(ingredient => ingredient.type === "main");
-    const sauceDetails = ingredientsDetails.filter(ingredient => ingredient.type === "sauce");
+    const bunsDetails = ingredients.filter(ingredient => ingredient.type === "bun");
+    const mainDetails = ingredients.filter(ingredient => ingredient.type === "main");
+    const sauceDetails = ingredients.filter(ingredient => ingredient.type === "sauce");
 
     // || ingredientsDetails[0] - временно, для исключения возврата undefiend в currentIngredient
-    const currentIngredient: IngredientsDetails = ingredientsDetails.find(
+    const currentIngredient = ingredients.find(
         ingredient => ingredient._id === ingredientToPopId
-    ) || ingredientsDetails[0]
+    ) || ingredients[0]
 
 
     const onModalClose: () => void = React.useCallback((): void => {
@@ -53,7 +53,7 @@ export default function BurgerIngredients({ ingredientsDetails }: IngredientProp
                     <h2 className="text text_type_main-medium">Булки</h2>
                     <div className={`${styles.ingredient_card}`}>
                         <IngredientCards
-                            ingredientsDetails={bunsDetails}
+                            ingredients={bunsDetails}
                             onModalOpen={onModalOpen}
                         />
                     </div>
@@ -62,7 +62,7 @@ export default function BurgerIngredients({ ingredientsDetails }: IngredientProp
                     <h2 className="text text_type_main-medium">Соусы</h2>
                     <div className={`${styles.ingredient_card}`}>
                         <IngredientCards
-                            ingredientsDetails={sauceDetails}
+                            ingredients={sauceDetails}
                             onModalOpen={onModalOpen}
                         />
                     </div>
@@ -71,7 +71,7 @@ export default function BurgerIngredients({ ingredientsDetails }: IngredientProp
                     <h2 className="text text_type_main-medium">Начинки</h2>
                     <div className={`${styles.ingredient_card}`}>
                         <IngredientCards
-                            ingredientsDetails={mainDetails}
+                            ingredients={mainDetails}
                             onModalOpen={onModalOpen}
                         />
                     </div>
@@ -79,6 +79,7 @@ export default function BurgerIngredients({ ingredientsDetails }: IngredientProp
             </ul>
             {isModalVisible && <Modal
                 onModalClose={onModalClose}
+                header="Детали ингредиента"
             >
                <IngredientDetails
                     currentIngredient = {currentIngredient}

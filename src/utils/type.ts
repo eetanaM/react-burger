@@ -1,4 +1,4 @@
-type IngredientsDetails = {
+type Ingredient = {
     _id: string;
         name: string;
         type: string;
@@ -14,7 +14,7 @@ type IngredientsDetails = {
 }
 
 interface IngredientProps {
-    ingredientsDetails: IngredientsDetails[]
+    ingredients: Ingredient[]
 }
 
 interface IngredientCardProps extends IngredientProps {
@@ -24,10 +24,11 @@ interface IngredientCardProps extends IngredientProps {
 interface ModalProps {
     onModalClose: () => void,
     children?: React.ReactNode,
+    header?: string,
 }
 
 interface IngredientDetailsProps {
-    currentIngredient: IngredientsDetails,
+    currentIngredient: Ingredient,
     onModalClose: () => void,
 }
 
@@ -41,6 +42,5 @@ export type {
     ModalProps,
     IngredientCardProps,
     IngredientDetailsProps,
-    IngredientsDetails,
     OrderDetailsProps
 };

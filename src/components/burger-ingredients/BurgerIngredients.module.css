@@ -28,7 +28,7 @@
 
 .ingredient_card {
     display: flex;
-    flex-flow: row;
+    flex-flow: row wrap;
     justify-content: start;
     align-items: start;
 

@@ -1,15 +1,15 @@
 import React from "react"
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./IngredientCards.module.css"
-import { IngredientCardProps, IngredientsDetails } from "../../../utils/type";
+import { IngredientCardProps } from "../../../utils/type";
 
-export default function IngredientCards({ingredientsDetails, onModalOpen}: IngredientCardProps) {
+export default function IngredientCards({ingredients, onModalOpen}: IngredientCardProps) {
 
     return (
         <>
-            {ingredientsDetails.map((ingredient: IngredientsDetails, index:number) => {
+            {ingredients.map((ingredient) => {
                 return (
-                    <div className={styles.ingredient_card_container} key={index}>
+                    <div className={styles.ingredient_card_container} key={ingredient._id}>
                         <div
                             className={styles.ingredient_card_details}
                             onClick={() => onModalOpen(ingredient._id)}

@@ -7,7 +7,7 @@ import OrderDetails from "../order-details/OrderDetails";
 
 
 
-export default function BurgerConstructor({ ingredientsDetails }: IngredientProps) {
+export default function BurgerConstructor({ ingredients }: IngredientProps) {
     const [isModalVisible, setIsModalVisible] = React.useState(false)
     const [orderId, setOrderId] = React.useState('034536')
 
@@ -20,7 +20,7 @@ export default function BurgerConstructor({ ingredientsDetails }: IngredientProp
     },[]);
 
     // Hardcoded ingredients array just for reference
-    const chosenIngredients = [ingredientsDetails[5], ingredientsDetails[4], ingredientsDetails[7], ingredientsDetails[8], ingredientsDetails[8]]
+    const chosenIngredients = [ingredients[5], ingredients[4], ingredients[7], ingredients[8], ingredients[8]]
 
     const totalIngredientsPrice = chosenIngredients.reduce((acc, ingredient) => acc + ingredient.price, 0)
 
@@ -45,9 +45,9 @@ export default function BurgerConstructor({ ingredientsDetails }: IngredientProp
                     <ConstructorElement
                         type="top"
                         isLocked={true}
-                        text={`${ingredientsDetails[0].name} (верх)`}
-                        price={ingredientsDetails[0].price}
-                        thumbnail={ingredientsDetails[0].image}
+                        text={`${ingredients[0].name} (верх)`}
+                        price={ingredients[0].price}
+                        thumbnail={ingredients[0].image}
                     />
                 </div>
                 <ul className={`${styles.burger_constructor_ingredients} custom-scroll`}>
@@ -57,16 +57,16 @@ export default function BurgerConstructor({ ingredientsDetails }: IngredientProp
                     <ConstructorElement
                         type="bottom"
                         isLocked={true}
-                        text={`${ingredientsDetails[0].name} (низ)`}
-                        price={ingredientsDetails[0].price}
-                        thumbnail={ingredientsDetails[0].image}
+                        text={`${ingredients[0].name} (низ)`}
+                        price={ingredients[0].price}
+                        thumbnail={ingredients[0].image}
                     />
                 </div>
             </div>
             <div className={`${styles.order_info} mr-4`}>
                 <div className="mr-10">
                     <span className="text text_type_digits-medium mr-2">
-                        {ingredientsDetails[0].price + totalIngredientsPrice+ ingredientsDetails[0].price}
+                        {ingredients[0].price + totalIngredientsPrice+ ingredients[0].price}
                     </span>
                     <CurrencyIcon type="primary"/>
                 </div>

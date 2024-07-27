@@ -1,25 +1,3 @@
-.content_container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-.content_header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width:100%;
-}
-
-.content_header button {
-    background: none;
-    border: none;
-    cursor: pointer;
-}
-
 .content_main {
     text-align: center;
     width:100%;
