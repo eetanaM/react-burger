@@ -1,14 +1,20 @@
 import React from "react";
+
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./BurgerIngredients.module.css"
-import { IngredientProps } from "../../utils/type";
+
 import Modal from "../modal/Modal";
-import IngredientCards from "./ingredient-cards/IngredientCards";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
+import IngredientCards from "./ingredient-cards/IngredientCards";
+
+import styles from "./BurgerIngredients.module.css"
+
+import { IngredientProps } from "../../utils/type";
+
+import { useModal } from "../../hooks/useModal";
 
 
 export default function BurgerIngredients({ ingredients }: IngredientProps) {
-    const [isModalVisible, setIsModalVisible] = React.useState(false)
+    const { isModalOpen, openModal, closeModal } = useModal();
     const [current, setCurrent] = React.useState('buns')
     const [ingredientToPopId, setIngredientToPopId] = React.useState('')
 
@@ -24,13 +30,13 @@ export default function BurgerIngredients({ ingredients }: IngredientProps) {
 
     const onModalClose: () => void = React.useCallback((): void => {
         setIngredientToPopId('')
-        setIsModalVisible(false);
-    },[]);
+        closeModal();
+    }, [closeModal]);
 
     const onModalOpen: (id: string) => void = React.useCallback((id:string):void => {
         setIngredientToPopId(id)
-        setIsModalVisible(true);
-    },[]);
+        openModal();
+    }, [openModal]);
 
     return (
         <section className={`${styles.burger_ingredients_container} pt-10`}>
@@ -77,7 +83,7 @@ export default function BurgerIngredients({ ingredients }: IngredientProps) {
                     </div>
                 </li>
             </ul>
-            {isModalVisible && <Modal
+            {isModalOpen && <Modal
                 onModalClose={onModalClose}
                 header="Детали ингредиента"
             >
