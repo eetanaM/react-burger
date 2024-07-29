@@ -29,11 +29,9 @@ interface ModalProps {
 
 interface IngredientDetailsProps {
     currentIngredient: Ingredient,
-    onModalClose: () => void,
 }
 
 interface OrderDetailsProps {
-    onModalClose: () => void,
     orderId: string,
 }
 
