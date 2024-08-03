@@ -3,47 +3,29 @@ import styles from './App.module.css';
 import AppHeader from '../app-header/AppHeader';
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../burger-constructor/BurgerConstructor';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadIngredients, getAllIngredients } from '../../services/burger-ingredients/reducer';
 
-const SERVER_URL: string = "https://norma.nomoreparties.space/api/ingredients"
 
 export default function App() {
-  const [ingredients, setIngredients] = React.useState([])
-  const [loading, setLoading] = React.useState(false)
-  const [error, setError] = React.useState('')
+  const { ingredients, loading, error } = useSelector(getAllIngredients)
+  const dispatch = useDispatch()
 
 
   React.useEffect(() => {
-      setError('');
-      setLoading(true);
-
-      fetch(SERVER_URL)
-        .then(res => {
-          if (!res.ok) {
-            throw new Error("Request error occured!")
-          }
-          return res.json()}
-        )
-        .then(ingredients => setIngredients(ingredients.data))
-        .catch((error) => {
-          console.log(error.message);
-          setError(error.message);
-        })
-        .finally(() => {
-            setLoading(false);
-          }
-        )
-  }, []);
+    dispatch(loadIngredients())
+  }, [dispatch]);
 
   if (loading) {
     return (
       <>
         <AppHeader />
-      <h1 className="text text_type_main-large">Загрузка...</h1>
+        <h1 className="text text_type_main-large">Загрузка...</h1>
       </>
     )
   }
 
-  if (error) {
+  if (!loading && error) {
     return (
       <>
         <AppHeader />
