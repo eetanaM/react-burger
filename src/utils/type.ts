@@ -19,7 +19,8 @@ interface IngredientProps {
     ingredients: Ingredient[]
 }
 
-interface IngredientCardProps extends IngredientProps {
+interface IngredientCardProps {
+    ingredient: Ingredient;
     onModalOpen: (id:string) => void
 }
 

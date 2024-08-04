@@ -31,8 +31,8 @@ export const ingredientsSlice = createSlice({
                 state.ingredients = action.payload;
                 state.loading = false;
             })
-            .addCase(loadIngredients.rejected, (state, error) => {
-                state.error = error;
+            .addCase(loadIngredients.rejected, (state, action) => {
+                state.error = action.error;
                 console.log(state.error)
                 state.loading = false;
             })

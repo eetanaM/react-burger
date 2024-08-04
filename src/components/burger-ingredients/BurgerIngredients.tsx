@@ -4,23 +4,28 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
-import IngredientCards from "./ingredient-cards/IngredientCards";
+import IngredientCard from "./ingredient-card/IngredientCard";
 
 import styles from "./BurgerIngredients.module.css"
+
+import { useSelector } from "react-redux";
+import { getAllIngredients } from '../../services/burger-ingredients/reducer';
 
 import { IngredientProps } from "../../utils/type";
 
 import { useModal } from "../../hooks/useModal";
 
 
-export default function BurgerIngredients({ ingredients }: IngredientProps) {
+export default function BurgerIngredients() {
+    const { ingredients }:IngredientProps = useSelector(getAllIngredients);
+
     const { isModalOpen, openModal, closeModal } = useModal();
     const [current, setCurrent] = React.useState('buns')
     const [ingredientToPopId, setIngredientToPopId] = React.useState('')
 
-    const bunsDetails = ingredients.filter(ingredient => ingredient.type === "bun");
-    const mainDetails = ingredients.filter(ingredient => ingredient.type === "main");
-    const sauceDetails = ingredients.filter(ingredient => ingredient.type === "sauce");
+    const buns = ingredients.filter(ingredient => ingredient.type === "bun");
+    const main = ingredients.filter(ingredient => ingredient.type === "main");
+    const sauces = ingredients.filter(ingredient => ingredient.type === "sauce");
 
     // || ingredientsDetails[0] - временно, для исключения возврата undefiend в currentIngredient
     const currentIngredient = ingredients.find(
@@ -58,28 +63,34 @@ export default function BurgerIngredients({ ingredients }: IngredientProps) {
                 <li className={`${styles.ingredient_cards_container} pb-10`}>
                     <h2 className="text text_type_main-medium">Булки</h2>
                     <div className={`${styles.ingredient_card}`}>
-                        <IngredientCards
-                            ingredients={bunsDetails}
-                            onModalOpen={onModalOpen}
-                        />
+                        {buns.map(bun => {
+                            return <IngredientCard
+                                ingredient={bun}
+                                onModalOpen={onModalOpen}
+                            />
+                        })}
                     </div>
                 </li>
                 <li className={`${styles.ingredient_cards_container} pb-10`}>
                     <h2 className="text text_type_main-medium">Соусы</h2>
                     <div className={`${styles.ingredient_card}`}>
-                        <IngredientCards
-                            ingredients={sauceDetails}
-                            onModalOpen={onModalOpen}
-                        />
+                        {sauces.map(sauce => {
+                            return <IngredientCard
+                                ingredient={sauce}
+                                onModalOpen={onModalOpen}
+                            />
+                        })}
                     </div>
                 </li>
                 <li className={`${styles.ingredient_cards_container} pb-10`}>
                     <h2 className="text text_type_main-medium">Начинки</h2>
                     <div className={`${styles.ingredient_card}`}>
-                        <IngredientCards
-                            ingredients={mainDetails}
-                            onModalOpen={onModalOpen}
-                        />
+                        {main.map(main => {
+                            return <IngredientCard
+                                ingredient={main}
+                                onModalOpen={onModalOpen}
+                            />
+                        })}
                     </div>
                 </li>
             </ul>

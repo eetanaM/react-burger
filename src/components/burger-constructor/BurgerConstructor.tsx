@@ -10,28 +10,50 @@ import { IngredientProps } from "../../utils/type";
 
 import { useModal } from "../../hooks/useModal";
 
+import { useDrag } from "react-dnd";
+import { nanoid } from "@reduxjs/toolkit";
+
 
 
 export default function BurgerConstructor({ ingredients }: IngredientProps) {
     const { isModalOpen, openModal, closeModal } = useModal();
-    const [orderId, setOrderId] = React.useState('034536')
+    const [orderId, setOrderId] = React.useState('034536');
+
+    function CardListElement({ingredient}:any) {
+        const [, dragRef] = useDrag({
+            type: 'constructor-ingredient',
+            item: {key: ingredient.key},
+            collect: (monitor) => {
+                return {
+                    isDragging: monitor.isDragging()
+                }
+            }
+        })
+        return (
+            <li className={`${styles.list_element} mb-4`} key={ingredient.key} ref={dragRef}>
+                <DragIcon type="primary" />
+                <div>
+                    <ConstructorElement
+                        text={ingredient.name}
+                        price={ingredient.price}
+                        thumbnail={ingredient.image}
+                    />
+                </div>
+            </li>
+        )
+    }
 
     // Hardcoded ingredients array just for reference
     const chosenIngredients = [ingredients[5], ingredients[4], ingredients[7], ingredients[8], ingredients[8]]
 
     const totalIngredientsPrice = chosenIngredients.reduce((acc, ingredient) => acc + ingredient.price, 0)
 
-    const constructedBurgerIngredients = chosenIngredients.map((ingredient, index) => {
-        return (
-            <li className={`${styles.list_element} mb-4`} key={index}>
-                <DragIcon type="primary" />
-                <ConstructorElement
-                    text={ingredient.name}
-                    price={ingredient.price}
-                    thumbnail={ingredient.image}
-                />
-            </li>
-        )
+    const constructedBurgerIngredients = chosenIngredients.map((ingredient) => {
+        ingredient = {
+            ...ingredient,
+            key: nanoid()
+        }
+        return <CardListElement ingredient={ingredient}/>
    })
 
 

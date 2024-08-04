@@ -3,6 +3,8 @@ import styles from './App.module.css';
 import AppHeader from '../app-header/AppHeader';
 import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../burger-constructor/BurgerConstructor';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadIngredients, getAllIngredients } from '../../services/burger-ingredients/reducer';
 
@@ -38,10 +40,12 @@ export default function App() {
     <>
       <AppHeader />
       {ingredients && ingredients.length > 0 ?
-        <main className={styles.main_container}>
-          <BurgerIngredients ingredients={ingredients}/>
-          <BurgerConstructor ingredients={ingredients}/>
-        </main> : null
+        <DndProvider backend={HTML5Backend}>
+          <main className={styles.main_container}>
+            <BurgerIngredients />
+            <BurgerConstructor ingredients={ingredients}/>
+          </main>
+        </DndProvider> : null
       }
     </>
   );
