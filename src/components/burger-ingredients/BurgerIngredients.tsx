@@ -67,6 +67,7 @@ export default function BurgerIngredients() {
                             return <IngredientCard
                                 ingredient={bun}
                                 onModalOpen={onModalOpen}
+                                key={bun._id}
                             />
                         })}
                     </div>
@@ -78,6 +79,7 @@ export default function BurgerIngredients() {
                             return <IngredientCard
                                 ingredient={sauce}
                                 onModalOpen={onModalOpen}
+                                key={sauce._id}
                             />
                         })}
                     </div>
@@ -89,6 +91,7 @@ export default function BurgerIngredients() {
                             return <IngredientCard
                                 ingredient={main}
                                 onModalOpen={onModalOpen}
+                                key={main._id}
                             />
                         })}
                     </div>

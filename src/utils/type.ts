@@ -21,7 +21,7 @@ interface IngredientProps {
 
 interface IngredientCardProps {
     ingredient: Ingredient;
-    onModalOpen: (id:string) => void
+    onModalOpen?: (id:string) => void
 }
 
 interface ModalProps {

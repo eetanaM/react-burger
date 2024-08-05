@@ -6,7 +6,7 @@ import OrderDetails from "../order-details/OrderDetails";
 
 import styles from "./BurgerConstructor.module.css"
 
-import { IngredientProps } from "../../utils/type";
+import { IngredientProps, IngredientCardProps } from "../../utils/type";
 
 import { useModal } from "../../hooks/useModal";
 
@@ -17,9 +17,9 @@ import { nanoid } from "@reduxjs/toolkit";
 
 export default function BurgerConstructor({ ingredients }: IngredientProps) {
     const { isModalOpen, openModal, closeModal } = useModal();
-    const [orderId, setOrderId] = React.useState('034536');
+    const [orderId] = React.useState('034536');
 
-    function CardListElement({ingredient}:any) {
+    function CardListElement({ingredient}:IngredientCardProps) {
         const [, dragRef] = useDrag({
             type: 'constructor-ingredient',
             item: {key: ingredient.key},
@@ -53,9 +53,8 @@ export default function BurgerConstructor({ ingredients }: IngredientProps) {
             ...ingredient,
             key: nanoid()
         }
-        return <CardListElement ingredient={ingredient}/>
+        return <CardListElement ingredient={ingredient} key={ingredient.key}/>
    })
-
 
     return (
         <section className={`${styles.burger_constructor_container} pt-25 pl-4 ml-10`}>

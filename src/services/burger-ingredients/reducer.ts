@@ -1,13 +1,17 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, SerializedError } from '@reduxjs/toolkit'
 import { getIngredients } from './actions'
 
-const initialState = {
+const initialState: {
+    ingredients: [],
+    loading: boolean,
+    error: SerializedError | null
+} = {
     ingredients: [],
     loading: false,
     error: null
 }
 
-export const loadIngredients: any = createAsyncThunk(
+export const loadIngredients = createAsyncThunk(
     "ingredients/loadIngredients",
     async () => {
         return getIngredients()
@@ -33,10 +37,9 @@ export const ingredientsSlice = createSlice({
             })
             .addCase(loadIngredients.rejected, (state, action) => {
                 state.error = action.error;
-                console.log(state.error)
                 state.loading = false;
             })
         }
 })
 
-export const { getAllIngredients } = ingredientsSlice.selectors
+export const { getAllIngredients } = ingredientsSlice.selectors;
