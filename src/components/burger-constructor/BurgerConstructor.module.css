@@ -23,17 +23,36 @@
     margin-top: 16px;
 }
 
-.list_element {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    cursor: pointer;
-}
-
 .order_info {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: end;
-    margin-bottom: 52px;
+}
+
+.empty_box_top {
+    border-radius: 88px 88px 40px 40px;
+    background: var(--background-element);
+    max-width: 536px;
+    width: 100%;
+    min-height: 80px;
+    box-sizing: border-box;
+}
+
+.empty_box_middle {
+    border-radius: 40px;
+    background: var(--background-element);
+    max-width: 536px;
+    width: 100%;
+    min-height: 80px;
+    box-sizing: border-box;
+}
+
+.empty_box_bottom {
+    border-radius: 40px 40px 88px 88px;
+    background: var(--background-element);
+    max-width: 536px;
+    width: 100%;
+    min-height: 80px;
+    box-sizing: border-box;
 }

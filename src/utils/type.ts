@@ -15,8 +15,12 @@ type Ingredient = {
     key?: string
 }
 
-interface IngredientProps {
+interface IngredientsState {
     ingredients: Ingredient[]
+}
+
+interface IngredientsToOrderState {
+    ingredientsToOrder: Ingredient[]
 }
 
 interface IngredientCardProps {
@@ -40,9 +44,10 @@ interface OrderDetailsProps {
 
 export type {
     Ingredient,
-    IngredientProps,
+    IngredientsState,
     ModalProps,
     IngredientCardProps,
     IngredientDetailsProps,
-    OrderDetailsProps
+    OrderDetailsProps,
+    IngredientsToOrderState
 };

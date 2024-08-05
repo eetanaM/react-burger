@@ -11,13 +11,13 @@ import styles from "./BurgerIngredients.module.css"
 import { useSelector } from "react-redux";
 import { getAllIngredients } from '../../services/burger-ingredients/reducer';
 
-import { IngredientProps } from "../../utils/type";
+import { IngredientsState } from "../../utils/type";
 
 import { useModal } from "../../hooks/useModal";
 
 
 export default function BurgerIngredients() {
-    const { ingredients }:IngredientProps = useSelector(getAllIngredients);
+    const { ingredients }:IngredientsState = useSelector(getAllIngredients);
 
     const { isModalOpen, openModal, closeModal } = useModal();
     const [current, setCurrent] = React.useState('buns')

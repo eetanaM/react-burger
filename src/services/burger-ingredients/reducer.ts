@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk, SerializedError } from '@reduxjs/toolkit'
 import { getIngredients } from './actions'
+import { Ingredient } from '../../utils/type'
 
 const initialState: {
-    ingredients: [],
+    ingredients: Ingredient[] | [],
     loading: boolean,
     error: SerializedError | null
 } = {
@@ -12,14 +13,14 @@ const initialState: {
 }
 
 export const loadIngredients = createAsyncThunk(
-    "ingredients/loadIngredients",
+    "burger-ingredients/loadIngredients",
     async () => {
         return getIngredients()
     }
 )
 
 export const ingredientsSlice = createSlice({
-    name: "ingredients",
+    name: "burger-ingredients",
     initialState: initialState,
     reducers: {},
     selectors: {

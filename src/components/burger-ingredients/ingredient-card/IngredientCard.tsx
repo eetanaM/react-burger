@@ -8,7 +8,7 @@ export default function IngredientCard({ingredient, onModalOpen}: IngredientCard
     const id = ingredient._id;
     const [, dragRef, preview] = useDrag({
         type: 'ingredient',
-        item: {id},
+        item: {id: id},
         collect: (monitor) => ({
             isDragging: monitor.isDragging()
         })
@@ -20,7 +20,7 @@ export default function IngredientCard({ingredient, onModalOpen}: IngredientCard
             <div className={styles.ingredient_card_container} key={ingredient._id} ref={dragRef}>
                 <div
                     className={styles.ingredient_card_details}
-                    onClick={() => onModalOpen(ingredient._id)}
+                    onClick={() => onModalOpen && onModalOpen(ingredient._id)}
                 >
                     <img src={ingredient.image} alt={`${ingredient.name} preview`} className="ml-4 mr-4" />
                     <div className={`${styles.currency}`}>

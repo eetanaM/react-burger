@@ -7,11 +7,12 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadIngredients, getAllIngredients } from '../../services/burger-ingredients/reducer';
+import { AppDispatch } from '../../services/store';
 
 
 export default function App() {
   const { ingredients, loading, error } = useSelector(getAllIngredients)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
 
 
   React.useEffect(() => {
@@ -43,7 +44,7 @@ export default function App() {
         <DndProvider backend={HTML5Backend}>
           <main className={styles.main_container}>
             <BurgerIngredients />
-            <BurgerConstructor ingredients={ingredients}/>
+            <BurgerConstructor />
           </main>
         </DndProvider> : null
       }

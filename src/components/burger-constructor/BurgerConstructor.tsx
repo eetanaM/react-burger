@@ -1,64 +1,72 @@
-import React from "react";
-
-import { ConstructorElement, Button, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import Modal from "../modal/Modal";
-import OrderDetails from "../order-details/OrderDetails";
+import React, { useEffect } from "react";
+import { DragObjectFactory, useDrop } from "react-dnd";
+import { useSelector, useDispatch } from "react-redux";
+import { useModal } from "../../hooks/useModal";
+import { useBunsDrop } from "../../hooks/useBunsDrop";
 
 import styles from "./BurgerConstructor.module.css"
 
-import { IngredientProps, IngredientCardProps } from "../../utils/type";
+import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import Modal from "../modal/Modal";
+import OrderDetails from "../order-details/OrderDetails";
+import CardListElement from "./card-list-element/CardListElement";
 
-import { useModal } from "../../hooks/useModal";
+import {IngredientsToOrderState, IngredientsState, Ingredient } from "../../utils/type";
+import { DragSourceHookSpec } from "react-dnd";
 
-import { useDrag } from "react-dnd";
-import { nanoid } from "@reduxjs/toolkit";
+import { addIngredientToOrder, getAllIngredientsToOrder } from "../../services/burger-constructor/reducer";
+import { getAllIngredients } from "../../services/burger-ingredients/reducer";
 
 
 
-export default function BurgerConstructor({ ingredients }: IngredientProps) {
+export default function BurgerConstructor() {
     const { isModalOpen, openModal, closeModal } = useModal();
     const [orderId] = React.useState('034536');
+    const dispatch = useDispatch();
+    const { ingredientsToOrder }: IngredientsToOrderState = useSelector(getAllIngredientsToOrder);
+    const { ingredients }: IngredientsState = useSelector(getAllIngredients);
+    const bunCanDrop = useBunsDrop().canDrop;
+    const bunDropRef = useBunsDrop().bunDropRef
 
-    function CardListElement({ingredient}:IngredientCardProps) {
-        const [, dragRef] = useDrag({
-            type: 'constructor-ingredient',
-            item: {key: ingredient.key},
-            collect: (monitor) => {
-                return {
-                    isDragging: monitor.isDragging()
-                }
-            }
-        })
-        return (
-            <li className={`${styles.list_element} mb-4`} key={ingredient.key} ref={dragRef}>
-                <DragIcon type="primary" />
-                <div>
-                    <ConstructorElement
-                        text={ingredient.name}
-                        price={ingredient.price}
-                        thumbnail={ingredient.image}
-                    />
-                </div>
-            </li>
-        )
-    }
-
-    // Hardcoded ingredients array just for reference
-    const chosenIngredients = [ingredients[5], ingredients[4], ingredients[7], ingredients[8], ingredients[8]]
-
-    const totalIngredientsPrice = chosenIngredients.reduce((acc, ingredient) => acc + ingredient.price, 0)
-
-    const constructedBurgerIngredients = chosenIngredients.map((ingredient) => {
-        ingredient = {
-            ...ingredient,
-            key: nanoid()
-        }
+    const constructedBurgerIngredients = ingredientsToOrder.map((ingredient) => {
         return <CardListElement ingredient={ingredient} key={ingredient.key}/>
    })
 
+   if (ingredientsToOrder.length === 0) {
     return (
         <section className={`${styles.burger_constructor_container} pt-25 pl-4 ml-10`}>
-            <div className={`${styles.burger_constructor_ingredients_container} mb-10`}>
+             <div className={`${styles.burger_constructor_ingredients_container} ml-8 mb-10`}>
+                <div className={`${styles.empty_box_top} pl-8 pr-4`}></div>
+                <div
+                className={`${styles.empty_box_middle} mt-4 mb-4`}
+                style={bunCanDrop ? {border: "solid 1px green"} : {}}
+                ref={bunDropRef}>
+                </div>
+                <div className={`${styles.empty_box_bottom} pl-8 pr-4`}></div>
+            </div>
+            <div className={`${styles.order_info} mr-4`}>
+                <div className="mr-10">
+                    <span className="text text_type_digits-medium mr-2">
+                        {ingredients[0].price + ingredients[0].price}
+                    </span>
+                    <CurrencyIcon type="primary"/>
+                </div>
+                <Button htmlType="button" type="primary" size="medium" onClick={openModal}>
+                    Оформить заказ
+                </Button>
+            </div>
+            {isModalOpen &&
+            <Modal onModalClose={closeModal}>
+                <OrderDetails orderId={orderId}/>
+            </Modal>
+            }
+        </section>
+    )
+   }
+
+    return (
+        <section className={`${styles.burger_constructor_container} pt-25 pl-4 ml-10`}>
+             <div className={`${styles.burger_constructor_ingredients_container} mb-10`}>
                 <div className="pl-8 pr-4">
                     <ConstructorElement
                         type="top"
@@ -68,7 +76,7 @@ export default function BurgerConstructor({ ingredients }: IngredientProps) {
                         thumbnail={ingredients[0].image}
                     />
                 </div>
-                <ul className={`${styles.burger_constructor_ingredients} custom-scroll`}>
+                <ul className={`${styles.burger_constructor_ingredients} custom-scroll`} ref={bunDropRef}>
                     {constructedBurgerIngredients}
                 </ul>
                 <div className="pl-8 pr-4">
@@ -84,7 +92,7 @@ export default function BurgerConstructor({ ingredients }: IngredientProps) {
             <div className={`${styles.order_info} mr-4`}>
                 <div className="mr-10">
                     <span className="text text_type_digits-medium mr-2">
-                        {ingredients[0].price + totalIngredientsPrice+ ingredients[0].price}
+                        {ingredients[0].price + ingredients[0].price}
                     </span>
                     <CurrencyIcon type="primary"/>
                 </div>
