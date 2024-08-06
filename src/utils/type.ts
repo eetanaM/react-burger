@@ -1,3 +1,4 @@
+
 // Структура ингредиента
 type Ingredient = {
     _id: string;
@@ -20,18 +21,24 @@ interface IngredientsState {
 }
 
 interface IngredientsToOrderState {
-    ingredientsToOrder: Ingredient[]
+    fillerToOrder: Ingredient[],
+    bunsToOrder: Ingredient[],
 }
 
 interface IngredientCardProps {
     ingredient: Ingredient;
-    onModalOpen?: (id:string) => void
+    onModalOpen?: (id:string) => void;
+    index?: number;
 }
 
 interface ModalProps {
     onModalClose: () => void,
     children?: React.ReactNode,
     header?: string,
+}
+
+interface ConstructorOverlayProps {
+    children?: React.ReactNode,
 }
 
 interface IngredientDetailsProps {
@@ -49,5 +56,6 @@ export type {
     IngredientCardProps,
     IngredientDetailsProps,
     OrderDetailsProps,
-    IngredientsToOrderState
+    IngredientsToOrderState,
+    ConstructorOverlayProps
 };

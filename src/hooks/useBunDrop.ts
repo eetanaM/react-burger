@@ -5,7 +5,7 @@ import { IngredientsState } from "../utils/type";
 
 import { addIngredientToOrder } from "../services/burger-constructor/reducer";
 
-const useBunsDrop = () => {
+const useBunDrop = () => {
     const dispatch = useDispatch();
     const { ingredients }: IngredientsState = useSelector(getAllIngredients);
 
@@ -20,7 +20,7 @@ const useBunsDrop = () => {
     canDrop: (dragItem) => {
         const id: string = dragItem.id;
         const ingredient = ingredients.find((item) => item._id === id)
-        if (ingredient?.type === "bun") return false;
+        if (ingredient?.type === "sauce" || ingredient?.type === "main" ) return false;
         return true
     },
     collect: (monitor) => ({
@@ -30,4 +30,4 @@ const useBunsDrop = () => {
   return { canDrop, bunDropRef };
 }
 
-export {useBunsDrop};
+export {useBunDrop};

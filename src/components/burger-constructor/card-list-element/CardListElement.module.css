@@ -4,3 +4,7 @@
     gap: 8px;
     cursor: pointer;
 }
+
+.list_element:last-child {
+    margin-bottom: 0;
+}
