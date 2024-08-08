@@ -1,17 +1,17 @@
-import React from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { useMemo, useCallback } from 'react';
 
-import styles from './ConstructorOverlay.module.css'
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../../modal/Modal'
 import OrderDetails from '../../order-details/OrderDetails'
 
 import { getAllIngredientsToOrder} from "../../../services/burger-constructor/reducer";
 import { loadOrder, getOrder } from '../../../services/order-details/reducer';
-
-import { ConstructorOverlayProps, IngredientsToOrderState } from '../../../utils/type'
 import { AppDispatch } from '../../../services/store';
+
+import { ConstructorOverlayProps } from '../../../utils/type'
+
+import styles from './ConstructorOverlay.module.css'
 
 export default function ConstructorOverlay ({children}: ConstructorOverlayProps) {
     const { fillerToOrder, bunsToOrder } = useSelector(getAllIngredientsToOrder)

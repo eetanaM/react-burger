@@ -1,10 +1,10 @@
+import { useCallback, useRef } from 'react';
 import { XYCoord, useDrag, useDrop } from "react-dnd";
 import { useDispatch } from 'react-redux';
-import { useCallback, useRef } from 'react';
 
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
-import { IngredientCardProps, Ingredient } from "../../../utils/type";
+import { IngredientCardProps } from "../../../utils/type";
 
 import styles from "./CardListElement.module.css"
 
@@ -32,7 +32,7 @@ export default function CardListElement({ingredient, index}:IngredientCardProps)
         }
     })
 
-    const [, dropRef] = useDrop<{key: string, index:number, type: string},void>({
+    const [, dropRef] = useDrop<{key: string, index:number, type: string}, void>({
         accept: 'constructor-ingredient',
         collect(monitor) {
             return {

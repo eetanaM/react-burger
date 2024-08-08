@@ -1,4 +1,4 @@
-
+import { SerializedError } from "@reduxjs/toolkit";
 // Структура ингредиента
 type Ingredient = {
     _id: string;
@@ -18,12 +18,27 @@ type Ingredient = {
 }
 
 interface IngredientsState {
-    ingredients: Ingredient[]
+    ingredients: Ingredient[] | [],
+    loading: boolean,
+    error: SerializedError | null
 }
 
-interface IngredientsToOrderState {
+interface IngredientsConstructorState {
     fillerToOrder: Ingredient[],
     bunsToOrder: Ingredient[],
+}
+
+interface IngredientDetailsState {
+    currentIngredient: Ingredient | null,
+}
+
+interface OrderDetailsState {
+    order: {
+        number: number | null,
+    },
+    success: boolean,
+    loading: boolean,
+    error: SerializedError | null,
 }
 
 interface IngredientCardProps {
@@ -42,10 +57,6 @@ interface ConstructorOverlayProps {
     children?: React.ReactNode,
 }
 
-interface IngredientDetailsProps {
-    currentIngredient: Ingredient,
-}
-
 interface OrderDetailsProps {
     orderId: number,
 }
@@ -53,10 +64,11 @@ interface OrderDetailsProps {
 export type {
     Ingredient,
     IngredientsState,
-    ModalProps,
+    IngredientsConstructorState,
+    IngredientDetailsState,
+    OrderDetailsState,
     IngredientCardProps,
-    IngredientDetailsProps,
+    ModalProps,
+    ConstructorOverlayProps,
     OrderDetailsProps,
-    IngredientsToOrderState,
-    ConstructorOverlayProps
 };

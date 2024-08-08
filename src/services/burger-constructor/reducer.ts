@@ -1,8 +1,8 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit'
-import { Ingredient, IngredientsToOrderState } from '../../utils/type'
+import { Ingredient, IngredientsConstructorState } from '../../utils/type'
 import { PayloadAction } from '@reduxjs/toolkit'
 
-const initialState: IngredientsToOrderState = {
+const initialState: IngredientsConstructorState = {
     fillerToOrder: [],
     bunsToOrder: []
 }

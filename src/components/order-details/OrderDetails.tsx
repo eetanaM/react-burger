@@ -1,5 +1,5 @@
-import React from "react";
 import done from '../../images/done.svg'
+
 import { OrderDetailsProps } from "../../utils/type";
 
 export default function OrderDetails({ orderId }: OrderDetailsProps) {

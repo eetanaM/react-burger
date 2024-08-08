@@ -1,12 +1,8 @@
 import { createSlice, createAsyncThunk, SerializedError } from '@reduxjs/toolkit'
 import { getIngredients } from './actions'
-import { Ingredient } from '../../utils/type'
+import { IngredientsState } from '../../utils/type'
 
-const initialState: {
-    ingredients: Ingredient[] | [],
-    loading: boolean,
-    error: SerializedError | null
-} = {
+const initialState: IngredientsState = {
     ingredients: [],
     loading: false,
     error: null
@@ -59,14 +55,13 @@ export const ingredientsSlice = createSlice({
             })
             .addCase(loadIngredients.fulfilled, (state, action) => {
                 state.ingredients = action.payload;
-                state.ingredients.forEach((ingredient) => {
-                    if (ingredient) ingredient.counter = 0
-                });
+                state.ingredients.forEach(ingredient => ingredient.counter = 0);
                 state.loading = false;
             })
             .addCase(loadIngredients.rejected, (state, action) => {
                 state.error = action.error;
                 state.loading = false;
+                state = initialState;
             })
         }
 })

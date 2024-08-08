@@ -1,14 +1,13 @@
-import React from "react"
 import ReactDOM from "react-dom"
+import { useEffect } from "react"
 import { useDispatch } from "react-redux";
 
 import ModalOverlay from "../modal-overlay/ModalOverlay"
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 
-import styles from "./Modal.module.css"
-
 import { ModalProps } from "../../utils/type"
 
+import styles from "./Modal.module.css"
 
 const modalRoot = document.querySelector('#react-modals') as HTMLDivElement
 
@@ -24,7 +23,7 @@ export default function Modal({ header, children }: ModalProps) {
         })
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         function closeByEscape(e:KeyboardEvent) {
             if (e.key === "Escape") hideModal()}
         window.addEventListener('keydown', closeByEscape);

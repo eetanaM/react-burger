@@ -1,12 +1,11 @@
-import React from "react"
 import { useDrag, DragPreviewImage } from "react-dnd";
 import { useDispatch } from "react-redux";
 
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import styles from "./IngredientCard.module.css"
-
 import { Ingredient, IngredientCardProps } from "../../../utils/type";
+
+import styles from "./IngredientCard.module.css"
 
 export default function IngredientCard({ingredient}: IngredientCardProps) {
     const dispatch = useDispatch()

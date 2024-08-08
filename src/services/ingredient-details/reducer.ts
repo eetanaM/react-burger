@@ -1,10 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { Ingredient } from '../../utils/type'
-import { useDispatch } from 'react-redux';
+import { IngredientDetailsState } from '../../utils/type'
 
-const initialState: {
-    currentIngredient: Ingredient | null,
- } = {
+const initialState: IngredientDetailsState = {
     currentIngredient: null,
  };
 

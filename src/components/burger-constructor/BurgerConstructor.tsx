@@ -1,9 +1,7 @@
-import React, { memo, useCallback, useEffect, useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useCallback } from "react";
+import { useSelector } from "react-redux";
 import { useFillerDrop } from "../../hooks/useFillerDrop";
 import { useBunDrop } from "../../hooks/useBunDrop";
-
-import styles from "./BurgerConstructor.module.css"
 
 import CardListElement from "./card-list-element/CardListElement";
 import ConstructorOverlay from "./constructor-overlay/ConstructorOverlay";
@@ -11,12 +9,13 @@ import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-comp
 
 import { getAllIngredientsToOrder } from "../../services/burger-constructor/reducer";
 
-import {IngredientsToOrderState, Ingredient } from "../../utils/type";
+import {IngredientsConstructorState, Ingredient } from "../../utils/type";
 
+import styles from "./BurgerConstructor.module.css"
 
 
 export default function BurgerConstructor() {
-    const { fillerToOrder, bunsToOrder }: IngredientsToOrderState = useSelector(getAllIngredientsToOrder);
+    const { fillerToOrder, bunsToOrder }: IngredientsConstructorState = useSelector(getAllIngredientsToOrder);
     const fillerCanDrop = useFillerDrop().canDrop;
     const fillerDropRef = useFillerDrop().fillerDropRef
 

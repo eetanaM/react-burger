@@ -1,6 +1,6 @@
-import React from "react"
-import styles from "./ModalOverlay.module.css"
 import { ModalProps } from "../../utils/type";
+
+import styles from "./ModalOverlay.module.css"
 
 export default function ModalOverlay({ children, hideModal }: ModalProps) {
 
