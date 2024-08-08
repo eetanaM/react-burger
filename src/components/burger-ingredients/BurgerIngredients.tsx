@@ -10,38 +10,21 @@ import styles from "./BurgerIngredients.module.css"
 
 import { useSelector } from "react-redux";
 import { getAllIngredients } from '../../services/burger-ingredients/reducer';
+import { getCurrentIngredient } from '../../services/ingredient-details/reducer';
 
 import { IngredientsState } from "../../utils/type";
 
-import { useModal } from "../../hooks/useModal";
-
 
 export default function BurgerIngredients() {
-    const { ingredients }:IngredientsState = useSelector(getAllIngredients);
+    const { ingredients }: IngredientsState = useSelector(getAllIngredients);
+    const currentIngredient = useSelector(getCurrentIngredient);
 
-    const { isModalOpen, openModal, closeModal } = useModal();
+
     const [current, setCurrent] = React.useState('buns')
-    const [ingredientToPopId, setIngredientToPopId] = React.useState('')
 
     const buns = ingredients.filter(ingredient => ingredient.type === "bun");
     const main = ingredients.filter(ingredient => ingredient.type === "main");
     const sauces = ingredients.filter(ingredient => ingredient.type === "sauce");
-
-    // || ingredientsDetails[0] - временно, для исключения возврата undefiend в currentIngredient
-    const currentIngredient = ingredients.find(
-        ingredient => ingredient._id === ingredientToPopId
-    ) || ingredients[0]
-
-
-    const onModalClose: () => void = React.useCallback((): void => {
-        setIngredientToPopId('')
-        closeModal();
-    }, [closeModal]);
-
-    const onModalOpen: (id: string) => void = React.useCallback((id:string):void => {
-        setIngredientToPopId(id)
-        openModal();
-    }, [openModal]);
 
     return (
         <section className={`${styles.burger_ingredients_container} pt-10`}>
@@ -66,7 +49,6 @@ export default function BurgerIngredients() {
                         {buns.map(bun => {
                             return <IngredientCard
                                 ingredient={bun}
-                                onModalOpen={onModalOpen}
                                 key={bun._id}
                             />
                         })}
@@ -78,7 +60,6 @@ export default function BurgerIngredients() {
                         {sauces.map(sauce => {
                             return <IngredientCard
                                 ingredient={sauce}
-                                onModalOpen={onModalOpen}
                                 key={sauce._id}
                             />
                         })}
@@ -90,15 +71,13 @@ export default function BurgerIngredients() {
                         {main.map(main => {
                             return <IngredientCard
                                 ingredient={main}
-                                onModalOpen={onModalOpen}
                                 key={main._id}
                             />
                         })}
                     </div>
                 </li>
             </ul>
-            {isModalOpen && <Modal
-                onModalClose={onModalClose}
+            {currentIngredient && <Modal
                 header="Детали ингредиента"
             >
                <IngredientDetails

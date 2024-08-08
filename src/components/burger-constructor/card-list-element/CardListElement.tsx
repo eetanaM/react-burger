@@ -32,7 +32,7 @@ export default function CardListElement({ingredient, index}:IngredientCardProps)
         }
     })
 
-    const [{ handlerId }, dropRef] = useDrop<{key: string, index:number, type: string},void,{ handlerId: string | symbol | null }>({
+    const [, dropRef] = useDrop<{key: string, index:number, type: string},void>({
         accept: 'constructor-ingredient',
         collect(monitor) {
             return {
@@ -79,8 +79,13 @@ export default function CardListElement({ingredient, index}:IngredientCardProps)
             payload: {
                 id: ingredient.key
             }
-        }
-        )
+        });
+        dispatch({
+            type: 'burger-ingredients/decrementCount',
+            payload: {
+                id: ingredient._id
+            }
+        })
     }
 
 

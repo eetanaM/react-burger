@@ -13,7 +13,8 @@ type Ingredient = {
     image_mobile: string;
     image_large: string;
     __v: number;
-    key?: string
+    counter: number;
+    key?: string;
 }
 
 interface IngredientsState {
@@ -32,9 +33,9 @@ interface IngredientCardProps {
 }
 
 interface ModalProps {
-    onModalClose: () => void,
     children?: React.ReactNode,
     header?: string,
+    hideModal?: () => void,
 }
 
 interface ConstructorOverlayProps {
@@ -46,7 +47,7 @@ interface IngredientDetailsProps {
 }
 
 interface OrderDetailsProps {
-    orderId: string,
+    orderId: number,
 }
 
 export type {

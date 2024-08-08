@@ -16,7 +16,7 @@ export const constructorSlice = createSlice({
                 if(action.payload.type === "bun") {
                     if (state.bunsToOrder.length === 0) {
                         state.bunsToOrder.push(action.payload);
-                        state.bunsToOrder.push(action.payload)
+                        state.bunsToOrder.push(action.payload);
                     } else {
                         state.bunsToOrder[0] = action.payload
                         state.bunsToOrder[1] = action.payload

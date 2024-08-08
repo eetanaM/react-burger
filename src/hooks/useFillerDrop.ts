@@ -11,11 +11,17 @@ const useFillerDrop = () => {
 
     const [{ canDrop }, fillerDropRef] = useDrop(() => ({
     accept: "ingredient",
-    drop: (dragItem : any, monitor) => {
+    drop: (dragItem : any) => {
         const id: string = dragItem.id;
         const ingredient = ingredients.find((item) => item._id === id)
         if (!ingredient) return
         dispatch(addIngredientToOrder(ingredient));
+        dispatch({
+            type: "burger-ingredients/incrementCount",
+            payload: {
+                id: id,
+            }
+        })
     },
     canDrop: (dragItem) => {
         const id: string = dragItem.id;

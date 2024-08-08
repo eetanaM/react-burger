@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { memo, useCallback, useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useFillerDrop } from "../../hooks/useFillerDrop";
 import { useBunDrop } from "../../hooks/useBunDrop";
@@ -10,7 +10,6 @@ import ConstructorOverlay from "./constructor-overlay/ConstructorOverlay";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { getAllIngredientsToOrder } from "../../services/burger-constructor/reducer";
-import { AppDispatch } from "../../services/store";
 
 import {IngredientsToOrderState, Ingredient } from "../../utils/type";
 
@@ -18,9 +17,9 @@ import {IngredientsToOrderState, Ingredient } from "../../utils/type";
 
 export default function BurgerConstructor() {
     const { fillerToOrder, bunsToOrder }: IngredientsToOrderState = useSelector(getAllIngredientsToOrder);
-    const dispatch = useDispatch<AppDispatch>();
     const fillerCanDrop = useFillerDrop().canDrop;
     const fillerDropRef = useFillerDrop().fillerDropRef
+
     const bunCanDrop = useBunDrop().canDrop;
     const topBunDropRef = useBunDrop().bunDropRef;
     const bottomBunDropRef = useBunDrop().bunDropRef;

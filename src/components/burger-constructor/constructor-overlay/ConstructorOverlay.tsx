@@ -1,23 +1,39 @@
-import React, {memo} from 'react'
-import { useSelector } from "react-redux";
-import { useModal } from '../../../hooks/useModal'
+import React from 'react'
+import { useSelector, useDispatch } from "react-redux";
+import { useMemo, useCallback } from 'react';
 
 import styles from './ConstructorOverlay.module.css'
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../../modal/Modal'
 import OrderDetails from '../../order-details/OrderDetails'
 
-import { getAllIngredientsToOrder } from "../../../services/burger-constructor/reducer";
+import { getAllIngredientsToOrder} from "../../../services/burger-constructor/reducer";
+import { loadOrder, getOrder } from '../../../services/order-details/reducer';
 
 import { ConstructorOverlayProps, IngredientsToOrderState } from '../../../utils/type'
+import { AppDispatch } from '../../../services/store';
 
 export default function ConstructorOverlay ({children}: ConstructorOverlayProps) {
-    const { isModalOpen, openModal, closeModal } = useModal();
-    const [orderId] = React.useState('034536');
-    const { fillerToOrder, bunsToOrder }: IngredientsToOrderState = useSelector(getAllIngredientsToOrder);
+    const { fillerToOrder, bunsToOrder } = useSelector(getAllIngredientsToOrder)
+    const order = useSelector(getOrder)
 
-    const totalPrice = fillerToOrder.reduce((acc, current) => acc + current.price, 0) + bunsToOrder.reduce((acc, current) => acc + current.price, 0);
+    const dispatch = useDispatch<AppDispatch>();
 
+    const totalPrice = useMemo(() => {
+        const result = fillerToOrder.reduce((acc, current) => acc + current.price, 0) + bunsToOrder.reduce((acc, current) => acc + current.price, 0)
+        return result;
+    }, [fillerToOrder, bunsToOrder])
+
+    const ingredientsToOrder = useMemo(() => {
+        if(fillerToOrder.length === 0 || bunsToOrder.length === 0) return [];
+
+        const result = [bunsToOrder[0]._id, ...fillerToOrder.map(item => item._id), bunsToOrder[0]._id]
+        return result;
+    }, [fillerToOrder, bunsToOrder]);
+
+    const getOrderInfo = useCallback(() => {
+        dispatch(loadOrder(ingredientsToOrder))
+    }, [ingredientsToOrder]);
     return (
         <section className={`${styles.burger_constructor_container} pt-25 pl-4 ml-10`}>
             <div className={`${styles.burger_constructor_ingredients_container} ml-8 mb-10`}>
@@ -34,15 +50,15 @@ export default function ConstructorOverlay ({children}: ConstructorOverlayProps)
                     htmlType="button"
                     type="primary"
                     size="medium"
-                    onClick={openModal}
+                    onClick={getOrderInfo}
                     {...(bunsToOrder.length === 0 && {disabled: true})}
                 >
                     Оформить заказ
                 </Button>
             </div>
-            {isModalOpen &&
-            <Modal onModalClose={closeModal}>
-                <OrderDetails orderId={orderId}/>
+            {order.number &&
+            <Modal>
+                <OrderDetails orderId={order.number}/>
             </Modal>
             }
         </section>

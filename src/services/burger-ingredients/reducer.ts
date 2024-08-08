@@ -22,7 +22,32 @@ export const loadIngredients = createAsyncThunk(
 export const ingredientsSlice = createSlice({
     name: "burger-ingredients",
     initialState: initialState,
-    reducers: {},
+    reducers: {
+        incrementCount: (state, action) => {
+            if (state.ingredients.length === 0) return;
+            const currentIndex = state.ingredients.findIndex(
+                ingredient => ingredient._id === action.payload.id
+            )
+            if (currentIndex !== -1) {
+                if(state.ingredients[currentIndex].type === "bun") {
+                    state.ingredients[currentIndex].counter += 2;
+                } else
+                state.ingredients[currentIndex].counter++;
+            }
+        },
+        decrementCount: (state, action) => {
+            if (state.ingredients.length === 0) return;
+            const currentIndex = state.ingredients.findIndex(
+                ingredient => ingredient._id === action.payload.id
+            )
+            if (currentIndex !== -1) {
+                if(state.ingredients[currentIndex].type === "bun") {
+                    state.ingredients[currentIndex].counter -= 2;
+                } else
+                state.ingredients[currentIndex].counter--;
+            }
+        }
+    },
     selectors: {
         getAllIngredients: state => state
     },
@@ -34,6 +59,9 @@ export const ingredientsSlice = createSlice({
             })
             .addCase(loadIngredients.fulfilled, (state, action) => {
                 state.ingredients = action.payload;
+                state.ingredients.forEach((ingredient) => {
+                    if (ingredient) ingredient.counter = 0
+                });
                 state.loading = false;
             })
             .addCase(loadIngredients.rejected, (state, action) => {

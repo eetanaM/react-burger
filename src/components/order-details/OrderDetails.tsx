@@ -2,7 +2,7 @@ import React from "react";
 import done from '../../images/done.svg'
 import { OrderDetailsProps } from "../../utils/type";
 
-export default function OrderDetails({orderId }: OrderDetailsProps) {
+export default function OrderDetails({ orderId }: OrderDetailsProps) {
     return (
         <>
             <h2 className="text text_type_digits-large mb-8">{orderId}</h2>

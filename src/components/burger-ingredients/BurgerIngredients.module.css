@@ -4,7 +4,7 @@
     flex-direction: column;
 
     max-width: 600px;
-    max-height: calc(100vh - 128px);
+    height: calc(100vh - 128px);
 }
 
 .tab_menu {
@@ -18,7 +18,6 @@
     box-sizing: border-box;
 
     padding-inline-start: 0;
-    margin: 0;
 }
 
 .ingredient_cards_container {
