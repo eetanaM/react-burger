@@ -24,16 +24,19 @@ export default function ConstructorOverlay ({children}: ConstructorOverlayProps)
     }, [fillerToOrder, bunsToOrder])
 
     const ingredientsToOrder = useMemo(() => {
-        if(fillerToOrder.length === 0 && bunsToOrder.length === 0) return [];
-        if(fillerToOrder.length === 0 && bunsToOrder.length > 0) return [bunsToOrder[0]._id,bunsToOrder[1]._id]
+        if (fillerToOrder.length === 0 && bunsToOrder.length === 0) return [];
+        if (fillerToOrder.length === 0 && bunsToOrder.length > 0) {
+            return [bunsToOrder[0]._id, bunsToOrder[1]._id];
+        }
 
-        const result = [bunsToOrder[0]._id, ...fillerToOrder.map(item => item._id), bunsToOrder[1]._id]
+        const result = [bunsToOrder[0]._id, ...fillerToOrder.map(item => item._id), bunsToOrder[1]._id];
         return result;
     }, [fillerToOrder, bunsToOrder]);
 
     const getOrderInfo = useCallback(() => {
         dispatch(loadOrder(ingredientsToOrder))
-    }, [ingredientsToOrder]);
+    }, [dispatch, ingredientsToOrder]);
+
     return (
         <section className={`${styles.burger_constructor_container} pt-25 pl-4 ml-10`}>
             <div className={`${styles.burger_constructor_ingredients_container} ml-8 mb-10`}>

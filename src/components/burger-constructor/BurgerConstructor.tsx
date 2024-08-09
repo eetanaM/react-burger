@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { useAppSelector } from "../../hooks/preTypedHooks";
 import { useFillerDrop } from "../../hooks/useFillerDrop";
 import { useBunDrop } from "../../hooks/useBunDrop";
@@ -24,7 +23,7 @@ export default function BurgerConstructor() {
     const bottomBunDropRef = useBunDrop().bunDropRef;
 
 
-    const renderIngredient = useCallback((ingredient: Ingredient, index: number) => {
+    const renderIngredient = (ingredient: Ingredient, index: number) => {
         return (
             <CardListElement
                 ingredient={ingredient}
@@ -32,7 +31,7 @@ export default function BurgerConstructor() {
                 index={index}
             />
         )
-    }, [])
+    }
 
     const fillers = fillerToOrder.map((ingredient, index) => {
         return renderIngredient(ingredient, index)

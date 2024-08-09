@@ -12,12 +12,12 @@ export default function CardListElement({ingredient, index}:IngredientCardProps)
     const dispatch = useAppDispatch();
     const ref = useRef<HTMLLIElement>(null)
 
-    const moveIngredient = useCallback((dragIndex: number, hoverIndex: number) => {
+    const moveIngredient = (dragIndex: number, hoverIndex: number) => {
         dispatch({
             type: 'burger-constructor/moveIngredient',
             payload: { dragIndex, hoverIndex },
         })
-    }, [])
+    }
 
     const [, dragRef] = useDrag({
         type: 'constructor-ingredient',
@@ -73,7 +73,7 @@ export default function CardListElement({ingredient, index}:IngredientCardProps)
 
     dragRef(dropRef(ref))
 
-    const removeHandler = () => {
+    const removeHandler = useCallback(() => {
         dispatch({
             type:"burger-constructor/removeIngredientFromOrder",
             payload: {
@@ -86,7 +86,7 @@ export default function CardListElement({ingredient, index}:IngredientCardProps)
                 id: ingredient._id
             }
         })
-    }
+    }, [dispatch])
 
 
     return (

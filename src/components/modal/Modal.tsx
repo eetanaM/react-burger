@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom"
-import { useEffect } from "react"
+import { useCallback, useEffect } from "react"
 import { useAppDispatch } from "../../hooks/preTypedHooks"
 
 import ModalOverlay from "../modal-overlay/ModalOverlay"
@@ -14,14 +14,14 @@ const modalRoot = document.querySelector('#react-modals') as HTMLDivElement
 export default function Modal({ header, children }: ModalProps) {
     const dispatch = useAppDispatch()
 
-    function hideModal() {
+    const hideModal = useCallback(() => {
         dispatch({
             type: 'ingredient-details/hideIngredient'
         });
         dispatch({
             type: "order-details/hideOrder"
         })
-    }
+    }, [dispatch])
 
     useEffect(() => {
         function closeByEscape(e:KeyboardEvent) {

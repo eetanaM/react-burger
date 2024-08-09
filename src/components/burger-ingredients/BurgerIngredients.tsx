@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useAppSelector } from "../../hooks/preTypedHooks";
 
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -22,11 +22,11 @@ export default function BurgerIngredients() {
     const saucesScrollRef = useRef<HTMLHeadingElement>(null);
     const mainScrollRef = useRef<HTMLHeadingElement>(null);
 
-    const buns = ingredients.filter(ingredient => ingredient.type === "bun");
-    const main = ingredients.filter(ingredient => ingredient.type === "main");
-    const sauces = ingredients.filter(ingredient => ingredient.type === "sauce");
+    const buns = useMemo(() => ingredients.filter(ingredient => ingredient.type === "bun"), [ingredients]);
+    const main = useMemo(() => ingredients.filter(ingredient => ingredient.type === "main"), [ingredients]);
+    const sauces = useMemo(() => ingredients.filter(ingredient => ingredient.type === "sauce"), [ingredients]);
 
-    const chooseActiveTab = useCallback(() => {
+    const chooseActiveTab = () => {
         const bunsPos = bunsScrollRef.current?.getBoundingClientRect().top;
         const saucesPos = saucesScrollRef.current?.getBoundingClientRect().top;
         const mainPos = mainScrollRef.current?.getBoundingClientRect().top;
@@ -55,7 +55,7 @@ export default function BurgerIngredients() {
                 default: break;
             }
         }
-    }, [])
+    }
 
     const moveToSection = useCallback((section: string) => {
         switch (section) {
@@ -74,7 +74,7 @@ export default function BurgerIngredients() {
             default:
                 break;
         }
-    }, [])
+    }, [bunsScrollRef, saucesScrollRef, mainScrollRef])
 
 
     return (

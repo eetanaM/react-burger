@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useDrag, DragPreviewImage } from "react-dnd";
 import { useAppDispatch } from "../../../hooks/preTypedHooks";
 
@@ -17,15 +18,14 @@ export default function IngredientCard({ingredient}: IngredientCardProps) {
         })
     })
 
-    function openModal(ingredient: Ingredient) {
+    const openModal = useCallback((ingredient: Ingredient) => {
         dispatch({
             type: 'ingredient-details/showIngredient',
             payload: {
                 ...ingredient,
             }
         })
-
-    }
+    }, [dispatch])
 
     return (
         <>

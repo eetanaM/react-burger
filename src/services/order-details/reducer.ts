@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import { getOrderData } from './action'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { OrderDetailsState } from '../../utils/type'
