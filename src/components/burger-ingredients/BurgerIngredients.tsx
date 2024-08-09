@@ -1,89 +1,138 @@
-import React from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { useAppSelector } from "../../hooks/preTypedHooks";
+
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./BurgerIngredients.module.css"
-import { IngredientProps } from "../../utils/type";
 import Modal from "../modal/Modal";
-import IngredientCards from "./ingredient-cards/IngredientCards";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
+import IngredientCard from "./ingredient-card/IngredientCard";
 
+import { getAllIngredients } from '../../services/burger-ingredients/reducer';
+import { getCurrentIngredient } from '../../services/ingredient-details/reducer';
 
-export default function BurgerIngredients({ ingredients }: IngredientProps) {
-    const [isModalVisible, setIsModalVisible] = React.useState(false)
-    const [current, setCurrent] = React.useState('buns')
-    const [ingredientToPopId, setIngredientToPopId] = React.useState('')
+import styles from "./BurgerIngredients.module.css"
 
-    const bunsDetails = ingredients.filter(ingredient => ingredient.type === "bun");
-    const mainDetails = ingredients.filter(ingredient => ingredient.type === "main");
-    const sauceDetails = ingredients.filter(ingredient => ingredient.type === "sauce");
+export default function BurgerIngredients() {
+    const [current, setCurrent] = useState('buns')
 
-    // || ingredientsDetails[0] - временно, для исключения возврата undefiend в currentIngredient
-    const currentIngredient = ingredients.find(
-        ingredient => ingredient._id === ingredientToPopId
-    ) || ingredients[0]
+    const { ingredients } = useAppSelector(getAllIngredients);
+    const currentIngredient = useAppSelector(getCurrentIngredient);
 
+    const tabsRef = useRef<HTMLDivElement>(null);
+    const bunsScrollRef = useRef<HTMLHeadingElement>(null);
+    const saucesScrollRef = useRef<HTMLHeadingElement>(null);
+    const mainScrollRef = useRef<HTMLHeadingElement>(null);
 
-    const onModalClose: () => void = React.useCallback((): void => {
-        setIngredientToPopId('')
-        setIsModalVisible(false);
-    },[]);
+    const buns = useMemo(() => ingredients.filter(ingredient => ingredient.type === "bun"), [ingredients]);
+    const main = useMemo(() => ingredients.filter(ingredient => ingredient.type === "main"), [ingredients]);
+    const sauces = useMemo(() => ingredients.filter(ingredient => ingredient.type === "sauce"), [ingredients]);
 
-    const onModalOpen: (id: string) => void = React.useCallback((id:string):void => {
-        setIngredientToPopId(id)
-        setIsModalVisible(true);
-    },[]);
+    const chooseActiveTab = () => {
+        const bunsPos = bunsScrollRef.current?.getBoundingClientRect().top;
+        const saucesPos = saucesScrollRef.current?.getBoundingClientRect().top;
+        const mainPos = mainScrollRef.current?.getBoundingClientRect().top;
+
+        const tabsPos = tabsRef.current?.getBoundingClientRect().bottom;
+
+        if (bunsPos !== undefined && mainPos!== undefined && saucesPos !== undefined && tabsPos !== undefined) {
+            const bunsPositionDiff = Math.abs(bunsPos - tabsPos);
+            const saucesPositionDiff = Math.abs(saucesPos - tabsPos);
+            const mainPositionDiff = Math.abs(mainPos - tabsPos);
+
+            const minDiff = Math.min(bunsPositionDiff, saucesPositionDiff, mainPositionDiff)
+            switch (minDiff) {
+                case bunsPositionDiff: {
+                    setCurrent('buns');
+                    break
+                }
+                case saucesPositionDiff: {
+                    setCurrent('sauces');
+                    break
+                }
+                case mainPositionDiff: {
+                    setCurrent('main');
+                    break
+                }
+                default: break;
+            }
+        }
+    }
+
+    const moveToSection = useCallback((section: string) => {
+        switch (section) {
+            case 'buns': {
+                bunsScrollRef.current?.scrollIntoView({ block: "start", behavior:'smooth' });
+                break
+            }
+            case'sauces': {
+                saucesScrollRef.current?.scrollIntoView({ block: "start", behavior:'smooth' });
+                break
+            }
+            case'main': {
+                mainScrollRef.current?.scrollIntoView({ block: "start", behavior:'smooth' });
+                break
+            }
+            default:
+                break;
+        }
+    }, [bunsScrollRef, saucesScrollRef, mainScrollRef])
+
 
     return (
         <section className={`${styles.burger_ingredients_container} pt-10`}>
             <h1 className={`text text_type_main-large`}>
                 Соберите бургер
             </h1>
-            <div className={`${styles.tab_menu} pt-5`}>
-                <Tab value="buns" active={current === 'buns'} onClick={setCurrent}>
+            <div className={`${styles.tab_menu} pt-5`} ref={tabsRef}>
+                <Tab value="buns" active={current === 'buns'} onClick={() => moveToSection("buns")}>
                     Булки
                 </Tab>
-                <Tab value="sauces" active={current === 'sauces'} onClick={setCurrent}>
+                <Tab value="sauces" active={current === 'sauces'} onClick={() => moveToSection("sauces")}>
                     Соусы
                 </Tab>
-                <Tab value="main" active={current === 'main'} onClick={setCurrent}>
+                <Tab value="main" active={current === 'main'} onClick={() => moveToSection("main")}>
                     Начинки
                 </Tab>
             </div>
-            <ul className={`${styles.ingredients_list} pt-10 custom-scroll`}>
+            <ul className={`${styles.ingredients_list} pt-10 custom-scroll`} onScroll={chooseActiveTab}>
                 <li className={`${styles.ingredient_cards_container} pb-10`}>
-                    <h2 className="text text_type_main-medium">Булки</h2>
+                    <h2 className="text text_type_main-medium" ref={bunsScrollRef}>Булки</h2>
                     <div className={`${styles.ingredient_card}`}>
-                        <IngredientCards
-                            ingredients={bunsDetails}
-                            onModalOpen={onModalOpen}
-                        />
+                        {buns.map(bun => {
+                            return <IngredientCard
+                                ingredient={bun}
+                                key={bun._id}
+                            />
+                        })}
                     </div>
                 </li>
                 <li className={`${styles.ingredient_cards_container} pb-10`}>
-                    <h2 className="text text_type_main-medium">Соусы</h2>
+                    <h2 className="text text_type_main-medium" ref={saucesScrollRef}>Соусы</h2>
                     <div className={`${styles.ingredient_card}`}>
-                        <IngredientCards
-                            ingredients={sauceDetails}
-                            onModalOpen={onModalOpen}
-                        />
+                        {sauces.map(sauce => {
+                            return <IngredientCard
+                                ingredient={sauce}
+                                key={sauce._id}
+                            />
+                        })}
                     </div>
                 </li>
                 <li className={`${styles.ingredient_cards_container} pb-10`}>
-                    <h2 className="text text_type_main-medium">Начинки</h2>
+                    <h2 className="text text_type_main-medium" ref={mainScrollRef}>Начинки</h2>
                     <div className={`${styles.ingredient_card}`}>
-                        <IngredientCards
-                            ingredients={mainDetails}
-                            onModalOpen={onModalOpen}
-                        />
+                        {main.map(main => {
+                            return <IngredientCard
+                                ingredient={main}
+                                key={main._id}
+                            />
+                        })}
                     </div>
                 </li>
             </ul>
-            {isModalVisible && <Modal
-                onModalClose={onModalClose}
+            {currentIngredient && <Modal
                 header="Детали ингредиента"
             >
                <IngredientDetails
                     currentIngredient = {currentIngredient}
-                    onModalClose={onModalClose}
                />
             </Modal>}
         </section>

@@ -1,46 +1,74 @@
+import { SerializedError } from "@reduxjs/toolkit";
+// Структура ингредиента
 type Ingredient = {
     _id: string;
-        name: string;
-        type: string;
-        proteins:number;
-        fat: number;
-        carbohydrates: number;
-        calories: number;
-        price: number;
-        image: string;
-        image_mobile: string;
-        image_large: string;
-        __v: number;
+    name: string;
+    type: string;
+    proteins:number;
+    fat: number;
+    carbohydrates: number;
+    calories: number;
+    price: number;
+    image: string;
+    image_mobile: string;
+    image_large: string;
+    __v: number;
+    counter: number;
+    key?: string;
 }
 
-interface IngredientProps {
-    ingredients: Ingredient[]
+interface IngredientsState {
+    ingredients: Ingredient[] | [],
+    loading: boolean,
+    error: SerializedError | null
 }
 
-interface IngredientCardProps extends IngredientProps {
-    onModalOpen: (id:string) => void
+interface IngredientsConstructorState {
+    fillerToOrder: Ingredient[],
+    bunsToOrder: Ingredient[],
+}
+
+interface IngredientDetailsState {
+    currentIngredient: Ingredient | null,
+}
+
+interface OrderDetailsState {
+    order: {
+        number: number | null,
+    },
+    success: boolean,
+    loading: boolean,
+    error: SerializedError | null,
+}
+
+interface IngredientCardProps {
+    ingredient: Ingredient;
+    onModalOpen?: (id:string) => void;
+    index?: number;
 }
 
 interface ModalProps {
-    onModalClose: () => void,
     children?: React.ReactNode,
     header?: string,
+    hideModal?: () => void,
 }
 
-interface IngredientDetailsProps {
-    currentIngredient: Ingredient,
-    onModalClose: () => void,
+interface ConstructorOverlayProps {
+    children?: React.ReactNode,
 }
 
 interface OrderDetailsProps {
-    onModalClose: () => void,
-    orderId: string,
+    orderId: number,
 }
 
 export type {
-    IngredientProps,
-    ModalProps,
+    Ingredient,
+    IngredientsState,
+    IngredientsConstructorState,
+    IngredientDetailsState,
+    OrderDetailsState,
     IngredientCardProps,
-    IngredientDetailsProps,
-    OrderDetailsProps
+    ModalProps,
+    ConstructorOverlayProps,
+    OrderDetailsProps,
 };
