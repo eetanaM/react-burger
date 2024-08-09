@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from '../../../hooks/preTypedHooks';
 import { useMemo, useCallback } from 'react';
 
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -7,17 +7,16 @@ import OrderDetails from '../../order-details/OrderDetails'
 
 import { getAllIngredientsToOrder} from "../../../services/burger-constructor/reducer";
 import { loadOrder, getOrder } from '../../../services/order-details/reducer';
-import { AppDispatch } from '../../../services/store';
 
 import { ConstructorOverlayProps } from '../../../utils/type'
 
 import styles from './ConstructorOverlay.module.css'
 
 export default function ConstructorOverlay ({children}: ConstructorOverlayProps) {
-    const { fillerToOrder, bunsToOrder } = useSelector(getAllIngredientsToOrder)
-    const order = useSelector(getOrder)
+    const { fillerToOrder, bunsToOrder } = useAppSelector(getAllIngredientsToOrder)
+    const order = useAppSelector(getOrder)
 
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     const totalPrice = useMemo(() => {
         const result = fillerToOrder.reduce((acc, current) => acc + current.price, 0) + bunsToOrder.reduce((acc, current) => acc + current.price, 0)

@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react';
 import { XYCoord, useDrag, useDrop } from "react-dnd";
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../../hooks/preTypedHooks';
 
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
@@ -9,7 +9,7 @@ import { IngredientCardProps } from "../../../utils/type";
 import styles from "./CardListElement.module.css"
 
 export default function CardListElement({ingredient, index}:IngredientCardProps) {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const ref = useRef<HTMLLIElement>(null)
 
     const moveIngredient = useCallback((dragIndex: number, hoverIndex: number) => {

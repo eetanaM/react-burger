@@ -1,6 +1,7 @@
-import { createSlice, createAsyncThunk, SerializedError } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, SerializedError, AsyncThunkAction } from '@reduxjs/toolkit'
 import { getIngredients } from './actions'
-import { IngredientsState } from '../../utils/type'
+import { Ingredient, IngredientsState } from '../../utils/type';
+import { PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: IngredientsState = {
     ingredients: [],
@@ -19,7 +20,7 @@ export const ingredientsSlice = createSlice({
     name: "burger-ingredients",
     initialState: initialState,
     reducers: {
-        incrementCount: (state, action) => {
+        incrementCount: (state, action: PayloadAction<{id: string}, string>) => {
             if (state.ingredients.length === 0) return;
             const currentIndex = state.ingredients.findIndex(
                 ingredient => ingredient._id === action.payload.id
@@ -31,7 +32,7 @@ export const ingredientsSlice = createSlice({
                 state.ingredients[currentIndex].counter++;
             }
         },
-        decrementCount: (state, action) => {
+        decrementCount: (state, action: PayloadAction<{id: string}, string>) => {
             if (state.ingredients.length === 0) return;
             const currentIndex = state.ingredients.findIndex(
                 ingredient => ingredient._id === action.payload.id
@@ -53,7 +54,7 @@ export const ingredientsSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(loadIngredients.fulfilled, (state, action) => {
+            .addCase(loadIngredients.fulfilled, (state, action: PayloadAction<Ingredient[]>) => {
                 state.ingredients = action.payload;
                 state.ingredients.forEach(ingredient => ingredient.counter = 0);
                 state.loading = false;

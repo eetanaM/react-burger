@@ -1,5 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { IngredientDetailsState } from '../../utils/type'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { Ingredient, IngredientDetailsState } from '../../utils/type'
 
 const initialState: IngredientDetailsState = {
     currentIngredient: null,
@@ -10,7 +10,7 @@ export const ingredientDetailsSlice = createSlice({
     name: "ingredient-details",
     initialState: initialState,
     reducers: {
-        showIngredient: (state, action) => {
+        showIngredient: (state, action: PayloadAction<Ingredient>) => {
             state.currentIngredient = action.payload;
         },
         hideIngredient: (state) => {

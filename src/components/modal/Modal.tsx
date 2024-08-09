@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom"
 import { useEffect } from "react"
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../hooks/preTypedHooks"
 
 import ModalOverlay from "../modal-overlay/ModalOverlay"
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
@@ -12,7 +12,7 @@ import styles from "./Modal.module.css"
 const modalRoot = document.querySelector('#react-modals') as HTMLDivElement
 
 export default function Modal({ header, children }: ModalProps) {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     function hideModal() {
         dispatch({

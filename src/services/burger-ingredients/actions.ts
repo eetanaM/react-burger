@@ -1,3 +1,5 @@
+import { SerializedError } from "@reduxjs/toolkit"
+
 const SERVER_URL: string = "https://norma.nomoreparties.space/api/ingredients"
 
 export const getIngredients = async () => {
@@ -8,7 +10,7 @@ export const getIngredients = async () => {
         }
         const ingredients = await res.json()
         return ingredients.data
-    } catch (error) {
+    } catch (error: any) {
         return error
     }
 }

@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../hooks/preTypedHooks";
 
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/Modal";
@@ -9,19 +9,18 @@ import IngredientCard from "./ingredient-card/IngredientCard";
 import { getAllIngredients } from '../../services/burger-ingredients/reducer';
 import { getCurrentIngredient } from '../../services/ingredient-details/reducer';
 
-import { IngredientsState } from "../../utils/type";
-
 import styles from "./BurgerIngredients.module.css"
 
 export default function BurgerIngredients() {
-    const { ingredients }: IngredientsState = useSelector(getAllIngredients);
-    const currentIngredient = useSelector(getCurrentIngredient);
+    const [current, setCurrent] = useState('buns')
+
+    const { ingredients } = useAppSelector(getAllIngredients);
+    const currentIngredient = useAppSelector(getCurrentIngredient);
+
     const tabsRef = useRef<HTMLDivElement>(null);
     const bunsScrollRef = useRef<HTMLHeadingElement>(null);
     const saucesScrollRef = useRef<HTMLHeadingElement>(null);
     const mainScrollRef = useRef<HTMLHeadingElement>(null);
-
-    const [current, setCurrent] = useState('buns')
 
     const buns = ingredients.filter(ingredient => ingredient.type === "bun");
     const main = ingredients.filter(ingredient => ingredient.type === "main");

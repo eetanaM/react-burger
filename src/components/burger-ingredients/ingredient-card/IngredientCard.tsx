@@ -1,5 +1,5 @@
 import { useDrag, DragPreviewImage } from "react-dnd";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../../hooks/preTypedHooks";
 
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 
@@ -8,7 +8,7 @@ import { Ingredient, IngredientCardProps } from "../../../utils/type";
 import styles from "./IngredientCard.module.css"
 
 export default function IngredientCard({ingredient}: IngredientCardProps) {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const [, dragRef, preview] = useDrag({
         type: 'ingredient',
         item: {id: ingredient._id},

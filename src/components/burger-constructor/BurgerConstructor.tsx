@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../hooks/preTypedHooks";
 import { useFillerDrop } from "../../hooks/useFillerDrop";
 import { useBunDrop } from "../../hooks/useBunDrop";
 
@@ -9,13 +9,13 @@ import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-comp
 
 import { getAllIngredientsToOrder } from "../../services/burger-constructor/reducer";
 
-import {IngredientsConstructorState, Ingredient } from "../../utils/type";
+import { Ingredient } from "../../utils/type";
 
 import styles from "./BurgerConstructor.module.css"
 
 
 export default function BurgerConstructor() {
-    const { fillerToOrder, bunsToOrder }: IngredientsConstructorState = useSelector(getAllIngredientsToOrder);
+    const { fillerToOrder, bunsToOrder } = useAppSelector(getAllIngredientsToOrder);
     const fillerCanDrop = useFillerDrop().canDrop;
     const fillerDropRef = useFillerDrop().fillerDropRef
 

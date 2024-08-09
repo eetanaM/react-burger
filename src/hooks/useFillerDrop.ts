@@ -1,18 +1,17 @@
 import { useDrop } from "react-dnd";
-import { useSelector, useDispatch } from "react-redux";
-import { getAllIngredients } from "../services/burger-ingredients/reducer";
-import { IngredientsState } from "../utils/type";
+import { useAppDispatch, useAppSelector } from "./preTypedHooks";
 
+import { getAllIngredients } from "../services/burger-ingredients/reducer";
 import { addIngredientToOrder } from "../services/burger-constructor/reducer";
 
 const useFillerDrop = () => {
-    const dispatch = useDispatch();
-    const { ingredients }: IngredientsState = useSelector(getAllIngredients);
+    const dispatch = useAppDispatch();
+    const { ingredients } = useAppSelector(getAllIngredients);
 
     const [{ canDrop }, fillerDropRef] = useDrop(() => ({
     accept: "ingredient",
-    drop: (dragItem : any) => {
-        const id: string = dragItem.id;
+    drop: (dragItem: {id: string}) => {
+        const id = dragItem.id;
         const ingredient = ingredients.find((item) => item._id === id)
         if (!ingredient) return
         dispatch(addIngredientToOrder(ingredient));
@@ -24,7 +23,7 @@ const useFillerDrop = () => {
         })
     },
     canDrop: (dragItem) => {
-        const id: string = dragItem.id;
+        const id = dragItem.id;
         const ingredient = ingredients.find((item) => item._id === id)
         if (ingredient?.type === "bun") return false;
         return true
