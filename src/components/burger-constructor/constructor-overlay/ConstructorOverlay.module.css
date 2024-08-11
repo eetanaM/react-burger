@@ -1,0 +1,20 @@
+.burger_constructor_container {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 600px;
+    max-width: 600px;
+    height: calc(100vh - 188px);
+}
+
+.burger_constructor_ingredients_container {
+    display: flex;
+    flex-direction: column;
+}
+
+.order_info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+}

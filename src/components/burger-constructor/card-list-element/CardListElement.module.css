@@ -1,0 +1,10 @@
+.list_element {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.list_element:last-child {
+    margin-bottom: 0;
+}

@@ -1,9 +1,9 @@
-import React from "react";
-import styles from "./IngredientDetails.module.css"
-import { IngredientDetailsProps } from "../../utils/type";
+import { IngredientDetailsState } from "../../utils/type";
 
-export default function IngredientDetails({ currentIngredient }: IngredientDetailsProps) {
-    return (
+import styles from "./IngredientDetails.module.css"
+
+export default function IngredientDetails({ currentIngredient }: IngredientDetailsState) {
+    return (currentIngredient &&
         <div className={`${styles.content_main}`}>
             <img
                 src={currentIngredient.image_large}
