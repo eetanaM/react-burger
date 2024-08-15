@@ -5,23 +5,24 @@ import { useAppDispatch } from "../../hooks/preTypedHooks"
 import ModalOverlay from "../modal-overlay/ModalOverlay"
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 
-import { ModalProps } from "../../utils/type"
-
 import styles from "./Modal.module.css"
+import { useLocation, useNavigate, useParams } from "react-router"
+import IngredientDetails from "../ingredient-details/IngredientDetails"
+import OrderDetails from "../order-details/OrderDetails"
 
 const modalRoot = document.querySelector('#react-modals') as HTMLDivElement
 
-export default function Modal({ header, children }: ModalProps) {
+export default function Modal() {
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+    const location = useLocation()
 
-    const hideModal = useCallback(() => {
-        dispatch({
-            type: 'ingredient-details/hideIngredient'
-        });
-        dispatch({
-            type: "order-details/hideOrder"
-        })
-    }, [dispatch])
+    const modalType = location.state.type
+    const header = modalType === "ingredient" && "Детали заказа"
+
+    const hideModal = () => {
+        navigate(-1);
+    }
 
     useEffect(() => {
         function closeByEscape(e:KeyboardEvent) {
@@ -44,7 +45,8 @@ export default function Modal({ header, children }: ModalProps) {
                             <CloseIcon type="primary"/>
                         </button>
                     </div>
-                    {children}
+                    {modalType === "ingredient" ? <IngredientDetails />
+                    : modalType === "order" ? <OrderDetails /> : null}
                 </div>
             </>
         ),

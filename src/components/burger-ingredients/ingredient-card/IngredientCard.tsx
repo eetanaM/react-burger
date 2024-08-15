@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import React, { useCallback } from "react";
 import { useDrag, DragPreviewImage } from "react-dnd";
 import { useAppDispatch } from "../../../hooks/preTypedHooks";
 
@@ -7,16 +7,19 @@ import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-c
 import { Ingredient, IngredientCardProps } from "../../../utils/type";
 
 import styles from "./IngredientCard.module.css"
+import { useLocation, useNavigate } from "react-router";
 
-export default function IngredientCard({ingredient}: IngredientCardProps) {
-    const dispatch = useAppDispatch()
+function IngredientCard({ingredient}: IngredientCardProps) {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const dispatch = useAppDispatch();
     const [, dragRef, preview] = useDrag({
         type: 'ingredient',
         item: {id: ingredient._id},
         collect: (monitor) => ({
             isDragging: monitor.isDragging()
         })
-    })
+    });
 
     const openModal = useCallback((ingredient: Ingredient) => {
         dispatch({
@@ -24,7 +27,8 @@ export default function IngredientCard({ingredient}: IngredientCardProps) {
             payload: {
                 ...ingredient,
             }
-        })
+        });
+        navigate(`/ingredients/${ingredient._id}`, { state: { backgroundLocation: location, type: "ingredient"}})
     }, [dispatch])
 
     return (
@@ -49,3 +53,5 @@ export default function IngredientCard({ingredient}: IngredientCardProps) {
         </>
     )
 }
+
+export default React.memo(IngredientCard)

@@ -1,5 +1,5 @@
 import AppHeader from '../../components/app-header/AppHeader'
-import style from './ResetPassword.module.css'
+import styles from './ResetPassword.module.css'
 
 export default function ResetPasswordPage() {
     return (

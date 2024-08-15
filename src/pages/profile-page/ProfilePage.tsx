@@ -1,5 +1,5 @@
 import AppHeader from '../../components/app-header/AppHeader'
-import style from './ProfilePage.module.css'
+import styles from './ProfilePage.module.css'
 
 export default function ProfilePage() {
     return (

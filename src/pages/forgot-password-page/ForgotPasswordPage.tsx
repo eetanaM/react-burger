@@ -1,5 +1,5 @@
 import AppHeader from '../../components/app-header/AppHeader'
-import style from './ForgotPasswordPage.module.css'
+import styles from './ForgotPasswordPage.module.css'
 
 export default function ForgotPasswordPage() {
     return (

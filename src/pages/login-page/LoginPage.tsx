@@ -1,5 +1,5 @@
 import AppHeader from '../../components/app-header/AppHeader'
-import style from './LoginPage.module.css'
+import styles from './LoginPage.module.css'
 
 export default function LoginPage() {
     return (

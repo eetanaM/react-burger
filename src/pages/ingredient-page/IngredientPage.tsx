@@ -1,12 +1,25 @@
-import AppHeader from '../../components/app-header/AppHeader'
+import { useParams } from 'react-router'
+import { useAppSelector } from '../../hooks/preTypedHooks'
 
-import style from './IngredientPage.module.css'
+import AppHeader from '../../components/app-header/AppHeader'
+import IngredientDetails from '../../components/ingredient-details/IngredientDetails'
+
+import { getAllIngredients } from '../../services/burger-ingredients/reducer'
 
 export default function IngredientPage() {
+
+    const { id } = useParams<"id">()
+
+    const { ingredients } = useAppSelector(getAllIngredients);
+
+    const currentIngredient = ingredients.find(ingredient => ingredient._id === id);
+
     return (
         <>
             <AppHeader />
-            <h1 className='text text_type_main-large'>Ingredient details would come here!</h1>
+            {currentIngredient &&
+                <IngredientDetails />
+            }
         </>
     )
 }

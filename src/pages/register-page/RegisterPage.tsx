@@ -1,5 +1,5 @@
 import AppHeader from '../../components/app-header/AppHeader'
-import style from './RegisterPage.module.css'
+import styles from './RegisterPage.module.css'
 
 export default function RegisterPage() {
     return (

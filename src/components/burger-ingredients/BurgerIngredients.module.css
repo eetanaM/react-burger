@@ -25,6 +25,11 @@
     flex-flow: column wrap;
 }
 
+.ingredient_card > a {
+    text-decoration: none;
+    color: white
+}
+
 .ingredient_card {
     display: flex;
     flex-flow: row wrap;

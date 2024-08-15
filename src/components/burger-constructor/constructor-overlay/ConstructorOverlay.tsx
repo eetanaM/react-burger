@@ -1,12 +1,11 @@
 import { useAppDispatch, useAppSelector } from '../../../hooks/preTypedHooks';
 import { useMemo, useCallback } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import Modal from '../../modal/Modal'
-import OrderDetails from '../../order-details/OrderDetails'
 
 import { getAllIngredientsToOrder} from "../../../services/burger-constructor/reducer";
-import { loadOrder, getOrder } from '../../../services/order-details/reducer';
+import { loadOrder } from '../../../services/order-details/reducer';
 
 import { ConstructorOverlayProps } from '../../../utils/type'
 
@@ -14,7 +13,8 @@ import styles from './ConstructorOverlay.module.css'
 
 export default function ConstructorOverlay ({children}: ConstructorOverlayProps) {
     const { fillerToOrder, bunsToOrder } = useAppSelector(getAllIngredientsToOrder)
-    const order = useAppSelector(getOrder)
+    const location = useLocation()
+    const navigate = useNavigate()
 
     const dispatch = useAppDispatch();
 
@@ -28,14 +28,18 @@ export default function ConstructorOverlay ({children}: ConstructorOverlayProps)
         if (fillerToOrder.length === 0 && bunsToOrder.length > 0) {
             return [bunsToOrder[0]._id, bunsToOrder[1]._id];
         }
+        if (bunsToOrder.length === 0 && fillerToOrder.length > 0) {
+            return [...fillerToOrder.map(item => item._id)];
+        }
 
         const result = [bunsToOrder[0]._id, ...fillerToOrder.map(item => item._id), bunsToOrder[1]._id];
         return result;
     }, [fillerToOrder, bunsToOrder]);
 
     const getOrderInfo = useCallback(() => {
-        dispatch(loadOrder(ingredientsToOrder))
-    }, [dispatch, ingredientsToOrder]);
+        dispatch(loadOrder(ingredientsToOrder));
+        navigate('/order', { state: { backgroundLocation: location, type: "order" }  });
+    }, [dispatch, ingredientsToOrder, navigate]);
 
     return (
         <section className={`${styles.burger_constructor_container} pt-25 pl-4 ml-10`}>
@@ -59,11 +63,11 @@ export default function ConstructorOverlay ({children}: ConstructorOverlayProps)
                     Оформить заказ
                 </Button>
             </div>
-            {order.number &&
+            {/* {order.number &&
             <Modal>
                 <OrderDetails orderId={order.number}/>
             </Modal>
-            }
+            } */}
         </section>
     )
 }
