@@ -5,14 +5,16 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import { getAllIngredientsToOrder} from "../../../services/burger-constructor/reducer";
-import { loadOrder } from '../../../services/order-details/reducer';
+import { loadOrder } from '../../../services/order-details/action';
 
 import { ConstructorOverlayProps } from '../../../utils/type'
 
 import styles from './ConstructorOverlay.module.css'
+import { getAuthData } from '../../../services/profile/reducer';
 
 export default function ConstructorOverlay ({children}: ConstructorOverlayProps) {
     const { fillerToOrder, bunsToOrder } = useAppSelector(getAllIngredientsToOrder)
+    const { isUserAuthenticated } = useAppSelector(getAuthData)
     const location = useLocation()
     const navigate = useNavigate()
 
@@ -37,8 +39,12 @@ export default function ConstructorOverlay ({children}: ConstructorOverlayProps)
     }, [fillerToOrder, bunsToOrder]);
 
     const getOrderInfo = useCallback(() => {
-        dispatch(loadOrder(ingredientsToOrder));
-        navigate('/order', { state: { backgroundLocation: location, type: "order" }  });
+        if (!isUserAuthenticated) {
+            navigate('/login', {state: { previousLocation: location }});
+        } else {
+            dispatch(loadOrder(ingredientsToOrder));
+            navigate('/order', { state: { backgroundLocation: location, type: "order" } });
+        }
     }, [dispatch, ingredientsToOrder, navigate]);
 
     return (
@@ -63,11 +69,6 @@ export default function ConstructorOverlay ({children}: ConstructorOverlayProps)
                     Оформить заказ
                 </Button>
             </div>
-            {/* {order.number &&
-            <Modal>
-                <OrderDetails orderId={order.number}/>
-            </Modal>
-            } */}
         </section>
     )
 }

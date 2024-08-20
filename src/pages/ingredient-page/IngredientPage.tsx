@@ -16,7 +16,6 @@ export default function IngredientPage() {
 
     return (
         <>
-            <AppHeader />
             {currentIngredient &&
                 <IngredientDetails />
             }

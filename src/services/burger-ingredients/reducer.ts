@@ -1,7 +1,6 @@
-import { createSlice, createAsyncThunk, SerializedError } from '@reduxjs/toolkit'
-import { getIngredients } from './actions'
-import { Ingredient, IngredientsState } from '../../utils/type';
-import { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
+import { loadIngredients } from './actions'
+import { IngredientsState } from '../../utils/type';
 
 const initialState: IngredientsState = {
     ingredients: [],
@@ -9,18 +8,11 @@ const initialState: IngredientsState = {
     error: null
 }
 
-export const loadIngredients = createAsyncThunk(
-    "burger-ingredients/loadIngredients",
-    async () => {
-        return getIngredients()
-    }
-)
-
 export const ingredientsSlice = createSlice({
     name: "burger-ingredients",
     initialState: initialState,
     reducers: {
-        incrementCount: (state, action: PayloadAction<{id: string}, string>) => {
+        incrementCount: (state, action) => {
             if (state.ingredients.length === 0) return;
             const currentIndex = state.ingredients.findIndex(
                 ingredient => ingredient._id === action.payload.id
@@ -32,7 +24,7 @@ export const ingredientsSlice = createSlice({
                 state.ingredients[currentIndex].counter++;
             }
         },
-        decrementCount: (state, action: PayloadAction<{id: string}, string>) => {
+        decrementCount: (state, action) => {
             if (state.ingredients.length === 0) return;
             const currentIndex = state.ingredients.findIndex(
                 ingredient => ingredient._id === action.payload.id
@@ -54,7 +46,7 @@ export const ingredientsSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(loadIngredients.fulfilled, (state, action: PayloadAction<Ingredient[]>) => {
+            .addCase(loadIngredients.fulfilled, (state, action) => {
                 state.ingredients = action.payload;
                 state.ingredients.forEach(ingredient => ingredient.counter = 0);
                 state.loading = false;

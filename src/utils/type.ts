@@ -61,6 +61,26 @@ interface OrderDetailsProps {
     orderId: number,
 }
 
+interface UserDataState {
+    user: {
+        email: string | null,
+        name: string | null,
+    }
+    isUserAuthenticated: boolean,
+    authError: SerializedError | null,
+    loading: boolean
+}
+
+interface Login {
+    email: string;
+    password: string;
+}
+
+interface Register extends Login {
+    userName: string
+}
+
+
 export type {
     Ingredient,
     IngredientsState,
@@ -71,4 +91,7 @@ export type {
     ModalProps,
     ConstructorOverlayProps,
     OrderDetailsProps,
+    UserDataState,
+    Login,
+    Register,
 };

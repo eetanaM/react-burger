@@ -13,15 +13,18 @@ import OrderDetails from "../order-details/OrderDetails"
 const modalRoot = document.querySelector('#react-modals') as HTMLDivElement
 
 export default function Modal() {
-    const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const location = useLocation()
+    const dispatch = useAppDispatch();
 
     const modalType = location.state.type
     const header = modalType === "ingredient" && "Детали заказа"
 
     const hideModal = () => {
         navigate(-1);
+        dispatch({
+            type: 'order-details/hideOrder'
+        })
     }
 
     useEffect(() => {
@@ -32,7 +35,7 @@ export default function Modal() {
         return () => {
             window.removeEventListener('keydown', closeByEscape)
         }
-    }, [dispatch])
+    }, [])
 
     return ReactDOM.createPortal(
         (

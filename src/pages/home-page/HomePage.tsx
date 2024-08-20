@@ -17,7 +17,6 @@ export default function HomePage() {
   if (loading) {
     return (
       <>
-        <AppHeader />
         <h1 className="text text_type_main-large">Загрузка...</h1>
       </>
     )
@@ -26,7 +25,6 @@ export default function HomePage() {
   if (!loading && error) {
     return (
       <>
-        <AppHeader />
         <h1 className="text text_type_main-large">Ошибка загрузки данных</h1>
       </>
     )
@@ -34,7 +32,6 @@ export default function HomePage() {
 
   return (
     <>
-      <AppHeader />
       {ingredients && ingredients.length > 0 ?
         <DndProvider backend={HTML5Backend}>
           <main className={styles.main_container}>

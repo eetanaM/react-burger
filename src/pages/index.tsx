@@ -4,6 +4,7 @@ import RegisterPage from "./register-page/RegisterPage";
 import ForgotPasswordPage from "./forgot-password-page/ForgotPasswordPage";
 import ResetPasswordPage from "./reset-password-page/ResetPasswordPage";
 import ProfilePage from "./profile-page/ProfilePage";
+import OrdersPage from "./orders-page/OrdersPage";
 import IngredientPage from "./ingredient-page/IngredientPage";
 import NotFoundPage from "./not-found-page/NotFoundPage";
 
@@ -15,5 +16,6 @@ export {
     ResetPasswordPage,
     ProfilePage,
     IngredientPage,
-    NotFoundPage
+    NotFoundPage,
+    OrdersPage
 }

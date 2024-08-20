@@ -1,0 +1,34 @@
+.profile_container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-flow: row;
+    align-items: start;
+    justify-content: center;
+    padding-top: 5%;
+}
+
+.menu_bar {
+    width: 320px;
+}
+
+.outlet_container {
+    width: 480px;
+}
+
+.logout_button {
+    padding: 0;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+    height: fit-content;
+    width: fit-content;
+}
+
+.menu_bar > a {
+    text-decoration: none;
+    color: #F2F2F3;
+}

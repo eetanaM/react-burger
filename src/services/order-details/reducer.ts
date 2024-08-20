@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getOrderData } from './action'
-import { createAsyncThunk } from '@reduxjs/toolkit'
+
+import { loadOrder } from './action'
+
 import { OrderDetailsState } from '../../utils/type'
 
 const initialState: OrderDetailsState = {
@@ -11,13 +12,6 @@ const initialState: OrderDetailsState = {
     loading: false,
     error: null,
 }
-
-export const loadOrder = createAsyncThunk(
-        "order-details/loadOrder",
-        async (ingredients: string[]) => {
-            return getOrderData(ingredients)
-        }
-    )
 
 export const orderDetailsSlice = createSlice({
     name: "order-details",
@@ -31,7 +25,7 @@ export const orderDetailsSlice = createSlice({
         }
     },
     selectors: {
-        getOrder: (state) => state.order
+        getOrderInfo: (state) => state
     },
     extraReducers: builder => {
         builder
@@ -52,4 +46,4 @@ export const orderDetailsSlice = createSlice({
         }
 })
 
-export const { getOrder } = orderDetailsSlice.selectors;
+export const { getOrderInfo } = orderDetailsSlice.selectors;

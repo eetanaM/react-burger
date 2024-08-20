@@ -1,16 +1,10 @@
-const REQUEST_URL: string = "https://norma.nomoreparties.space/api/orders"
+import { createAsyncThunk } from "@reduxjs/toolkit"
 
-export const getOrderData = async (ingredientsToOrder: string[]) => {
-    const res = await fetch(REQUEST_URL, {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-        },
-    body: JSON.stringify({ ingredients: ingredientsToOrder })
-    })
-    if (!res.ok) {
-        throw new Error("Order request error occured!")
+import { getOrderData } from "../../utils/api"
+
+export const loadOrder = createAsyncThunk(
+    "order-details/loadOrder",
+    async (ingredients: string[]) => {
+        return getOrderData(ingredients)
     }
-    const order = await res.json();
-    return order
-}
+)

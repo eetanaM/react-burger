@@ -1,11 +1,75 @@
-import AppHeader from '../../components/app-header/AppHeader'
+import { ChangeEvent, useRef, useState } from 'react'
+
+import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Link, useNavigate } from 'react-router-dom'
+
 import styles from './ResetPassword.module.css'
+import NotFoundPage from '../not-found-page/NotFoundPage'
+import { refreshPassword } from '../../utils/api'
 
 export default function ResetPasswordPage() {
-    return (
+    const initialState = {
+        password: '',
+        token: ''
+    }
+    const [formData, setFormData] = useState(initialState)
+    const isResetPasswordPageAvailable = localStorage.getItem('resetPassword')
+    const navigate = useNavigate()
+
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setFormData(prevData => {
+            return {
+                ...prevData,
+                [e.target.name]: e.target.value
+            }
+        })
+    }
+
+    const submitPasswordRefresh = async () => {
+        const result = await refreshPassword(formData.password, formData.token)
+        if (result.success) {
+            localStorage.removeItem('resetPassword')
+            alert('Пароль успешно изменен');
+            navigate('/login')
+        }
+    }
+
+    if (!isResetPasswordPageAvailable) {
+        return <NotFoundPage />
+    } else {
+        return (
         <>
-            <AppHeader />
-            <h1 className='text text_type_main-large'>Need to reset password? You're in the right place!</h1>
+            <div className="sign_in_container">
+                <h2 className="text text_type_main-medium">Восстановление пароля</h2>
+                <PasswordInput
+                    placeholder='Введите новый пароль'
+                    onChange={e => onChange(e)}
+                    value={formData.password}
+                    name={'password'}
+                    extraClass="mb-2 mt-6"
+                />
+                <Input
+                    type={'text'}
+                    placeholder={'Введите код из письма'}
+                    onChange={e => onChange(e)}
+                    value={formData.token}
+                    name={'token'}
+                    extraClass="ml-1 mt-6"
+                    />
+                <Button
+                    htmlType="button"
+                    type="primary"
+                    extraClass='mt-6'
+                    onClick={submitPasswordRefresh}
+                >
+                    Сохранить
+                </Button>
+                <span
+                    className={`${styles.info} text text_type_main-default mt-20`}
+                >
+                    Вспомнили пароль? <Link to="/login"> Войти</Link></span>
+                <span></span>
+            </div>
         </>
-    )
+    )}
 }

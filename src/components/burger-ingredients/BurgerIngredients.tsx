@@ -1,24 +1,17 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useAppSelector } from "../../hooks/preTypedHooks";
-import { useLocation } from "react-router";
 
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from "../modal/Modal";
-import IngredientDetails from "../ingredient-details/IngredientDetails";
 import IngredientCard from "./ingredient-card/IngredientCard";
 
 import { getAllIngredients } from '../../services/burger-ingredients/reducer';
-import { getCurrentIngredient } from '../../services/ingredient-details/reducer';
 
 import styles from "./BurgerIngredients.module.css"
-import { Link } from "react-router-dom";
 
 export default function BurgerIngredients() {
     const [current, setCurrent] = useState('buns')
-    const location = useLocation()
 
     const { ingredients } = useAppSelector(getAllIngredients);
-    const currentIngredient = useAppSelector(getCurrentIngredient);
 
     const tabsRef = useRef<HTMLDivElement>(null);
     const bunsScrollRef = useRef<HTMLHeadingElement>(null);
@@ -122,11 +115,6 @@ export default function BurgerIngredients() {
                     </div>
                 </li>
             </ul>
-            {/* {currentIngredient &&
-                <Modal header="Детали ингредиента">
-                    <IngredientDetails/>
-                </Modal>
-            } */}
         </section>
     )
 }

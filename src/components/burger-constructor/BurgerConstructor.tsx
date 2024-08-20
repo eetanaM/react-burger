@@ -43,7 +43,7 @@ export default function BurgerConstructor() {
             {bunsToOrder.length === 0
             ?
             <div
-                className={`${styles.empty_box_top} ml-8 pl-8`}
+                className={`${styles.empty_box_top} ml-8`}
                 style={bunCanDrop ? {border: "solid 1px green"} : {}}
                 ref={topBunDropRef}
             >
@@ -85,7 +85,7 @@ export default function BurgerConstructor() {
             }
             {bunsToOrder.length === 0
             ? <div
-                className={`${styles.empty_box_bottom} ml-8 pl-8`}
+                className={`${styles.empty_box_bottom} ml-8`}
                 style={bunCanDrop ? {border: "solid 1px green"} : {}}
                 ref={bottomBunDropRef}
             >
