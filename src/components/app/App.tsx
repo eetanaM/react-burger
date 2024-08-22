@@ -13,6 +13,7 @@ import { loadIngredients } from '../../services/burger-ingredients/actions';
 import { getUser } from '../../services/profile/actions';
 
 import ProfilePageLayout from '../profile-page-layout/ProfilePageLayout';
+import Preloader from '../preloader/Preloader';
 
 export default function App() {
   const dispatch = useAppDispatch();
@@ -32,11 +33,8 @@ return (
           <Route path='login' element={<OnlyUnAuth element={<LoginPage />} />} />
           <Route path='register' element={<OnlyUnAuth element={<RegisterPage />} />} />
           <Route path='forgot-password' element={<OnlyUnAuth element={<ForgotPasswordPage />} />} />
-          <Route path='reset-password' element={<OnlyUnAuth element={<ResetPasswordPage />} />} />
-          <Route
-            path='profile'
-            element={<OnlyAuth onlyUnAuth={false} element={<ProfilePageLayout />} />}
-          >
+          <Route path='reset-password' element={<ResetPasswordPage />} />
+          <Route path='profile' element={<OnlyAuth element={<ProfilePageLayout />} />} >
             <Route index={true} element={<ProfilePage />} />
             <Route path='orders' element={<OrdersPage />} />
             <Route path='orders/:id' element={<NotFoundPage />} />

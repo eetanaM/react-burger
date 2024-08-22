@@ -3,7 +3,7 @@
   box-sizing: border-box;
 }
 .lds_hourglass {
-  display: inline-block;
+  align-self: center;
   position: relative;
   top: 50px;
   width: 80px;

@@ -1,8 +1,8 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { useAppDispatch } from '../../hooks/preTypedHooks'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import { loginUser } from '../../services/profile/actions'
 
@@ -16,7 +16,8 @@ export default function LoginPage() {
     const location = useLocation();
     const navigate = useNavigate()
 
-    const handleSubmitForm = () => {
+    const handleSubmitForm = (e: FormEvent) => {
+        e.preventDefault();
         dispatch(loginUser(formData))
         if(location.state?.previousLocation) {
             navigate(location.state.previousLocation)
@@ -33,28 +34,28 @@ export default function LoginPage() {
         <>
             <div className="sign_in_container">
                 <h2 className="text text_type_main-medium">Вход</h2>
-                <Input
-                    type={'email'}
-                    placeholder={'E-mail'}
-                    onChange={e => onChange(e)}
-                    name='email'
-                    value={formData.email}
-                    extraClass="ml-1 mt-6"
-                />
-                <PasswordInput
-                    onChange={e => onChange(e)}
-                    name='password'
-                    value={formData.password}
-                    extraClass="mb-2 mt-6"
-                />
-                <Button
-                    htmlType="button"
-                    type="primary"
-                    extraClass='mt-6'
-                    onClick={handleSubmitForm}
-                >
-                    Войти
-                </Button>
+                <form onSubmit={e => handleSubmitForm(e)}>
+                    <EmailInput
+                        placeholder={'E-mail'}
+                        onChange={e => onChange(e)}
+                        name='email'
+                        value={formData.email}
+                        extraClass="ml-1 mt-6"
+                    />
+                    <PasswordInput
+                        onChange={e => onChange(e)}
+                        name='password'
+                        value={formData.password}
+                        extraClass="mb-2 mt-6"
+                    />
+                    <Button
+                        htmlType="submit"
+                        type="primary"
+                        extraClass='mt-6'
+                    >
+                        Войти
+                    </Button>
+                </form>
                 <span
                     className='info text text_type_main-default mt-20'
                 >

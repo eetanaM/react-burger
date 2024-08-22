@@ -4,7 +4,7 @@ import { useAppSelector } from "../../hooks/preTypedHooks";
 import { getIsAuthChecked, getUserInfo } from "../../services/profile/reducer";
 import Preloader from "../preloader/Preloader";
 
-export default function ProtectedRouteElement({ onlyUnAuth = false, element }: { onlyUnAuth: boolean, element: ReactElement}) {
+export default function ProtectedRouteElement({ onlyUnAuth = false, element }: { onlyUnAuth?: boolean, element: ReactElement}) {
     const user = useAppSelector(getUserInfo);
     const isAuthChecked = useAppSelector(getIsAuthChecked);
     const location = useLocation();

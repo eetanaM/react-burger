@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useState } from 'react'
+import { ChangeEvent, FormEvent, useRef, useState } from 'react'
 
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, useNavigate } from 'react-router-dom'
@@ -25,7 +25,8 @@ export default function ResetPasswordPage() {
         })
     }
 
-    const submitPasswordRefresh = async () => {
+    const submitPasswordRefresh = async (e: FormEvent) => {
+        e.preventDefault();
         const result = await refreshPassword(formData.password, formData.token)
         if (result.success) {
             localStorage.removeItem('resetPassword')
@@ -41,29 +42,30 @@ export default function ResetPasswordPage() {
         <>
             <div className="sign_in_container">
                 <h2 className="text text_type_main-medium">Восстановление пароля</h2>
-                <PasswordInput
-                    placeholder='Введите новый пароль'
-                    onChange={e => onChange(e)}
-                    value={formData.password}
-                    name={'password'}
-                    extraClass="mb-2 mt-6"
-                />
-                <Input
-                    type={'text'}
-                    placeholder={'Введите код из письма'}
-                    onChange={e => onChange(e)}
-                    value={formData.token}
-                    name={'token'}
-                    extraClass="ml-1 mt-6"
+                <form onSubmit={e => submitPasswordRefresh(e)}>
+                    <PasswordInput
+                        placeholder='Введите новый пароль'
+                        onChange={e => onChange(e)}
+                        value={formData.password}
+                        name={'password'}
+                        extraClass="mb-2 mt-6"
                     />
-                <Button
-                    htmlType="button"
-                    type="primary"
-                    extraClass='mt-6'
-                    onClick={submitPasswordRefresh}
-                >
-                    Сохранить
-                </Button>
+                    <Input
+                        type={'text'}
+                        placeholder={'Введите код из письма'}
+                        onChange={e => onChange(e)}
+                        value={formData.token}
+                        name={'token'}
+                        extraClass="ml-1 mt-6"
+                        />
+                    <Button
+                        htmlType="submit"
+                        type="primary"
+                        extraClass='mt-6'
+                    >
+                        Сохранить
+                    </Button>
+                    </form>
                 <span
                     className={`${styles.info} text text_type_main-default mt-20`}
                 >

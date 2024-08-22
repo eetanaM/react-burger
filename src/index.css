@@ -11,6 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+#root {
+  display: flex;
+  flex-direction: column;
+}
 
 #react-modals {
   width: 100%;
@@ -18,7 +22,6 @@ code {
 }
 
 .sign_in_container {
-  position: absolute;
   width: 100%;
   height: max-content;
 
