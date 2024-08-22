@@ -30,7 +30,7 @@ export const getIngredients = async () => {
     .then((ingredients) => ingredients.data);
 };
 
-export const getOrderData = async (ingredientsToOrder: string[]) => {
+export const getOrderData = async (ingredientsToOrder: string[], signal: AbortSignal) => {
   const accessToken = getStoredToken('accessToken');
   if (!accessToken) {
     throw new Error('Access token not available');
@@ -42,6 +42,7 @@ export const getOrderData = async (ingredientsToOrder: string[]) => {
       Authorization: accessToken,
     },
     body: JSON.stringify({ ingredients: ingredientsToOrder }),
+    signal: signal
   }).then(getResponse);
 };
 

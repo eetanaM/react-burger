@@ -6,11 +6,11 @@ import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-co
 
 import { getAllIngredientsToOrder} from "../../../services/burger-constructor/reducer";
 import { loadOrder } from '../../../services/order-details/action';
+import { getUserInfo } from '../../../services/profile/reducer';
 
 import { ConstructorOverlayProps } from '../../../utils/type'
 
 import styles from './ConstructorOverlay.module.css'
-import { getUserInfo } from '../../../services/profile/reducer';
 
 export default function ConstructorOverlay ({children}: ConstructorOverlayProps) {
     const { fillerToOrder, bunsToOrder } = useAppSelector(getAllIngredientsToOrder);
@@ -18,33 +18,17 @@ export default function ConstructorOverlay ({children}: ConstructorOverlayProps)
     const location = useLocation();
     const navigate = useNavigate();
 
-    const dispatch = useAppDispatch();
-
     const totalPrice = useMemo(() => {
         const result = fillerToOrder.reduce((acc, current) => acc + current.price, 0) + bunsToOrder.reduce((acc, current) => acc + current.price, 0)
         return result;
     }, [fillerToOrder, bunsToOrder])
-
-    const ingredientsToOrder = useMemo(() => {
-        if (fillerToOrder.length === 0 && bunsToOrder.length === 0) return [];
-        if (fillerToOrder.length === 0 && bunsToOrder.length > 0) {
-            return [bunsToOrder[0]._id, bunsToOrder[1]._id];
-        }
-        if (bunsToOrder.length === 0 && fillerToOrder.length > 0) {
-            return [...fillerToOrder.map(item => item._id)];
-        }
-
-        const result = [bunsToOrder[0]._id, ...fillerToOrder.map(item => item._id), bunsToOrder[1]._id];
-        return result;
-    }, [fillerToOrder, bunsToOrder]);
 
     const getOrderInfo = () => {
         if (!user) {
             navigate('/login', { state: { previousLocation: location } })
             return
         }
-        dispatch(loadOrder(ingredientsToOrder));
-        navigate('/order', { state: { backgroundLocation: location, type: "order" } });
+        navigate('/order', { state: { backgroundLocation: location, type: "order" }});
     };
 
     return (

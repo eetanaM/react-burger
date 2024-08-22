@@ -34,11 +34,9 @@ interface IngredientDetailsState {
 
 interface OrderDetailsState {
     order: {
-        number: number | null,
-    },
-    success: boolean,
-    loading: boolean,
-    error: SerializedError | null,
+        number: number,
+    } | null,
+    success: boolean
 }
 
 interface IngredientCardProps {
