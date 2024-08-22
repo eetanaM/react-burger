@@ -9,6 +9,7 @@ import BurgerConstructor from '../../components/burger-constructor/BurgerConstru
 import { getAllIngredients } from '../../services/burger-ingredients/reducer';
 
 import styles from './HomePage.module.css'
+import Preloader from '../../components/preloader/Preloader';
 
 
 export default function HomePage() {
@@ -17,7 +18,10 @@ export default function HomePage() {
   if (loading) {
     return (
       <>
-        <h1 className="text text_type_main-large">Загрузка...</h1>
+        <div className={styles.loading_container}>
+          <h1 className="text text_type_main-large"> Загрузка... </h1>
+          <Preloader />
+        </div>
       </>
     )
   }

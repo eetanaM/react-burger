@@ -4,12 +4,12 @@ import { NavLink } from "react-router-dom";
 
 import { Logo, BurgerIcon, ListIcon, ProfileIcon  } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { getAuthData } from "../../services/profile/reducer";
+import { getUserInfo } from "../../services/profile/reducer";
 
 import styles from "./AppHeader.module.css"
 
 function AppHeader(){
-    const { user, isUserAuthenticated } = useAppSelector(getAuthData)
+    const user = useAppSelector(getUserInfo)
     const chooseTextStyle = (isActive: boolean) => {
         return `text text_type_main-small ${isActive ? '' : 'text_color_inactive'}`
     }
@@ -60,7 +60,7 @@ function AppHeader(){
                         <span
                             className={chooseTextStyle(isActive)}
                         >
-                            {isUserAuthenticated ? user.name :"Личный кабинет"}
+                            {user ? user.name :"Личный кабинет"}
                         </span>
                     </>
                     )}

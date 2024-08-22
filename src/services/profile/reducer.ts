@@ -2,16 +2,11 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import { UserDataState } from '../../utils/type'
 import { configureUser, getUser, loginUser, logoutUser, registerUser } from './actions'
-import { configure } from '@testing-library/react'
 
 const initialState: UserDataState = {
-    user: {
-        email: null,
-        name: null,
-    },
-    isUserAuthenticated: false,
+    user: null,
+    isAuthChecked: false,
     authError: null,
-    loading: false
 }
 
 export const profileSlice = createSlice({
@@ -24,77 +19,49 @@ export const profileSlice = createSlice({
     },
     extraReducers: builder => {
         builder
-            .addCase(registerUser.pending, (state) => {
-                state.authError = null;
-                state.loading = true;
-            })
             .addCase(registerUser.fulfilled, (state, action) => {
                 state.user = action.payload.user;
-                state.isUserAuthenticated = true;
-                state.loading = false;
+                state.isAuthChecked = true;
             })
             .addCase(registerUser.rejected, (state, action) => {
-                state.user = { email: null, name: null };
-                state.isUserAuthenticated = false;
+                state.user = null
+                state.isAuthChecked = true;
                 state.authError = action.error;
-                state.loading = false;
-            })
-            .addCase(loginUser.pending, (state) => {
-                state.authError = null;
-                state.loading = true;
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.user = action.payload.user;
-                state.isUserAuthenticated = true;
-                state.loading = false;
+                state.isAuthChecked = true;
             })
             .addCase(loginUser.rejected, (state, action) => {
-                state.user = { email: null, name: null };
-                state.isUserAuthenticated = false;
+                state.user = null
+                state.isAuthChecked = true;
                 state.authError = action.error;
-                state.loading = false;
-            })
-            .addCase(getUser.pending, (state) => {
-                state.authError = null;
-                state.loading = true;
             })
             .addCase(getUser.fulfilled, (state, action) => {
                 state.user = action.payload.user;
-                state.isUserAuthenticated = true;
-                state.loading = false;
+                state.isAuthChecked = true;
             })
             .addCase(getUser.rejected, (state, action) => {
-                state.user = { email: null, name: null };
-                state.isUserAuthenticated = false;
+                state.user = null
+                state.isAuthChecked = true;
                 state.authError = action.error;
-                state.loading = false;
-            })
-            .addCase(logoutUser.pending, (state) => {
-                state.authError = null;
-                state.loading = true;
             })
             .addCase(logoutUser.fulfilled, (state) => {
                 state.user = initialState.user;
-                state.isUserAuthenticated = false;
-                state.loading = false;
-            })
-            .addCase(configureUser.pending, (state) => {
-                state.authError = null;
-                state.loading = true;
+                state.isAuthChecked = true;
             })
             .addCase(configureUser.fulfilled, (state, action) => {
                 state.user = action.payload.user;
-                state.loading = false;
             })
             .addCase(configureUser.rejected, (state, action) => {
                 state.authError = action.error;
-                state.loading = false;
             })
 
     },
     selectors: {
-        getAuthData: state => state,
+        getUserInfo: state => state.user,
+        getIsAuthChecked: state => state.isAuthChecked
     }
 })
 
-export const { getAuthData } = profileSlice.selectors
+export const { getUserInfo, getIsAuthChecked } = profileSlice.selectors

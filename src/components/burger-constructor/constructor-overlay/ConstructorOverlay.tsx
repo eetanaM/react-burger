@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../../hooks/preTypedHooks';
-import { useMemo, useCallback } from 'react';
+import { useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -10,13 +10,13 @@ import { loadOrder } from '../../../services/order-details/action';
 import { ConstructorOverlayProps } from '../../../utils/type'
 
 import styles from './ConstructorOverlay.module.css'
-import { getAuthData } from '../../../services/profile/reducer';
+import { getUserInfo } from '../../../services/profile/reducer';
 
 export default function ConstructorOverlay ({children}: ConstructorOverlayProps) {
-    const { fillerToOrder, bunsToOrder } = useAppSelector(getAllIngredientsToOrder)
-    const { isUserAuthenticated } = useAppSelector(getAuthData)
-    const location = useLocation()
-    const navigate = useNavigate()
+    const { fillerToOrder, bunsToOrder } = useAppSelector(getAllIngredientsToOrder);
+    const user = useAppSelector(getUserInfo)
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const dispatch = useAppDispatch();
 
@@ -38,14 +38,14 @@ export default function ConstructorOverlay ({children}: ConstructorOverlayProps)
         return result;
     }, [fillerToOrder, bunsToOrder]);
 
-    const getOrderInfo = useCallback(() => {
-        if (!isUserAuthenticated) {
-            navigate('/login', {state: { previousLocation: location }});
-        } else {
-            dispatch(loadOrder(ingredientsToOrder));
-            navigate('/order', { state: { backgroundLocation: location, type: "order" } });
+    const getOrderInfo = () => {
+        if (!user) {
+            navigate('/login', { state: { previousLocation: location } })
+            return
         }
-    }, [dispatch, ingredientsToOrder, navigate]);
+        dispatch(loadOrder(ingredientsToOrder));
+        navigate('/order', { state: { backgroundLocation: location, type: "order" } });
+    };
 
     return (
         <section className={`${styles.burger_constructor_container} pt-25 pl-4 ml-10`}>

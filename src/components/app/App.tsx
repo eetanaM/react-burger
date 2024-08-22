@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes, useLocation } from 'react-router';
 import { useAppDispatch } from '../../hooks/preTypedHooks';
 
-import ProtectedRouteElement from '../protected-route-element/ProtectedRouteElement';
+import { OnlyAuth, OnlyUnAuth } from '../protected-route-element/ProtectedRouteElement';
 
 import { ForgotPasswordPage, HomePage, IngredientPage, LoginPage, NotFoundPage, OrdersPage, ProfilePage, RegisterPage, ResetPasswordPage } from '../../pages';
 
@@ -26,33 +26,33 @@ export default function App() {
 
 return (
     <>
-    <Routes location={state?.backgroundLocation || location}>
-      <Route path='/' element={<Layout />} >
-        <Route index={true} element={<HomePage />} />
-        <Route path='login' element={<LoginPage />} />
-        <Route path='register' element={<RegisterPage />} />
-        <Route path='forgot-password' element={<ForgotPasswordPage />} />
-        <Route path='reset-password' element={<ResetPasswordPage />} />
-        <Route
-          path='profile'
-          element={<ProtectedRouteElement element={<ProfilePageLayout />} />}
-        >
-          <Route index={true} element={<ProfilePage />} />
-          <Route path='orders' element={<OrdersPage />} />
-          <Route path='orders/:id' element={<NotFoundPage />} />
+      <Routes location={state?.backgroundLocation || location}>
+        <Route path='/' element={<Layout />} >
+          <Route index={true} element={<HomePage />} />
+          <Route path='login' element={<OnlyUnAuth element={<LoginPage />} />} />
+          <Route path='register' element={<OnlyUnAuth element={<RegisterPage />} />} />
+          <Route path='forgot-password' element={<OnlyUnAuth element={<ForgotPasswordPage />} />} />
+          <Route path='reset-password' element={<OnlyUnAuth element={<ResetPasswordPage />} />} />
+          <Route
+            path='profile'
+            element={<OnlyAuth onlyUnAuth={false} element={<ProfilePageLayout />} />}
+          >
+            <Route index={true} element={<ProfilePage />} />
+            <Route path='orders' element={<OrdersPage />} />
+            <Route path='orders/:id' element={<NotFoundPage />} />
+          </Route>
+          <Route />
+          <Route path='ingredients/:id' element={<IngredientPage />} />
+          <Route path='*' element={<NotFoundPage />} />
         </Route>
-        <Route />
-        <Route path='ingredients/:id' element={<IngredientPage />} />
-        <Route path='*' element={<NotFoundPage />} />
-      </Route>
-    </Routes>
-
-    {state?.backgroundLocation && (
-      <Routes>
-        <Route path='/ingredients/:id' element={<Modal />} />
-        <Route path='/order' element={<Modal />} />
       </Routes>
-    )}
-    </>
+
+      {state?.backgroundLocation && (
+        <Routes>
+          <Route path='/ingredients/:id' element={<Modal />} />
+          <Route path='/order' element={<Modal />} />
+        </Routes>
+      )}
+      </>
   );
 }

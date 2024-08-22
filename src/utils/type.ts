@@ -65,10 +65,9 @@ interface UserDataState {
     user: {
         email: string | null,
         name: string | null,
-    }
-    isUserAuthenticated: boolean,
+    } | null
+    isAuthChecked: boolean,
     authError: SerializedError | null,
-    loading: boolean
 }
 
 interface Login {
