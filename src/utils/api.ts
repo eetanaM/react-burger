@@ -52,7 +52,11 @@ export const resetPassword = async (email: string) => {
     headers: signInApiConfig.headers,
     body: JSON.stringify({ email: email }),
   }).then(getResponse)
-    .then(data => data);
+    .then(data => data)
+    .catch(error => {
+      alert("Что-то пошло не так... Попробуйте снова")
+      console.log("Reset password request failed with error message: " + error.message)
+    })
 };
 
 export const refreshPassword = async (password: string, token: string) => {
@@ -61,7 +65,11 @@ export const refreshPassword = async (password: string, token: string) => {
     headers: signInApiConfig.headers,
     body: JSON.stringify({ password: password, token: token }),
   }).then(getResponse)
-    .then(data => data);
+    .then(data => data)
+    .catch(error => {
+      alert("Что-то пошло не так... Попробуйте снова")
+      console.log("Refresh password request failed with error message: " + error.message)
+    })
 };
 
 export const registerUser = async (email: string, password: string, userName: string) => {

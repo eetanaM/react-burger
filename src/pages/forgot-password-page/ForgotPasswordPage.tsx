@@ -12,7 +12,7 @@ export default function ForgotPasswordPage() {
     const resetPasswordHandler = async (e: FormEvent) => {
         e.preventDefault();
         const result = await resetPassword(emailValue)
-        if (result.success) {
+        if (result?.success) {
             localStorage.setItem('resetPassword', "true")
             navigate('/reset-password')
         }
