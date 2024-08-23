@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useAppDispatch } from '../../hooks/preTypedHooks'
+import { useForm } from '../../hooks/useForm'
 
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 
@@ -7,36 +8,31 @@ import { configureUser } from '../../services/profile/actions'
 
 import styles from './ProfilePage.module.css'
 
+import { Register } from '../../utils/type'
+
 export default function ProfilePage() {
     const dispatch = useAppDispatch()
-    const initialState = {
-        userName: '',
-        email: '',
-        password: ''
-    }
-    const [formData, setFormData] = useState(initialState)
+    const initialState = { userName: '', email: '', password: '' }
+    const { values, handleChange, setValues} = useForm<Register>(initialState)
     const [isChanged, setIsChanged] = useState(false)
 
-
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setFormData(prevData => {
-            return {...prevData, [e.target.name]: e.target.value}
-        })
+        handleChange(e);
         setIsChanged(true)
     }
 
     const submitChanges = (e: FormEvent) => {
         e.preventDefault();
-        dispatch(configureUser(formData))
+        dispatch(configureUser(values))
     }
 
     const resetChanges = (e: FormEvent) => {
         e.preventDefault();
-        setFormData(initialState)
+        setValues(initialState)
         setIsChanged(false)
     }
 
-    if (isChanged && formData.email === '' && formData.password === '' && formData.userName === '') {
+    if (isChanged && values.email === '' && values.password === '' && values.userName === '') {
         setIsChanged(false)
     }
 
@@ -48,7 +44,7 @@ export default function ProfilePage() {
                     placeholder={'Имя'}
                     onChange={e => onChange(e)}
                     name='userName'
-                    value={formData.userName}
+                    value={values.userName}
                     extraClass="ml-1 mt-6"
                 />
                 <Input
@@ -56,13 +52,13 @@ export default function ProfilePage() {
                     placeholder={'Логин (email)'}
                     onChange={e => onChange(e)}
                     name='email'
-                    value={formData.email}
+                    value={values.email}
                     extraClass="ml-1 mt-6"
                 />
                 <PasswordInput
                     onChange={e => onChange(e)}
                     name='password'
-                    value={formData.password}
+                    value={values.password}
                     extraClass="ml-1 mb-2 mt-6"
                 />
                 {isChanged &&

@@ -5,29 +5,22 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import { loginUser } from '../../services/profile/actions'
+import { useForm } from '../../hooks/useForm'
+import { Login } from '../../utils/type'
 
 export default function LoginPage() {
-    const initialState = {
-        email: '',
-        password: ''
-    }
-    const [formData, setFormData] = useState(initialState)
+    const initialState = { email: '', password: '' }
+    const { values, handleChange } = useForm<Login>(initialState)
     const dispatch = useAppDispatch();
     const location = useLocation();
     const navigate = useNavigate()
 
     const handleSubmitForm = (e: FormEvent) => {
         e.preventDefault();
-        dispatch(loginUser(formData))
+        dispatch(loginUser(values))
         if(location.state?.previousLocation) {
             navigate(location.state.previousLocation)
         } else navigate('/')
-    }
-
-    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setFormData(prevData => {
-            return {...prevData, [e.target.name]: e.target.value}
-        })
     }
 
     return (
@@ -37,15 +30,15 @@ export default function LoginPage() {
                 <form onSubmit={e => handleSubmitForm(e)}>
                     <EmailInput
                         placeholder={'E-mail'}
-                        onChange={e => onChange(e)}
+                        onChange={e => handleChange(e)}
                         name='email'
-                        value={formData.email}
+                        value={values.email ?? ""}
                         extraClass="ml-1 mt-6"
                     />
                     <PasswordInput
-                        onChange={e => onChange(e)}
+                        onChange={e => handleChange(e)}
                         name='password'
-                        value={formData.password}
+                        value={values.password ?? ""}
                         extraClass="mb-2 mt-6"
                     />
                     <Button

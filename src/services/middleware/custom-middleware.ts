@@ -5,8 +5,7 @@ import { getUser, configureUser } from "../profile/actions";
 import { loadOrder } from "../order-details/action";
 
 const customMiddleware: Middleware<{}, RootState> = store => next => (action: any) => {
-    // Перехватываются экшены, добавляющие булки в конструктор, и удаляются добавленные
-    // ранее булки
+    // Перехватываются экшены, добавляющие булки в конструктор, и удаляются добавленные ранее булки
     if (action.type === "burger-constructor/addIngredientToOrder" &&
     action.payload.type === "bun") {
         if(store.getState()["burger-constructor"].bunsToOrder.length > 0) {
@@ -17,6 +16,14 @@ const customMiddleware: Middleware<{}, RootState> = store => next => (action: an
             })
         }
     }
+
+    // Перехватывается экшен при успешном заказе и очищаются добавленные в конструктор ингредиенты
+    if (action.type === loadOrder.fulfilled.type) {
+        store.dispatch({
+            type: "burger-constructor/clearIngredients"
+        })
+    }
+
     // Перехватываются отклоненные запросы с истёкшим временем жизни токена доступа для обновления токена и повторного запроса при наличии рефреш токена
     if ((action.type === getUser.rejected.type
         || action.type === configureUser.rejected.type

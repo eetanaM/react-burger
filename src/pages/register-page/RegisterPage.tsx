@@ -1,4 +1,5 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { FormEvent } from 'react'
+import { useForm } from '../../hooks/useForm'
 import { useAppDispatch } from '../../hooks/preTypedHooks'
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -7,27 +8,18 @@ import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-de
 import { registerUser } from '../../services/profile/actions'
 
 import styles from './RegisterPage.module.css'
-export default function RegisterPage() {
-    const initialState = {
-        userName: '',
-        email: '',
-        password: '',
 
-    }
-    const [formData, setFormData] = useState(initialState)
+import { Register } from '../../utils/type'
+export default function RegisterPage() {
+    const initialState = { userName: '', email: '', password: '' }
+    const { values, handleChange } = useForm<Register>(initialState)
     const dispatch = useAppDispatch();
     const navigate = useNavigate()
 
     const handleSubmitForm = (e: FormEvent) => {
         e.preventDefault();
-        dispatch(registerUser(formData));
+        dispatch(registerUser(values));
         navigate('/', { replace: true});
-    }
-
-    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setFormData(prevData => {
-            return {...prevData, [e.target.name]: e.target.value}
-        })
     }
 
     return (
@@ -38,21 +30,21 @@ export default function RegisterPage() {
                     <Input
                         type='text'
                         placeholder='Имя'
-                        onChange={onChange}
-                        value={formData.userName}
+                        onChange={e => handleChange(e)}
+                        value={values.userName}
                         name='userName'
                         extraClass="ml-1 mt-6"
                         />
                     <EmailInput
                         placeholder='E-mail'
-                        onChange={onChange}
-                        value={formData.email}
+                        onChange={e => handleChange(e)}
+                        value={values.email}
                         name='email'
                         extraClass="ml-1 mt-6"
                         />
                     <PasswordInput
-                        onChange={onChange}
-                        value={formData.password}
+                        onChange={e => handleChange(e)}
+                        value={values.password}
                         name='password'
                         extraClass="mb-2 mt-6"
                     />

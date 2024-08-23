@@ -1,18 +1,24 @@
-const signInApiConfig = {
-  baseUrl: "https://norma.nomoreparties.space/api",
-  headers: {
-    "Content-Type": "application/json",
-  },
-};
+const BASE_URL = "https://norma.nomoreparties.space/api/"
 
-const getResponse = (res:any) => {
+const checkResponse = (res:any) => {
   if (res.ok) {
     return res.json();
-  } else {
-    return res.json()
-      .then((error: Error) => Promise.reject(error))
   }
-};
+  return Promise.reject(`Ошибка ${res.status}`)
+}
+
+const checkSuccess = (res: any) => {
+  if (res && res.success) {
+    return res
+ }
+ return Promise.reject(`Не получен успешный ответ: ${res}`)
+}
+
+const request = async (endpoint: string, options: RequestInit) => {
+  return fetch(`${BASE_URL}${endpoint}`, options)
+    .then(checkResponse)
+    .then(checkSuccess)
+}
 
 const saveTokens = (accessToken: string, refreshToken: string) => {
   localStorage.setItem('accessToken', accessToken);
@@ -25,9 +31,7 @@ export const getStoredToken = (tokenName: string) => {
 
 
 export const getIngredients = async () => {
-  return fetch(`${signInApiConfig.baseUrl}/ingredients`)
-    .then(getResponse)
-    .then((ingredients) => ingredients.data);
+  return request('ingredients', {}).then(ingredients => ingredients.data)
 };
 
 export const getOrderData = async (ingredientsToOrder: string[], signal: AbortSignal) => {
@@ -35,24 +39,25 @@ export const getOrderData = async (ingredientsToOrder: string[], signal: AbortSi
   if (!accessToken) {
     throw new Error('Access token not available');
   }
-  return fetch(`${signInApiConfig.baseUrl}/orders`, {
+  return request('orders', {
     method: "POST",
     headers: {
-      ...signInApiConfig.headers,
+      "Content-Type": "application/json",
       Authorization: accessToken,
     },
     body: JSON.stringify({ ingredients: ingredientsToOrder }),
     signal: signal
-  }).then(getResponse);
+  })
 };
 
 export const resetPassword = async (email: string) => {
-  return fetch(`${signInApiConfig.baseUrl}/password-reset`, {
+  return request('password-reset', {
     method: "POST",
-    headers: signInApiConfig.headers,
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ email: email }),
-  }).then(getResponse)
-    .then(data => data)
+  }).then(data => data)
     .catch(error => {
       alert("Что-то пошло не так... Попробуйте снова")
       console.log("Reset password request failed with error message: " + error.message)
@@ -60,59 +65,58 @@ export const resetPassword = async (email: string) => {
 };
 
 export const refreshPassword = async (password: string, token: string) => {
-  return fetch(`${signInApiConfig.baseUrl}/password-reset/reset`, {
+  return request('password/reset-password', {
     method: "POST",
-    headers: signInApiConfig.headers,
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({ password: password, token: token }),
-  }).then(getResponse)
-    .then(data => data)
+  }).then(data => data)
     .catch(error => {
-      alert("Что-то пошло не так... Попробуйте снова")
-      console.log("Refresh password request failed with error message: " + error.message)
-    })
+    alert("Что-то пошло не так... Попробуйте снова")
+    console.log("Refresh password request failed with error message: " + error.message)
+  })
 };
 
 export const registerUser = async (email: string, password: string, userName: string) => {
-  return fetch(`${signInApiConfig.baseUrl}/auth/register`, {
+  return request('auth/register', {
     method: "POST",
-    headers: signInApiConfig.headers,
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({ email: email, password: password, name: userName }),
-  }).then(getResponse)
-    .then((data) => {
+  }).then((data) => {
       if (data.accessToken && data.refreshToken) {
         saveTokens(data.accessToken, data.refreshToken);
       }
-      return data
-    }
-  )
+    return data
+  })
 };
 
 export const loginUser = async (email: string, password: string) => {
-  return fetch(`${signInApiConfig.baseUrl}/auth/login`, {
+  return request('auth/login', {
     method: "POST",
-    headers: signInApiConfig.headers,
-    body: JSON.stringify({ email: email, password: password }),
-  }).then(getResponse)
-    .then((data) => {
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ email: email, password: password })
+  }).then((data) => {
       if (data.accessToken && data.refreshToken) {
         saveTokens(data.accessToken, data.refreshToken);
       }
       return data
-    }
-  )
+    })
 };
 
 export const refreshToken = async () => {
   const refreshToken = getStoredToken('refreshToken');
-  return fetch(`${signInApiConfig.baseUrl}/auth/token`, {
+  return request('auth/token', {
     method: "POST",
-    headers: signInApiConfig.headers,
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({ token: refreshToken }),
-  }).then(getResponse)
-    .then(data => {
-      if (!data.success) {
-        return Promise.reject(data);
-      }
+  }).then(data => {
       saveTokens(data.accessToken, data.refreshToken);
       return {
         accessToken: data.accessToken,
@@ -123,12 +127,13 @@ export const refreshToken = async () => {
 
 export const logoutUser = async () => {
   const refreshToken = getStoredToken('refreshToken');
-  return fetch(`${signInApiConfig.baseUrl}/auth/logout`, {
+  return request('auth/logout', {
     method: "POST",
-    headers: signInApiConfig.headers,
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({ token: refreshToken }),
-  }).then(getResponse)
-    .then(data => {
+  }).then(data => {
       localStorage.removeItem('accessToken')
       localStorage.removeItem('refreshToken')
       return data
@@ -140,14 +145,13 @@ export const getUserData = async () => {
   if (!accessToken) {
     throw new Error('Access token not available')
   }
-  return fetch(`${signInApiConfig.baseUrl}/auth/user`, {
+  return request('auth/user', {
     method: "GET",
     headers: {
-      ...signInApiConfig.headers,
+      "Content-Type": "application/json",
       Authorization: accessToken,
     },
-  }).then(getResponse)
-    .then(data => data)
+  }).then(data => data)
 };
 
 export const configureUserData = async (email: string, password: string, userName: string) => {
@@ -155,12 +159,12 @@ export const configureUserData = async (email: string, password: string, userNam
   if (!accessToken) {
     throw new Error('Access token not available');
   }
-  return fetch(`${signInApiConfig.baseUrl}/auth/user`, {
+  return request('auth/user', {
     method: "PATCH",
     headers: {
-      ...signInApiConfig.headers,
+      "Content-Type": "application/json",
       Authorization: accessToken,
     },
     body: JSON.stringify({ name: userName, email: email, password: password }),
-  }).then(getResponse);
+  })
 };

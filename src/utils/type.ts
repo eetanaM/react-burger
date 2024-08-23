@@ -48,7 +48,7 @@ interface IngredientCardProps {
 interface ModalProps {
     children?: React.ReactNode,
     header?: string,
-    hideModal?: () => void,
+    onClose: () => void,
 }
 
 interface ConstructorOverlayProps {
@@ -77,6 +77,11 @@ interface Register extends Login {
     userName: string
 }
 
+interface RefreshPassword {
+    password: string,
+    token: string
+}
+
 
 export type {
     Ingredient,
@@ -91,4 +96,5 @@ export type {
     UserDataState,
     Login,
     Register,
+    RefreshPassword,
 };

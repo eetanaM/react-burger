@@ -1,5 +1,5 @@
-import React from 'react';
-import { Route, Routes, useLocation } from 'react-router';
+import React, { useCallback } from 'react';
+import { Route, Routes, useLocation, useNavigate } from 'react-router';
 import { useAppDispatch } from '../../hooks/preTypedHooks';
 
 import { OnlyAuth, OnlyUnAuth } from '../protected-route-element/ProtectedRouteElement';
@@ -13,12 +13,21 @@ import { loadIngredients } from '../../services/burger-ingredients/actions';
 import { getUser } from '../../services/profile/actions';
 
 import ProfilePageLayout from '../profile-page-layout/ProfilePageLayout';
-import Preloader from '../preloader/Preloader';
+import OrderDetails from '../order-details/OrderDetails';
+import IngredientDetails from '../ingredient-details/IngredientDetails';
 
 export default function App() {
   const dispatch = useAppDispatch();
   const location = useLocation();
-  const state = location.state as { backgroundLocation?: Location}
+  const navigate = useNavigate();
+  const state = location.state as { backgroundLocation?: Location};
+
+  const hideModal = useCallback((dispatchType: string) => {
+    navigate(-1)
+    dispatch({
+      type: dispatchType
+    })
+  }, [dispatch])
 
   React.useEffect(() => {
     dispatch(getUser())
@@ -47,8 +56,27 @@ return (
 
       {state?.backgroundLocation && (
         <Routes>
-          <Route path='/ingredients/:id' element={<Modal />} />
-          <Route path='/order' element={<Modal />} />
+          <Route
+            path='/ingredients/:id'
+            element={
+              <Modal
+                header="Детали ингредиента"
+                onClose={() => hideModal('ingredient-details/hideIngredient')}
+              >
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path='/order'
+            element={
+              <Modal
+                onClose={() => hideModal('order-details/hideOrder')}
+              >
+                <OrderDetails />
+              </Modal>
+            }
+          />
         </Routes>
       )}
       </>

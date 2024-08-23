@@ -45,7 +45,8 @@ export const constructorSlice = createSlice({
             const hoverIndex = action.payload.hoverIndex;
             const ingredients = state.fillerToOrder;
             ingredients[dragIndex] = [ingredients[hoverIndex], ingredients[hoverIndex] = ingredients[dragIndex]][0];
-        }
+        },
+        clearIngredients: (state) => state = initialState
     },
     selectors: {
         getAllIngredientsToOrder: state => state,

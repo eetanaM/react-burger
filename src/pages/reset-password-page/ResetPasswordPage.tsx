@@ -1,33 +1,25 @@
-import { ChangeEvent, FormEvent, useRef, useState } from 'react'
-
-import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
+import { FormEvent } from 'react'
+import { useForm } from '../../hooks/useForm'
 import { Link, useNavigate } from 'react-router-dom'
 
-import styles from './ResetPassword.module.css'
+import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 import NotFoundPage from '../not-found-page/NotFoundPage'
+
+import styles from './ResetPassword.module.css'
+
 import { refreshPassword } from '../../utils/api'
 
+import { RefreshPassword } from '../../utils/type'
+
 export default function ResetPasswordPage() {
-    const initialState = {
-        password: '',
-        token: ''
-    }
-    const [formData, setFormData] = useState(initialState)
+    const initialState = { password: '', token: '' }
+    const { values, handleChange } = useForm<RefreshPassword>(initialState)
     const isResetPasswordPageAvailable = localStorage.getItem('resetPassword')
     const navigate = useNavigate()
 
-    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setFormData(prevData => {
-            return {
-                ...prevData,
-                [e.target.name]: e.target.value
-            }
-        })
-    }
-
     const submitPasswordRefresh = async (e: FormEvent) => {
         e.preventDefault();
-        const result = await refreshPassword(formData.password, formData.token)
+        const result = await refreshPassword(values.password, values.token)
         if (result.success) {
             localStorage.removeItem('resetPassword')
             alert('Пароль успешно изменен');
@@ -45,16 +37,16 @@ export default function ResetPasswordPage() {
                 <form onSubmit={e => submitPasswordRefresh(e)}>
                     <PasswordInput
                         placeholder='Введите новый пароль'
-                        onChange={e => onChange(e)}
-                        value={formData.password}
+                        onChange={e => handleChange(e)}
+                        value={values.password}
                         name={'password'}
                         extraClass="mb-2 mt-6"
                     />
                     <Input
                         type={'text'}
                         placeholder={'Введите код из письма'}
-                        onChange={e => onChange(e)}
-                        value={formData.token}
+                        onChange={e => handleChange(e)}
+                        value={values.token}
                         name={'token'}
                         extraClass="ml-1 mt-6"
                         />

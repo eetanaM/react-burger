@@ -49,7 +49,7 @@ function AppHeader(){
                         )}
                     </NavLink>
                 </nav>
-                <Logo />
+                <NavLink to='/'><Logo /></NavLink>
                 <NavLink
                     to="/profile"
                     className={`${styles.header_button} ${styles.profile_button} pl-5 pr-5 pb-4 pt-4`}

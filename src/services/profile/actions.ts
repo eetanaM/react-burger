@@ -24,19 +24,9 @@ export const loginUser = createAsyncThunk(
     }
 )
 
-export const getUser = createAsyncThunk(
-    "profile/getUser",
-    async () => {
-        return await getUserDataAPI()
-    }
-)
+export const getUser = createAsyncThunk("profile/getUser", getUserDataAPI)
 
-export const logoutUser = createAsyncThunk(
-    "profile/logoutUser",
-    async () => {
-        return logoutAPI()
-    }
-)
+export const logoutUser = createAsyncThunk("profile/logoutUser", logoutAPI)
 
 export const configureUser = createAsyncThunk(
     "profile/configureUser",
