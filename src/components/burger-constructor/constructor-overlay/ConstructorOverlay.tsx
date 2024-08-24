@@ -1,41 +1,35 @@
 import { useAppDispatch, useAppSelector } from '../../../hooks/preTypedHooks';
-import { useMemo, useCallback } from 'react';
+import { useMemo } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import Modal from '../../modal/Modal'
-import OrderDetails from '../../order-details/OrderDetails'
 
 import { getAllIngredientsToOrder} from "../../../services/burger-constructor/reducer";
-import { loadOrder, getOrder } from '../../../services/order-details/reducer';
+import { loadOrder } from '../../../services/order-details/action';
+import { getUserInfo } from '../../../services/profile/reducer';
 
 import { ConstructorOverlayProps } from '../../../utils/type'
 
 import styles from './ConstructorOverlay.module.css'
 
 export default function ConstructorOverlay ({children}: ConstructorOverlayProps) {
-    const { fillerToOrder, bunsToOrder } = useAppSelector(getAllIngredientsToOrder)
-    const order = useAppSelector(getOrder)
-
-    const dispatch = useAppDispatch();
+    const { fillerToOrder, bunsToOrder } = useAppSelector(getAllIngredientsToOrder);
+    const user = useAppSelector(getUserInfo)
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const totalPrice = useMemo(() => {
         const result = fillerToOrder.reduce((acc, current) => acc + current.price, 0) + bunsToOrder.reduce((acc, current) => acc + current.price, 0)
         return result;
     }, [fillerToOrder, bunsToOrder])
 
-    const ingredientsToOrder = useMemo(() => {
-        if (fillerToOrder.length === 0 && bunsToOrder.length === 0) return [];
-        if (fillerToOrder.length === 0 && bunsToOrder.length > 0) {
-            return [bunsToOrder[0]._id, bunsToOrder[1]._id];
+    const getOrderInfo = () => {
+        if (!user) {
+            navigate('/login', { state: { previousLocation: location } })
+            return
         }
-
-        const result = [bunsToOrder[0]._id, ...fillerToOrder.map(item => item._id), bunsToOrder[1]._id];
-        return result;
-    }, [fillerToOrder, bunsToOrder]);
-
-    const getOrderInfo = useCallback(() => {
-        dispatch(loadOrder(ingredientsToOrder))
-    }, [dispatch, ingredientsToOrder]);
+        navigate('/order', { state: { backgroundLocation: location, type: "order" }});
+    };
 
     return (
         <section className={`${styles.burger_constructor_container} pt-25 pl-4 ml-10`}>
@@ -59,11 +53,6 @@ export default function ConstructorOverlay ({children}: ConstructorOverlayProps)
                     Оформить заказ
                 </Button>
             </div>
-            {order.number &&
-            <Modal>
-                <OrderDetails orderId={order.number}/>
-            </Modal>
-            }
         </section>
     )
 }

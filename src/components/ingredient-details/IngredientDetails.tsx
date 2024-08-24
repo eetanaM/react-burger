@@ -1,9 +1,18 @@
-import { IngredientDetailsState } from "../../utils/type";
+import React from "react";
+import { useAppSelector } from "../../hooks/preTypedHooks";
+import { getAllIngredients } from "../../services/burger-ingredients/reducer";
 
 import styles from "./IngredientDetails.module.css"
+import { useParams } from "react-router";
 
-export default function IngredientDetails({ currentIngredient }: IngredientDetailsState) {
-    return (currentIngredient &&
+export default function IngredientDetails() {
+    const { id } = useParams<"id">()
+
+    const { ingredients } = useAppSelector(getAllIngredients);
+
+    const currentIngredient = ingredients.find(ingredient => ingredient._id === id);
+
+    return (currentIngredient ?
         <div className={`${styles.content_main}`}>
             <img
                 src={currentIngredient.image_large}
@@ -31,5 +40,5 @@ export default function IngredientDetails({ currentIngredient }: IngredientDetai
                 </ul>
             </div>
         </div>
-    )
+    : null)
 }

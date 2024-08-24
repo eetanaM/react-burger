@@ -2,12 +2,9 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import { useAppSelector } from "../../hooks/preTypedHooks";
 
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from "../modal/Modal";
-import IngredientDetails from "../ingredient-details/IngredientDetails";
 import IngredientCard from "./ingredient-card/IngredientCard";
 
 import { getAllIngredients } from '../../services/burger-ingredients/reducer';
-import { getCurrentIngredient } from '../../services/ingredient-details/reducer';
 
 import styles from "./BurgerIngredients.module.css"
 
@@ -15,7 +12,6 @@ export default function BurgerIngredients() {
     const [current, setCurrent] = useState('buns')
 
     const { ingredients } = useAppSelector(getAllIngredients);
-    const currentIngredient = useAppSelector(getCurrentIngredient);
 
     const tabsRef = useRef<HTMLDivElement>(null);
     const bunsScrollRef = useRef<HTMLHeadingElement>(null);
@@ -98,10 +94,7 @@ export default function BurgerIngredients() {
                     <h2 className="text text_type_main-medium" ref={bunsScrollRef}>Булки</h2>
                     <div className={`${styles.ingredient_card}`}>
                         {buns.map(bun => {
-                            return <IngredientCard
-                                ingredient={bun}
-                                key={bun._id}
-                            />
+                            return <IngredientCard key={bun._id} ingredient={bun}/>
                         })}
                     </div>
                 </li>
@@ -109,10 +102,7 @@ export default function BurgerIngredients() {
                     <h2 className="text text_type_main-medium" ref={saucesScrollRef}>Соусы</h2>
                     <div className={`${styles.ingredient_card}`}>
                         {sauces.map(sauce => {
-                            return <IngredientCard
-                                ingredient={sauce}
-                                key={sauce._id}
-                            />
+                            return <IngredientCard key={sauce._id} ingredient={sauce}/>
                         })}
                     </div>
                 </li>
@@ -120,21 +110,11 @@ export default function BurgerIngredients() {
                     <h2 className="text text_type_main-medium" ref={mainScrollRef}>Начинки</h2>
                     <div className={`${styles.ingredient_card}`}>
                         {main.map(main => {
-                            return <IngredientCard
-                                ingredient={main}
-                                key={main._id}
-                            />
+                            return <IngredientCard key={main._id} ingredient={main}/>
                         })}
                     </div>
                 </li>
             </ul>
-            {currentIngredient && <Modal
-                header="Детали ингредиента"
-            >
-               <IngredientDetails
-                    currentIngredient = {currentIngredient}
-               />
-            </Modal>}
         </section>
     )
 }

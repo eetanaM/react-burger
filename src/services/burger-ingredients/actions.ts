@@ -1,10 +1,5 @@
-const SERVER_URL: string = "https://norma.nomoreparties.space/api/ingredients"
+import { createAsyncThunk } from "@reduxjs/toolkit"
 
-export const getIngredients = async () => {
-    const res = await fetch(SERVER_URL)
-    if (!res.ok) {
-        throw new Error("Request error occured!")
-    }
-    const ingredients = await res.json()
-    return ingredients.data
-}
+import { getIngredients } from "../../utils/api"
+
+export const loadIngredients = createAsyncThunk("burger-ingredients/loadIngredients", getIngredients)

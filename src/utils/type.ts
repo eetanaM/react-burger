@@ -34,11 +34,9 @@ interface IngredientDetailsState {
 
 interface OrderDetailsState {
     order: {
-        number: number | null,
-    },
-    success: boolean,
-    loading: boolean,
-    error: SerializedError | null,
+        number: number,
+    } | null,
+    success: boolean
 }
 
 interface IngredientCardProps {
@@ -50,7 +48,7 @@ interface IngredientCardProps {
 interface ModalProps {
     children?: React.ReactNode,
     header?: string,
-    hideModal?: () => void,
+    onClose: () => void,
 }
 
 interface ConstructorOverlayProps {
@@ -60,6 +58,30 @@ interface ConstructorOverlayProps {
 interface OrderDetailsProps {
     orderId: number,
 }
+
+interface UserDataState {
+    user: {
+        email: string | null,
+        name: string | null,
+    } | null
+    isAuthChecked: boolean,
+    authError: SerializedError | null,
+}
+
+interface Login {
+    email: string;
+    password: string;
+}
+
+interface Register extends Login {
+    userName: string
+}
+
+interface RefreshPassword {
+    password: string,
+    token: string
+}
+
 
 export type {
     Ingredient,
@@ -71,4 +93,8 @@ export type {
     ModalProps,
     ConstructorOverlayProps,
     OrderDetailsProps,
+    UserDataState,
+    Login,
+    Register,
+    RefreshPassword,
 };
