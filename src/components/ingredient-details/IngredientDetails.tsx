@@ -5,7 +5,7 @@ import { getAllIngredients } from "../../services/burger-ingredients/reducer";
 import styles from "./IngredientDetails.module.css"
 import { useParams } from "react-router";
 
-export default function IngredientDetails() {
+const IngredientDetails = (): React.JSX.Element | null => {
     const { id } = useParams<"id">()
 
     const { ingredients } = useAppSelector(getAllIngredients);
@@ -42,3 +42,5 @@ export default function IngredientDetails() {
         </div>
     : null)
 }
+
+export default IngredientDetails

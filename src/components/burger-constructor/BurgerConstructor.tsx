@@ -8,12 +8,12 @@ import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-comp
 
 import { getAllIngredientsToOrder } from "../../services/burger-constructor/reducer";
 
-import { IIngredient } from "../../utils/type";
+import { IDraggableIngredient } from "../../utils/type";
 
 import styles from "./BurgerConstructor.module.css"
 
 
-export default function BurgerConstructor() {
+const BurgerConstructor = (): React.JSX.Element => {
     const { fillerToOrder, bunsToOrder } = useAppSelector(getAllIngredientsToOrder);
     const fillerCanDrop = useFillerDrop().canDrop;
     const fillerDropRef = useFillerDrop().fillerDropRef
@@ -23,7 +23,7 @@ export default function BurgerConstructor() {
     const bottomBunDropRef = useBunDrop().bunDropRef;
 
 
-    const renderIngredient = (ingredient: IIngredient, index: number) => {
+    const renderIngredient = (ingredient: IDraggableIngredient, index: number) => {
         return (
             <CardListElement
                 ingredient={ingredient}
@@ -109,3 +109,5 @@ export default function BurgerConstructor() {
         </ConstructorOverlay>
     )
 }
+
+export default BurgerConstructor

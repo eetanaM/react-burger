@@ -16,7 +16,7 @@ import ProfilePageLayout from '../profile-page-layout/ProfilePageLayout';
 import OrderDetails from '../order-details/OrderDetails';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
 
-export default function App() {
+const App = (): React.JSX.Element => {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -82,3 +82,5 @@ return (
       </>
   );
 }
+
+export default App

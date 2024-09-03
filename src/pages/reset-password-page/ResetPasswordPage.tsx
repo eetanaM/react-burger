@@ -11,7 +11,7 @@ import { refreshPassword } from '../../utils/api'
 
 import { IRefreshPassword } from '../../utils/type'
 
-export default function ResetPasswordPage() {
+const ResetPasswordPage = (): React.JSX.Element => {
     const initialState = { password: '', token: '' }
     const { values, handleChange } = useForm<IRefreshPassword>(initialState)
     const isResetPasswordPageAvailable = localStorage.getItem('resetPassword')
@@ -67,3 +67,5 @@ export default function ResetPasswordPage() {
         </>
     )}
 }
+
+export default ResetPasswordPage

@@ -10,7 +10,7 @@ import styles from './ProfilePage.module.css'
 
 import { IRegister } from '../../utils/type'
 
-export default function ProfilePage() {
+const ProfilePage = (): React.JSX.Element => {
     const dispatch = useAppDispatch()
     const initialState = { userName: '', email: '', password: '' }
     const { values, handleChange, setValues} = useForm<IRegister>(initialState)
@@ -74,3 +74,5 @@ export default function ProfilePage() {
         </>
     )
 }
+
+export default ProfilePage

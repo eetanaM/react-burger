@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/preTypedHooks";
 import { logoutUser } from "../../services/profile/actions";
 
-export default function ProfilePageLayout() {
+const ProfilePageLayout = (): React.JSX.Element => {
     const dispatch = useAppDispatch()
     const chooseTextStyle = (isActive: boolean) => {
         return `${isActive ? '' : 'text_color_inactive'}`
@@ -51,3 +51,5 @@ export default function ProfilePageLayout() {
         </>
     )
 }
+
+export default ProfilePageLayout;

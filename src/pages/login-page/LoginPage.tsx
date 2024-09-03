@@ -8,7 +8,7 @@ import { loginUser } from '../../services/profile/actions'
 import { useForm } from '../../hooks/useForm'
 import { ILogin } from '../../utils/type'
 
-export default function LoginPage() {
+const LoginPage = (): React.JSX.Element => {
     const initialState = { email: '', password: '' }
     const { values, handleChange } = useForm<ILogin>(initialState)
     const dispatch = useAppDispatch();
@@ -63,3 +63,5 @@ export default function LoginPage() {
         </>
     )
 }
+
+export default LoginPage

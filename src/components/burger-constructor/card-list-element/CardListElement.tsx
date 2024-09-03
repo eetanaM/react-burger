@@ -4,11 +4,11 @@ import { useAppDispatch } from '../../../hooks/preTypedHooks';
 
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
-import { IIngredientCardProps } from "../../../utils/type";
+import { IDraggableIngredient, IIngredientCardProps } from "../../../utils/type";
 
 import styles from "./CardListElement.module.css"
 
-export default function CardListElement({ingredient, index}:IIngredientCardProps) {
+const CardListElement = ({ingredient, index}: IIngredientCardProps<IDraggableIngredient>): React.JSX.Element => {
     const dispatch = useAppDispatch();
     const ref = useRef<HTMLLIElement>(null)
 
@@ -32,7 +32,7 @@ export default function CardListElement({ingredient, index}:IIngredientCardProps
         }
     })
 
-    const [, dropRef] = useDrop<{key: string, index:number, type: string}, void>({
+    const [, dropRef] = useDrop<{ key: string, index: number }>({
         accept: 'constructor-ingredient',
         collect(monitor) {
             return {
@@ -99,3 +99,5 @@ export default function CardListElement({ingredient, index}:IIngredientCardProps
         </li>
     )
 }
+
+export default CardListElement

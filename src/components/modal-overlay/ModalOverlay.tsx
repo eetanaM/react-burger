@@ -2,7 +2,7 @@ import { IModalProps } from "../../utils/type";
 
 import styles from "./ModalOverlay.module.css"
 
-export default function ModalOverlay({ onClose }: IModalProps) {
+const ModalOverlay = ({ onClose }: IModalProps): React.JSX.Element => {
 
     return (
         <>
@@ -11,3 +11,5 @@ export default function ModalOverlay({ onClose }: IModalProps) {
         </>
     )
 }
+
+export default ModalOverlay

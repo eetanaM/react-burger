@@ -1,10 +1,9 @@
-import { ReactElement } from "react";
 import { Navigate, useLocation } from "react-router";
 import { useAppSelector } from "../../hooks/preTypedHooks";
 import { getIsAuthChecked, getUserInfo } from "../../services/profile/reducer";
 import Preloader from "../preloader/Preloader";
 
-export default function ProtectedRouteElement({ onlyUnAuth = false, element }: { onlyUnAuth?: boolean, element: ReactElement}) {
+const ProtectedRouteElement = ({ onlyUnAuth = false, element }: { onlyUnAuth?: boolean, element: React.JSX.Element}): React.JSX.Element => {
     const user = useAppSelector(getUserInfo);
     const isAuthChecked = useAppSelector(getIsAuthChecked);
     const location = useLocation();
@@ -26,4 +25,4 @@ export default function ProtectedRouteElement({ onlyUnAuth = false, element }: {
 }
 
 export const OnlyAuth = ProtectedRouteElement;
-export const OnlyUnAuth = ({ element }: { element: ReactElement}) => <ProtectedRouteElement onlyUnAuth={true} element={element} />
+export const OnlyUnAuth = ({ element }: { element: React.JSX.Element}) => <ProtectedRouteElement onlyUnAuth={true} element={element} />

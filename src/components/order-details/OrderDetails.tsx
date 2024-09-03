@@ -11,7 +11,7 @@ import { loadOrder } from '../../services/order-details/action';
 
 import styles from './OrderDetails.module.css'
 
-export default function OrderDetails() {
+const OrderDetails = (): React.JSX.Element => {
     const { order, success } = useAppSelector(getOrderInfo)
     const { fillerToOrder, bunsToOrder } = useAppSelector(getAllIngredientsToOrder);
     const dispatch = useAppDispatch()
@@ -67,3 +67,5 @@ export default function OrderDetails() {
         </div>
     )
 }
+
+export default OrderDetails

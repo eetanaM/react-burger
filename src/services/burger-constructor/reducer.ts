@@ -1,5 +1,5 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit'
-import { IIngredient, IIngredientsConstructorState } from '../../utils/type'
+import { IDraggableIngredient, IIngredientsConstructorState, IIngredient } from '../../utils/type'
 import { PayloadAction } from '@reduxjs/toolkit'
 
 const initialState: IIngredientsConstructorState = {
@@ -12,7 +12,7 @@ export const constructorSlice = createSlice({
     initialState: initialState,
     reducers: {
         addIngredientToOrder: {
-            reducer(state, action: PayloadAction<IIngredient>) {
+            reducer(state, action: PayloadAction<IDraggableIngredient>) {
                 if(action.payload.type === "bun") {
                     if (state.bunsToOrder.length === 0) {
                         state.bunsToOrder.push(action.payload);

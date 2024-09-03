@@ -8,7 +8,7 @@ import { getUserInfo } from "../../services/profile/reducer";
 
 import styles from "./AppHeader.module.css"
 
-function AppHeader(){
+const AppHeader = (): React.JSX.Element => {
     const user = useAppSelector(getUserInfo)
     const chooseTextStyle = (isActive: boolean) => {
         return `text text_type_main-small ${isActive ? '' : 'text_color_inactive'}`

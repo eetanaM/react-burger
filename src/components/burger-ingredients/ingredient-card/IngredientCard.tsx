@@ -9,7 +9,7 @@ import { IIngredient, IIngredientCardProps } from "../../../utils/type";
 import styles from "./IngredientCard.module.css"
 import { useLocation, useNavigate } from "react-router";
 
-function IngredientCard({ingredient}: IIngredientCardProps) {
+const IngredientCard = ({ ingredient }: IIngredientCardProps<IIngredient>): React.JSX.Element => {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useAppDispatch();

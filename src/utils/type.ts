@@ -14,7 +14,10 @@ interface IIngredient {
     image_large: string;
     __v: number;
     counter: number;
-    key?: string;
+}
+
+interface IDraggableIngredient extends IIngredient {
+    key: string
 }
 
 // Интерфейс хранилища слайса ингредиентов
@@ -26,8 +29,8 @@ interface IIngredientsState {
 
 // Интерфейс хранилища слайса конструктора ингредиентов
 interface IIngredientsConstructorState {
-    fillerToOrder: IIngredient[];
-    bunsToOrder: IIngredient[];
+    fillerToOrder: IDraggableIngredient[];
+    bunsToOrder: IDraggableIngredient[];
 }
 
 // Интерфейс хранилища слайса информации о заказе
@@ -38,19 +41,19 @@ interface IOrderDetailsState {
     success: boolean;
 }
 
-interface IIngredientCardProps {
-    ingredient: IIngredient;
+interface IIngredientCardProps<T> {
+    ingredient: T;
     index?: number;
 }
 
 interface IModalProps {
-    children?: React.ReactNode;
+    children?: React.JSX.Element;
     header?: string;
     onClose: () => void;
 }
 
 interface IConstructorOverlayProps {
-    children?: React.ReactNode;
+    children: React.JSX.Element | React.JSX.Element[];
 }
 
 interface IUserDataState {
@@ -79,6 +82,7 @@ interface IRefreshPassword {
 
 export type {
     IIngredient,
+    IDraggableIngredient,
     IIngredientsState,
     IIngredientsConstructorState,
     IOrderDetailsState,

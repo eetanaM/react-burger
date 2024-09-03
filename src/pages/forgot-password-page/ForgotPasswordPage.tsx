@@ -6,7 +6,7 @@ import { resetPassword } from '../../utils/api'
 import { useForm } from '../../hooks/useForm'
 
 
-export default function ForgotPasswordPage() {
+const ForgotPasswordPage = (): React.JSX.Element => {
     const { values , handleChange } = useForm<{email: string}>({email: ''})
     const navigate = useNavigate()
 
@@ -49,3 +49,5 @@ export default function ForgotPasswordPage() {
         </>
     )
 }
+
+export default ForgotPasswordPage;

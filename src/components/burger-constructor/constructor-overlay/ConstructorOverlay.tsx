@@ -1,18 +1,17 @@
 import { useAppDispatch, useAppSelector } from '../../../hooks/preTypedHooks';
-import { useMemo } from 'react';
+import { FC, FunctionComponent, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import { getAllIngredientsToOrder} from "../../../services/burger-constructor/reducer";
-import { loadOrder } from '../../../services/order-details/action';
 import { getUserInfo } from '../../../services/profile/reducer';
 
 import { IConstructorOverlayProps } from '../../../utils/type'
 
 import styles from './ConstructorOverlay.module.css'
 
-export default function ConstructorOverlay ({children}: IConstructorOverlayProps) {
+const ConstructorOverlay = ({ children }: IConstructorOverlayProps): React.JSX.Element => {
     const { fillerToOrder, bunsToOrder } = useAppSelector(getAllIngredientsToOrder);
     const user = useAppSelector(getUserInfo)
     const location = useLocation();
@@ -56,3 +55,5 @@ export default function ConstructorOverlay ({children}: IConstructorOverlayProps
         </section>
     )
 }
+
+export default ConstructorOverlay

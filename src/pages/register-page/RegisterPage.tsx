@@ -10,7 +10,7 @@ import { registerUser } from '../../services/profile/actions'
 import styles from './RegisterPage.module.css'
 
 import { IRegister } from '../../utils/type'
-export default function RegisterPage() {
+const RegisterPage = (): React.JSX.Element => {
     const initialState = { userName: '', email: '', password: '' }
     const { values, handleChange } = useForm<IRegister>(initialState)
     const dispatch = useAppDispatch();
@@ -66,3 +66,5 @@ export default function RegisterPage() {
         </>
     )
 }
+
+export default RegisterPage;
