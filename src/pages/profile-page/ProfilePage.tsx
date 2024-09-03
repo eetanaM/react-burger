@@ -8,12 +8,12 @@ import { configureUser } from '../../services/profile/actions'
 
 import styles from './ProfilePage.module.css'
 
-import { Register } from '../../utils/type'
+import { IRegister } from '../../utils/type'
 
 export default function ProfilePage() {
     const dispatch = useAppDispatch()
     const initialState = { userName: '', email: '', password: '' }
-    const { values, handleChange, setValues} = useForm<Register>(initialState)
+    const { values, handleChange, setValues} = useForm<IRegister>(initialState)
     const [isChanged, setIsChanged] = useState(false)
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {

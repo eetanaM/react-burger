@@ -9,10 +9,10 @@ import { registerUser } from '../../services/profile/actions'
 
 import styles from './RegisterPage.module.css'
 
-import { Register } from '../../utils/type'
+import { IRegister } from '../../utils/type'
 export default function RegisterPage() {
     const initialState = { userName: '', email: '', password: '' }
-    const { values, handleChange } = useForm<Register>(initialState)
+    const { values, handleChange } = useForm<IRegister>(initialState)
     const dispatch = useAppDispatch();
     const navigate = useNavigate()
 

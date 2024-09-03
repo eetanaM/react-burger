@@ -8,11 +8,11 @@ import { getAllIngredientsToOrder} from "../../../services/burger-constructor/re
 import { loadOrder } from '../../../services/order-details/action';
 import { getUserInfo } from '../../../services/profile/reducer';
 
-import { ConstructorOverlayProps } from '../../../utils/type'
+import { IConstructorOverlayProps } from '../../../utils/type'
 
 import styles from './ConstructorOverlay.module.css'
 
-export default function ConstructorOverlay ({children}: ConstructorOverlayProps) {
+export default function ConstructorOverlay ({children}: IConstructorOverlayProps) {
     const { fillerToOrder, bunsToOrder } = useAppSelector(getAllIngredientsToOrder);
     const user = useAppSelector(getUserInfo)
     const location = useLocation();

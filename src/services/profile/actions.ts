@@ -8,18 +8,18 @@ import {
     configureUserData as configureUserDataAPI,
 } from "../../utils/api"
 
-import { Login, Register } from "../../utils/type";
+import { ILogin, IRegister } from "../../utils/type";
 
 export const registerUser = createAsyncThunk(
     "profile/registerUser",
-    async (user: Register) => {
+    async (user: IRegister) => {
         return registerAPI(user.email, user.password, user.userName)
     }
 )
 
 export const loginUser = createAsyncThunk(
     "profile/loginUser",
-    async (user: Login) => {
+    async (user: ILogin) => {
         return loginAPI(user.email, user.password)
     }
 )
@@ -30,7 +30,7 @@ export const logoutUser = createAsyncThunk("profile/logoutUser", logoutAPI)
 
 export const configureUser = createAsyncThunk(
     "profile/configureUser",
-    async (user: Register) => {
+    async (user: IRegister) => {
         return configureUserDataAPI(user.email, user.password, user.userName)
     }
 )

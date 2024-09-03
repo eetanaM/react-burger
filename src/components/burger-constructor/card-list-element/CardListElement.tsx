@@ -4,11 +4,11 @@ import { useAppDispatch } from '../../../hooks/preTypedHooks';
 
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
-import { IngredientCardProps } from "../../../utils/type";
+import { IIngredientCardProps } from "../../../utils/type";
 
 import styles from "./CardListElement.module.css"
 
-export default function CardListElement({ingredient, index}:IngredientCardProps) {
+export default function CardListElement({ingredient, index}:IIngredientCardProps) {
     const dispatch = useAppDispatch();
     const ref = useRef<HTMLLIElement>(null)
 
@@ -42,12 +42,10 @@ export default function CardListElement({ingredient, index}:IngredientCardProps)
         hover(item, monitor) {
             if (!ref.current) return;
 
-
             const dragIndex = item.index;
             const hoverIndex = index;
 
             if (dragIndex === undefined || hoverIndex === undefined) return
-
             if (dragIndex === hoverIndex) return;
 
             const hoverBoundingRect = ref.current?.getBoundingClientRect();

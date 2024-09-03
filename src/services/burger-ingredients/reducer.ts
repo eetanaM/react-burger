@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { loadIngredients } from './actions'
-import { IngredientsState } from '../../utils/type';
+import { IIngredientsState } from '../../utils/type';
 
-const initialState: IngredientsState = {
+const initialState: IIngredientsState = {
     ingredients: [],
     loading: false,
     error: null

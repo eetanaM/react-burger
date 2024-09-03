@@ -5,11 +5,11 @@ import ModalOverlay from "../modal-overlay/ModalOverlay"
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 
 import styles from "./Modal.module.css"
-import { ModalProps } from "../../utils/type"
+import { IModalProps } from "../../utils/type"
 
 const modalRoot = document.querySelector('#react-modals') as HTMLDivElement
 
-export default function Modal({ children, header, onClose }: ModalProps) {
+export default function Modal({ children, header, onClose }: IModalProps) {
 
     useEffect(() => {
         function closeByEscape(e:KeyboardEvent) {

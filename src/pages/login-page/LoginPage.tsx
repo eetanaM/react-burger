@@ -6,11 +6,11 @@ import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer
 
 import { loginUser } from '../../services/profile/actions'
 import { useForm } from '../../hooks/useForm'
-import { Login } from '../../utils/type'
+import { ILogin } from '../../utils/type'
 
 export default function LoginPage() {
     const initialState = { email: '', password: '' }
-    const { values, handleChange } = useForm<Login>(initialState)
+    const { values, handleChange } = useForm<ILogin>(initialState)
     const dispatch = useAppDispatch();
     const location = useLocation();
     const navigate = useNavigate()

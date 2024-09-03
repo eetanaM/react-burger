@@ -9,11 +9,11 @@ import styles from './ResetPassword.module.css'
 
 import { refreshPassword } from '../../utils/api'
 
-import { RefreshPassword } from '../../utils/type'
+import { IRefreshPassword } from '../../utils/type'
 
 export default function ResetPasswordPage() {
     const initialState = { password: '', token: '' }
-    const { values, handleChange } = useForm<RefreshPassword>(initialState)
+    const { values, handleChange } = useForm<IRefreshPassword>(initialState)
     const isResetPasswordPageAvailable = localStorage.getItem('resetPassword')
     const navigate = useNavigate()
 

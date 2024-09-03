@@ -4,12 +4,12 @@ import { useAppDispatch } from "../../../hooks/preTypedHooks";
 
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { Ingredient, IngredientCardProps } from "../../../utils/type";
+import { IIngredient, IIngredientCardProps } from "../../../utils/type";
 
 import styles from "./IngredientCard.module.css"
 import { useLocation, useNavigate } from "react-router";
 
-function IngredientCard({ingredient}: IngredientCardProps) {
+function IngredientCard({ingredient}: IIngredientCardProps) {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useAppDispatch();
@@ -21,7 +21,7 @@ function IngredientCard({ingredient}: IngredientCardProps) {
         })
     });
 
-    const openModal = useCallback((ingredient: Ingredient) => {
+    const openModal = useCallback((ingredient: IIngredient) => {
         dispatch({
             type: 'ingredient-details/showIngredient',
             payload: {

@@ -1,6 +1,6 @@
 import { SerializedError } from "@reduxjs/toolkit";
 // Структура ингредиента
-type Ingredient = {
+interface IIngredient {
     _id: string;
     name: string;
     type: string;
@@ -17,84 +17,76 @@ type Ingredient = {
     key?: string;
 }
 
-interface IngredientsState {
-    ingredients: Ingredient[] | [],
-    loading: boolean,
-    error: SerializedError | null
+// Интерфейс хранилища слайса ингредиентов
+interface IIngredientsState {
+    ingredients: IIngredient[] | [];
+    loading: boolean;
+    error: SerializedError | null;
 }
 
-interface IngredientsConstructorState {
-    fillerToOrder: Ingredient[],
-    bunsToOrder: Ingredient[],
+// Интерфейс хранилища слайса конструктора ингредиентов
+interface IIngredientsConstructorState {
+    fillerToOrder: IIngredient[];
+    bunsToOrder: IIngredient[];
 }
 
-interface IngredientDetailsState {
-    currentIngredient: Ingredient | null,
-}
-
-interface OrderDetailsState {
+// Интерфейс хранилища слайса информации о заказе
+interface IOrderDetailsState {
     order: {
-        number: number,
-    } | null,
-    success: boolean
+        number: number;
+    } | null;
+    success: boolean;
 }
 
-interface IngredientCardProps {
-    ingredient: Ingredient;
-    onModalOpen?: (id:string) => void;
+interface IIngredientCardProps {
+    ingredient: IIngredient;
     index?: number;
 }
 
-interface ModalProps {
-    children?: React.ReactNode,
-    header?: string,
-    onClose: () => void,
+interface IModalProps {
+    children?: React.ReactNode;
+    header?: string;
+    onClose: () => void;
 }
 
-interface ConstructorOverlayProps {
-    children?: React.ReactNode,
+interface IConstructorOverlayProps {
+    children?: React.ReactNode;
 }
 
-interface OrderDetailsProps {
-    orderId: number,
-}
-
-interface UserDataState {
+interface IUserDataState {
     user: {
-        email: string | null,
-        name: string | null,
-    } | null
-    isAuthChecked: boolean,
-    authError: SerializedError | null,
+        email: string | null;
+        name: string | null;
+    } | null;
+    isAuthChecked: boolean;
+    authError: SerializedError | null;
 }
 
-interface Login {
+interface ILogin {
     email: string;
     password: string;
 }
 
-interface Register extends Login {
-    userName: string
+interface IRegister extends ILogin {
+    userName: string;
 }
 
-interface RefreshPassword {
-    password: string,
-    token: string
+interface IRefreshPassword {
+    password: string;
+    token: string;
 }
 
 
 export type {
-    Ingredient,
-    IngredientsState,
-    IngredientsConstructorState,
-    IngredientDetailsState,
-    OrderDetailsState,
-    IngredientCardProps,
-    ModalProps,
-    ConstructorOverlayProps,
-    OrderDetailsProps,
-    UserDataState,
-    Login,
-    Register,
-    RefreshPassword,
+    IIngredient,
+    IIngredientsState,
+    IIngredientsConstructorState,
+    IOrderDetailsState,
+    IIngredientCardProps,
+    IModalProps,
+    IConstructorOverlayProps,
+    IUserDataState,
+    ILogin,
+    IRegister,
+    IRefreshPassword,
 };

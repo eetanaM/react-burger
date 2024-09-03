@@ -1,8 +1,8 @@
-import { ModalProps } from "../../utils/type";
+import { IModalProps } from "../../utils/type";
 
 import styles from "./ModalOverlay.module.css"
 
-export default function ModalOverlay({ onClose }: ModalProps) {
+export default function ModalOverlay({ onClose }: IModalProps) {
 
     return (
         <>

@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { UserDataState } from '../../utils/type'
+import { IUserDataState } from '../../utils/type'
 import { configureUser, getUser, loginUser, logoutUser, registerUser } from './actions'
 
-const initialState: UserDataState = {
+const initialState: IUserDataState = {
     user: null,
     isAuthChecked: false,
     authError: null,
