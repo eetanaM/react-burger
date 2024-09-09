@@ -1,19 +1,19 @@
 import React, { useCallback } from "react";
 import { useDrag, DragPreviewImage } from "react-dnd";
 import { useAppDispatch } from "../../../hooks/preTypedHooks";
+import { Location, useLocation, useNavigate } from "react-router";
 
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { Ingredient, IngredientCardProps } from "../../../utils/type";
+import { IIngredient, IIngredientCardProps } from "../../../utils/types/type";
 
 import styles from "./IngredientCard.module.css"
-import { useLocation, useNavigate } from "react-router";
 
-function IngredientCard({ingredient}: IngredientCardProps) {
+const IngredientCard = ({ ingredient }: Pick<IIngredientCardProps<IIngredient>, 'ingredient'>): React.JSX.Element => {
     const navigate = useNavigate();
-    const location = useLocation();
+    const location = useLocation() as Location<{ backgroundLocation: Location }>;
     const dispatch = useAppDispatch();
-    const [, dragRef, preview] = useDrag({
+    const [, dragRef, preview] = useDrag<{ id: string }, unknown, unknown>({
         type: 'ingredient',
         item: {id: ingredient._id},
         collect: (monitor) => ({
@@ -21,7 +21,7 @@ function IngredientCard({ingredient}: IngredientCardProps) {
         })
     });
 
-    const openModal = useCallback((ingredient: Ingredient) => {
+    const openModal = useCallback((ingredient: IIngredient) => {
         dispatch({
             type: 'ingredient-details/showIngredient',
             payload: {

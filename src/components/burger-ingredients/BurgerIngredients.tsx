@@ -8,7 +8,7 @@ import { getAllIngredients } from '../../services/burger-ingredients/reducer';
 
 import styles from "./BurgerIngredients.module.css"
 
-export default function BurgerIngredients() {
+const BurgerIngredients = (): React.JSX.Element => {
     const [current, setCurrent] = useState('buns')
 
     const { ingredients } = useAppSelector(getAllIngredients);
@@ -118,3 +118,5 @@ export default function BurgerIngredients() {
         </section>
     )
 }
+
+export default BurgerIngredients

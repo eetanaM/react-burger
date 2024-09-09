@@ -8,9 +8,9 @@ const useFillerDrop = () => {
     const dispatch = useAppDispatch();
     const { ingredients } = useAppSelector(getAllIngredients);
 
-    const [{ canDrop }, fillerDropRef] = useDrop(() => ({
+    const [{ canDrop }, fillerDropRef] = useDrop<{ id: string }, unknown, { canDrop: boolean }>(() => ({
     accept: "ingredient",
-    drop: (dragItem: {id: string}) => {
+    drop: (dragItem) => {
         const id = dragItem.id;
         const ingredient = ingredients.find((item) => item._id === id)
         if (!ingredient) return
@@ -35,4 +35,4 @@ const useFillerDrop = () => {
   return { canDrop, fillerDropRef };
 }
 
-export {useFillerDrop};
+export { useFillerDrop };

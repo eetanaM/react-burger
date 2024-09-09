@@ -1,7 +1,7 @@
 import styles from './NotFoundPage.module.css'
 import smile from '../../images/sad-svgrepo-com.svg'
 
-export default function NotFoundPage() {
+const NotFoundPage = (): React.JSX.Element => {
     return (
         <>
             <div className={`${styles.not_found_container}`}>
@@ -12,3 +12,5 @@ export default function NotFoundPage() {
         </>
     )
 }
+
+export default NotFoundPage

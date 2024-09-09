@@ -9,15 +9,15 @@ import styles from './ResetPassword.module.css'
 
 import { refreshPassword } from '../../utils/api'
 
-import { RefreshPassword } from '../../utils/type'
+import { IRefreshPassword } from '../../utils/types/type'
 
-export default function ResetPasswordPage() {
+const ResetPasswordPage = (): React.JSX.Element => {
     const initialState = { password: '', token: '' }
-    const { values, handleChange } = useForm<RefreshPassword>(initialState)
+    const { values, handleChange } = useForm<IRefreshPassword>(initialState)
     const isResetPasswordPageAvailable = localStorage.getItem('resetPassword')
     const navigate = useNavigate()
 
-    const submitPasswordRefresh = async (e: FormEvent) => {
+    const submitPasswordRefresh = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const result = await refreshPassword(values.password, values.token)
         if (result.success) {
@@ -67,3 +67,5 @@ export default function ResetPasswordPage() {
         </>
     )}
 }
+
+export default ResetPasswordPage

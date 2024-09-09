@@ -2,7 +2,6 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useAppSelector } from '../../hooks/preTypedHooks';
 
-import AppHeader from '../../components/app-header/AppHeader';
 import BurgerIngredients from '../../components/burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../../components/burger-constructor/BurgerConstructor';
 
@@ -12,7 +11,7 @@ import styles from './HomePage.module.css'
 import Preloader from '../../components/preloader/Preloader';
 
 
-export default function HomePage() {
+const HomePage = (): React.JSX.Element => {
   const { ingredients, loading, error } = useAppSelector(getAllIngredients)
 
   if (loading) {
@@ -47,3 +46,5 @@ export default function HomePage() {
     </>
   );
 }
+
+export default HomePage

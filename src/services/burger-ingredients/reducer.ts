@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { loadIngredients } from './actions'
-import { IngredientsState } from '../../utils/type';
+import { IIngredientsState } from '../../utils/types/type';
 
-const initialState: IngredientsState = {
+const initialState: IIngredientsState = {
     ingredients: [],
     loading: false,
     error: null
@@ -35,6 +35,9 @@ export const ingredientsSlice = createSlice({
                 } else
                 state.ingredients[currentIndex].counter--;
             }
+        },
+        clearCounts: (state) => {
+            state.ingredients.map(ingredient => ingredient.counter = 0);
         }
     },
     selectors: {
@@ -47,7 +50,7 @@ export const ingredientsSlice = createSlice({
                 state.error = null;
             })
             .addCase(loadIngredients.fulfilled, (state, action) => {
-                state.ingredients = action.payload;
+                state.ingredients = action.payload.data;
                 state.ingredients.forEach(ingredient => ingredient.counter = 0);
                 state.loading = false;
             })

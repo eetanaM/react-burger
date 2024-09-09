@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import { UserDataState } from '../../utils/type'
+import { IUserDataState } from '../../utils/types/type'
 import { configureUser, getUser, loginUser, logoutUser, registerUser } from './actions'
 
-const initialState: UserDataState = {
+const initialState: IUserDataState = {
     user: null,
     isAuthChecked: false,
     authError: null,
@@ -20,6 +20,7 @@ export const profileSlice = createSlice({
     extraReducers: builder => {
         builder
             .addCase(registerUser.fulfilled, (state, action) => {
+                state.authError = null;
                 state.user = action.payload.user;
                 state.isAuthChecked = true;
             })
@@ -29,6 +30,7 @@ export const profileSlice = createSlice({
                 state.authError = action.error;
             })
             .addCase(loginUser.fulfilled, (state, action) => {
+                state.authError = null;
                 state.user = action.payload.user;
                 state.isAuthChecked = true;
             })
@@ -38,6 +40,7 @@ export const profileSlice = createSlice({
                 state.authError = action.error;
             })
             .addCase(getUser.fulfilled, (state, action) => {
+                state.authError = null;
                 state.user = action.payload.user;
                 state.isAuthChecked = true;
             })
@@ -51,6 +54,7 @@ export const profileSlice = createSlice({
                 state.isAuthChecked = true;
             })
             .addCase(configureUser.fulfilled, (state, action) => {
+                state.authError = null;
                 state.user = action.payload.user;
             })
             .addCase(configureUser.rejected, (state, action) => {

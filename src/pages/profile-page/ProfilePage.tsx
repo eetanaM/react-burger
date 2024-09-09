@@ -8,25 +8,25 @@ import { configureUser } from '../../services/profile/actions'
 
 import styles from './ProfilePage.module.css'
 
-import { Register } from '../../utils/type'
+import { IRegister } from '../../utils/types/type'
 
-export default function ProfilePage() {
+const ProfilePage = (): React.JSX.Element => {
     const dispatch = useAppDispatch()
     const initialState = { userName: '', email: '', password: '' }
-    const { values, handleChange, setValues} = useForm<Register>(initialState)
-    const [isChanged, setIsChanged] = useState(false)
+    const { values, handleChange, setValues} = useForm<IRegister>(initialState)
+    const [isChanged, setIsChanged] = useState<boolean>(false)
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         handleChange(e);
         setIsChanged(true)
     }
 
-    const submitChanges = (e: FormEvent) => {
+    const submitChanges = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(configureUser(values))
     }
 
-    const resetChanges = (e: FormEvent) => {
+    const resetChanges = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setValues(initialState)
         setIsChanged(false)
@@ -74,3 +74,5 @@ export default function ProfilePage() {
         </>
     )
 }
+
+export default ProfilePage

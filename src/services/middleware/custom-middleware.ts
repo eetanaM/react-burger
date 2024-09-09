@@ -17,10 +17,13 @@ const customMiddleware: Middleware<{}, RootState> = store => next => (action: an
         }
     }
 
-    // Перехватывается экшен при успешном заказе и очищаются добавленные в конструктор ингредиенты
+    // Перехватывается экшен при успешном заказе и очищаются добавленные в конструктор ингредиенты и обнуляются счётчики в списке ингредиентов
     if (action.type === loadOrder.fulfilled.type) {
         store.dispatch({
             type: "burger-constructor/clearIngredients"
+        })
+        store.dispatch({
+            type: "burger-ingredients/clearCounts"
         })
     }
 
@@ -29,6 +32,7 @@ const customMiddleware: Middleware<{}, RootState> = store => next => (action: an
         || action.type === configureUser.rejected.type
         || action.type === loadOrder.rejected.type)
         && action.error.message === "jwt expired") {
+        console.log("Refreshing token")
         const storedRefreshToken = getStoredToken('refreshToken')
         const interceptedPayload = action.meta.arg;
         if (storedRefreshToken) {

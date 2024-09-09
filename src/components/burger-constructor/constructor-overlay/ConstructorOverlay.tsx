@@ -1,21 +1,20 @@
-import { useAppDispatch, useAppSelector } from '../../../hooks/preTypedHooks';
+import { useAppSelector } from '../../../hooks/preTypedHooks';
 import { useMemo } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Location, useLocation, useNavigate } from 'react-router-dom';
 
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import { getAllIngredientsToOrder} from "../../../services/burger-constructor/reducer";
-import { loadOrder } from '../../../services/order-details/action';
 import { getUserInfo } from '../../../services/profile/reducer';
 
-import { ConstructorOverlayProps } from '../../../utils/type'
+import { IConstructorOverlayProps } from '../../../utils/types/type'
 
 import styles from './ConstructorOverlay.module.css'
 
-export default function ConstructorOverlay ({children}: ConstructorOverlayProps) {
+const ConstructorOverlay = ({ children }: IConstructorOverlayProps): React.JSX.Element => {
     const { fillerToOrder, bunsToOrder } = useAppSelector(getAllIngredientsToOrder);
     const user = useAppSelector(getUserInfo)
-    const location = useLocation();
+    const location = useLocation() as Location<{ backgroundLocation: Location }>;
     const navigate = useNavigate();
 
     const totalPrice = useMemo(() => {
@@ -56,3 +55,5 @@ export default function ConstructorOverlay ({children}: ConstructorOverlayProps)
         </section>
     )
 }
+
+export default ConstructorOverlay

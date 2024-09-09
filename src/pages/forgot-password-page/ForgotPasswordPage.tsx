@@ -4,10 +4,9 @@ import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-component
 import { Link, useNavigate } from 'react-router-dom'
 import { resetPassword } from '../../utils/api'
 import { useForm } from '../../hooks/useForm'
-import { Login } from '../../utils/type'
 
 
-export default function ForgotPasswordPage() {
+const ForgotPasswordPage = (): React.JSX.Element => {
     const { values , handleChange } = useForm<{email: string}>({email: ''})
     const navigate = useNavigate()
 
@@ -50,3 +49,5 @@ export default function ForgotPasswordPage() {
         </>
     )
 }
+
+export default ForgotPasswordPage;
