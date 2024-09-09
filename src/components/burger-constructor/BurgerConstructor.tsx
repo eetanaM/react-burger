@@ -8,7 +8,7 @@ import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-comp
 
 import { getAllIngredientsToOrder } from "../../services/burger-constructor/reducer";
 
-import { IDraggableIngredient } from "../../utils/type";
+import { IDraggableIngredient } from "../../utils/types/type";
 
 import styles from "./BurgerConstructor.module.css"
 

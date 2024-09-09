@@ -5,7 +5,7 @@ import ModalOverlay from "../modal-overlay/ModalOverlay"
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components"
 
 import styles from "./Modal.module.css"
-import { IModalProps } from "../../utils/type"
+import { IModalProps } from "../../utils/types/type"
 
 const modalRoot = document.querySelector('#react-modals') as HTMLDivElement
 

@@ -1,4 +1,4 @@
-import { IModalProps } from "../../utils/type";
+import { IModalProps } from "../../utils/types/type";
 
 import styles from "./ModalOverlay.module.css"
 

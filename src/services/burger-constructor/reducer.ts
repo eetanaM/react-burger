@@ -1,5 +1,5 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit'
-import { IDraggableIngredient, IIngredientsConstructorState, IIngredient } from '../../utils/type'
+import { IDraggableIngredient, IIngredientsConstructorState, IIngredient } from '../../utils/types/type'
 import { PayloadAction } from '@reduxjs/toolkit'
 
 const initialState: IIngredientsConstructorState = {

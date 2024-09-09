@@ -8,7 +8,7 @@ import {
     configureUserData as configureUserDataAPI,
 } from "../../utils/api"
 
-import { ILogin, IRegister } from "../../utils/type";
+import { ILogin, IRegister } from "../../utils/types/type";
 
 export const registerUser = createAsyncThunk(
     "profile/registerUser",

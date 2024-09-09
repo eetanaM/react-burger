@@ -1,9 +1,11 @@
 import { Outlet } from "react-router";
+import { useAppDispatch } from "../../hooks/preTypedHooks";
+
+import { NavLink } from "react-router-dom";
+
+import { logoutUser } from "../../services/profile/actions";
 
 import styles from './ProfilePageLayout.module.css'
-import { NavLink } from "react-router-dom";
-import { useAppDispatch } from "../../hooks/preTypedHooks";
-import { logoutUser } from "../../services/profile/actions";
 
 const ProfilePageLayout = (): React.JSX.Element => {
     const dispatch = useAppDispatch()

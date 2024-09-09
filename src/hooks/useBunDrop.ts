@@ -7,9 +7,9 @@ import { addIngredientToOrder } from "../services/burger-constructor/reducer";
 const useBunDrop = () => {
     const dispatch = useAppDispatch();
     const { ingredients } = useAppSelector(getAllIngredients);
-    const [{ canDrop }, bunDropRef] = useDrop(() => ({
+    const [{ canDrop }, bunDropRef] = useDrop<{ id: string }, unknown, { canDrop: boolean }>(() => ({
     accept: "ingredient",
-    drop: (dragItem: {id: string}) => {
+    drop: (dragItem) => {
         const id = dragItem.id;
         const ingredient = ingredients.find((item) => item._id === id);
         if (!ingredient) return
@@ -34,4 +34,4 @@ const useBunDrop = () => {
   return { canDrop, bunDropRef };
 }
 
-export {useBunDrop};
+export { useBunDrop };

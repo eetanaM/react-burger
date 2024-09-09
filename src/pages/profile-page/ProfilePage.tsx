@@ -8,25 +8,25 @@ import { configureUser } from '../../services/profile/actions'
 
 import styles from './ProfilePage.module.css'
 
-import { IRegister } from '../../utils/type'
+import { IRegister } from '../../utils/types/type'
 
 const ProfilePage = (): React.JSX.Element => {
     const dispatch = useAppDispatch()
     const initialState = { userName: '', email: '', password: '' }
     const { values, handleChange, setValues} = useForm<IRegister>(initialState)
-    const [isChanged, setIsChanged] = useState(false)
+    const [isChanged, setIsChanged] = useState<boolean>(false)
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         handleChange(e);
         setIsChanged(true)
     }
 
-    const submitChanges = (e: FormEvent) => {
+    const submitChanges = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(configureUser(values))
     }
 
-    const resetChanges = (e: FormEvent) => {
+    const resetChanges = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setValues(initialState)
         setIsChanged(false)

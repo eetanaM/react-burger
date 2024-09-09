@@ -31,7 +31,6 @@ const OrderDetails = (): React.JSX.Element => {
 
 
     useEffect(() => {
-        console.log("Mounted")
         const abortController = new AbortController()
         const signal = abortController.signal
         dispatch(loadOrder({ingredients:ingredientsToOrder, signal}))

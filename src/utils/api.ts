@@ -1,23 +1,37 @@
+import {
+  IAuthResponse,
+  IGetIngredients,
+  IGetOrderData,
+  IGetUserData,
+  ILogoutUser,
+  IPasswordReset,
+  IRefreshToken,
+  IRequest
+} from "./types/api-types";
+
 const BASE_URL = "https://norma.nomoreparties.space/api/"
 
-const checkResponse = (res: Response) => {
+const checkResponse = <T>(res: Response): Promise<T & IRequest> => {
   if (res.ok) {
     return res.json();
+  }
+  if (res.status === 403) {
+    return Promise.reject('jwt expired')
   }
   return Promise.reject(`Ошибка ${res.status}`)
 }
 
-const checkSuccess = (res: any) => {
+const checkSuccess = <T>(res: T & IRequest): Promise<T> => {
   if (res && res.success) {
-    return res
- }
- return Promise.reject(`Не получен успешный ответ: ${res}`)
-}
+    return res as unknown as Promise<T>
+  }
+  return Promise.reject(`Не получен успешный ответ: ${res}`);
+};
 
-const request = async (endpoint: string, options: RequestInit) => {
+const request = async <T>(endpoint: string, options: RequestInit): Promise<T> => {
   return fetch(`${BASE_URL}${endpoint}`, options)
-    .then(checkResponse)
-    .then(checkSuccess)
+    .then(checkResponse<T>)
+    .then(checkSuccess<T>)
 }
 
 const saveTokens = (accessToken: string, refreshToken: string) => {
@@ -30,16 +44,16 @@ export const getStoredToken = (tokenName: string) => {
 }
 
 
-export const getIngredients = async () => {
-  return request('ingredients', {}).then(ingredients => ingredients.data)
+export const getIngredients = async (): Promise<IGetIngredients> => {
+  return request<IGetIngredients>('ingredients', {})
 };
 
-export const getOrderData = async (ingredientsToOrder: string[], signal: AbortSignal) => {
+export const getOrderData = async (ingredientsToOrder: string[], signal: AbortSignal): Promise<IGetOrderData> => {
   const accessToken = getStoredToken('accessToken');
   if (!accessToken) {
     throw new Error('Access token not available');
   }
-  return request('orders', {
+  return request<IGetOrderData>('orders', {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -50,51 +64,49 @@ export const getOrderData = async (ingredientsToOrder: string[], signal: AbortSi
   })
 };
 
-export const resetPassword = async (email: string) => {
-  return request('password-reset', {
+export const resetPassword = async (email: string): Promise<IPasswordReset> => {
+  return request<IPasswordReset>('password-reset', {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email: email }),
-  }).then(data => data)
-    .catch(error => {
+  }).catch(error => {
       alert("Что-то пошло не так... Попробуйте снова")
-      console.log("Reset password request failed with error message: " + error.message)
+      return Promise.reject(`Reset password request failed. Error status ${error.status ? error.status : "unknown"}`)
     })
 };
 
-export const refreshPassword = async (password: string, token: string) => {
-  return request('password/reset-password', {
+export const refreshPassword = async (password: string, token: string): Promise<IPasswordReset> => {
+  return request<IPasswordReset>('password-reset/reset', {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({ password: password, token: token }),
-  }).then(data => data)
-    .catch(error => {
+  }).catch(error => {
     alert("Что-то пошло не так... Попробуйте снова")
-    console.log("Refresh password request failed with error message: " + error.message)
+    return Promise.reject(`Refresh password request failed. Error status ${error.status ? error.status : "unknown"}`)
   })
 };
 
-export const registerUser = async (email: string, password: string, userName: string) => {
-  return request('auth/register', {
+export const registerUser = async (email: string, password: string, userName: string): Promise<IAuthResponse> => {
+  return request<IAuthResponse>('auth/register', {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({ email: email, password: password, name: userName }),
   }).then((data) => {
-      if (data.accessToken && data.refreshToken) {
+    if (data.accessToken && data.refreshToken) {
         saveTokens(data.accessToken, data.refreshToken);
       }
     return data
   })
 };
 
-export const loginUser = async (email: string, password: string) => {
-  return request('auth/login', {
+export const loginUser = async (email: string, password: string): Promise<IAuthResponse> => {
+  return request<IAuthResponse>('auth/login', {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -108,31 +120,28 @@ export const loginUser = async (email: string, password: string) => {
     })
 };
 
-export const refreshToken = async () => {
-  const refreshToken = getStoredToken('refreshToken');
-  return request('auth/token', {
+export const refreshToken = async (): Promise<IRefreshToken> => {
+  const storedRefreshToken = getStoredToken('refreshToken');
+  return request<IRefreshToken>('auth/token', {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ token: refreshToken }),
+    body: JSON.stringify({ token: storedRefreshToken }),
   }).then(data => {
       saveTokens(data.accessToken, data.refreshToken);
-      return {
-        accessToken: data.accessToken,
-        refreshToken: data.refreshToken,
-      }
+      return data
     })
 };
 
-export const logoutUser = async () => {
-  const refreshToken = getStoredToken('refreshToken');
-  return request('auth/logout', {
+export const logoutUser = async (): Promise<ILogoutUser> => {
+  const storedRefreshToken = getStoredToken('refreshToken');
+  return request<ILogoutUser>('auth/logout', {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ token: refreshToken }),
+    body: JSON.stringify({ token: storedRefreshToken }),
   }).then(data => {
       localStorage.removeItem('accessToken')
       localStorage.removeItem('refreshToken')
@@ -140,26 +149,26 @@ export const logoutUser = async () => {
     })
 };
 
-export const getUserData = async () => {
+export const getUserData = async (): Promise<IGetUserData> => {
   const accessToken = getStoredToken('accessToken');
   if (!accessToken) {
     throw new Error('Access token not available')
   }
-  return request('auth/user', {
+  return request<IGetUserData>('auth/user', {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: accessToken,
     },
-  }).then(data => data)
+  })
 };
 
-export const configureUserData = async (email: string, password: string, userName: string) => {
+export const configureUserData = async (email: string, password: string, userName: string): Promise<IGetUserData> => {
   const accessToken = getStoredToken('accessToken');
   if (!accessToken) {
     throw new Error('Access token not available');
   }
-  return request('auth/user', {
+  return request<IGetUserData>('auth/user', {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

@@ -1,18 +1,18 @@
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { FormEvent } from 'react'
 import { useAppDispatch } from '../../hooks/preTypedHooks'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useForm } from '../../hooks/useForm'
+import { Link, Location, useLocation, useNavigate } from 'react-router-dom'
 
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import { loginUser } from '../../services/profile/actions'
-import { useForm } from '../../hooks/useForm'
-import { ILogin } from '../../utils/type'
+import { ILogin } from '../../utils/types/type'
 
 const LoginPage = (): React.JSX.Element => {
     const initialState = { email: '', password: '' }
     const { values, handleChange } = useForm<ILogin>(initialState)
     const dispatch = useAppDispatch();
-    const location = useLocation();
+    const location = useLocation() as Location<{ previousLocation: Location }>;
     const navigate = useNavigate()
 
     const handleSubmitForm = (e: FormEvent) => {

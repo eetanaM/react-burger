@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import { loadOrder } from './action'
 
-import { IOrderDetailsState } from '../../utils/type'
+import { IOrderDetailsState } from '../../utils/types/type'
 
 const initialState: IOrderDetailsState = {
     order: null,

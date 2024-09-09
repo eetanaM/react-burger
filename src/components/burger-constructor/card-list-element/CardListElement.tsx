@@ -1,10 +1,11 @@
 import { useCallback, useRef } from 'react';
-import { XYCoord, useDrag, useDrop } from "react-dnd";
+import { useDrag, useDrop } from "react-dnd";
 import { useAppDispatch } from '../../../hooks/preTypedHooks';
 
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
-import { IDraggableIngredient, IIngredientCardProps } from "../../../utils/type";
+import { IDraggableIngredient, IIngredientCardProps, IDragItem } from "../../../utils/types/type";
+import { Identifier } from 'dnd-core';
 
 import styles from "./CardListElement.module.css"
 
@@ -19,7 +20,7 @@ const CardListElement = ({ingredient, index}: IIngredientCardProps<IDraggableIng
         })
     }
 
-    const [, dragRef] = useDrag({
+    const [, dragRef] = useDrag<IDragItem, unknown, unknown>({
         type: 'constructor-ingredient',
         item: () => ({
             key: ingredient.key,
@@ -32,7 +33,7 @@ const CardListElement = ({ingredient, index}: IIngredientCardProps<IDraggableIng
         }
     })
 
-    const [, dropRef] = useDrop<{ key: string, index: number }>({
+    const [, dropRef] = useDrop<IDragItem, unknown, { handlerId: Identifier | null }>({
         accept: 'constructor-ingredient',
         collect(monitor) {
             return {
@@ -53,7 +54,12 @@ const CardListElement = ({ingredient, index}: IIngredientCardProps<IDraggableIng
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
             const clientOffset = monitor.getClientOffset();
-            const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
+
+            if (!clientOffset) {
+                return
+            }
+
+            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
                 return

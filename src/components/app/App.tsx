@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Route, Routes, useLocation, useNavigate } from 'react-router';
+import { Location, Route, Routes, useLocation, useNavigate } from 'react-router';
 import { useAppDispatch } from '../../hooks/preTypedHooks';
 
 import { OnlyAuth, OnlyUnAuth } from '../protected-route-element/ProtectedRouteElement';
@@ -18,9 +18,9 @@ import IngredientDetails from '../ingredient-details/IngredientDetails';
 
 const App = (): React.JSX.Element => {
   const dispatch = useAppDispatch();
-  const location = useLocation();
+  const location = useLocation() as Location<{ backgroundLocation: Location }>;
   const navigate = useNavigate();
-  const state = location.state as { backgroundLocation?: Location};
+  const state = location.state;
 
   const hideModal = useCallback((dispatchType: string) => {
     navigate(-1)

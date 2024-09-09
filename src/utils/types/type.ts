@@ -43,13 +43,18 @@ interface IOrderDetailsState {
 
 interface IIngredientCardProps<T> {
     ingredient: T;
-    index?: number;
+    index: number;
 }
 
 interface IModalProps {
     children?: React.JSX.Element;
     header?: string;
     onClose: () => void;
+}
+
+interface IProtectedRouteElementProps {
+    onlyUnAuth?: boolean;
+    element: React.JSX.Element;
 }
 
 interface IConstructorOverlayProps {
@@ -79,6 +84,12 @@ interface IRefreshPassword {
     token: string;
 }
 
+interface IDragItem {
+    key: string;
+    index: number;
+}
+
+
 
 export type {
     IIngredient,
@@ -88,9 +99,11 @@ export type {
     IOrderDetailsState,
     IIngredientCardProps,
     IModalProps,
+    IProtectedRouteElementProps,
     IConstructorOverlayProps,
     IUserDataState,
     ILogin,
     IRegister,
     IRefreshPassword,
+    IDragItem
 };

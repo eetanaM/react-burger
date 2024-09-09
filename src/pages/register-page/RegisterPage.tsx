@@ -1,15 +1,16 @@
 import { FormEvent } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from '../../hooks/useForm'
 import { useAppDispatch } from '../../hooks/preTypedHooks'
-import { Link, useNavigate } from 'react-router-dom'
 
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import { registerUser } from '../../services/profile/actions'
 
+import { IRegister } from '../../utils/types/type'
+
 import styles from './RegisterPage.module.css'
 
-import { IRegister } from '../../utils/type'
 const RegisterPage = (): React.JSX.Element => {
     const initialState = { userName: '', email: '', password: '' }
     const { values, handleChange } = useForm<IRegister>(initialState)
