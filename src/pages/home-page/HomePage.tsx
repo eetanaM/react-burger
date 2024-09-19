@@ -28,7 +28,9 @@ const HomePage = (): React.JSX.Element => {
   if (!loading && error) {
     return (
       <>
-        <h1 className="text text_type_main-large">Ошибка загрузки данных</h1>
+        <div className={styles.loading_container}>
+          <h1 className="text text_type_main-large">Ошибка загрузки данных</h1>
+        </div>
       </>
     )
   }

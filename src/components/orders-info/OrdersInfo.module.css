@@ -1,0 +1,9 @@
+.orders_info_container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    min-width: 580px;
+    height: calc(100vh - 130px);
+    border: 1px solid white;
+}

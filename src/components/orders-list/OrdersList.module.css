@@ -1,0 +1,9 @@
+.orders_list_container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+
+    min-width: 600px;
+    height: calc(100vh - 128px);
+}

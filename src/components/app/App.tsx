@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../hooks/preTypedHooks';
 
 import { OnlyAuth, OnlyUnAuth } from '../protected-route-element/ProtectedRouteElement';
 
-import { ForgotPasswordPage, HomePage, IngredientPage, LoginPage, NotFoundPage, OrdersPage, ProfilePage, RegisterPage, ResetPasswordPage } from '../../pages';
+import { ForgotPasswordPage, HomePage, IngredientPage, LoginPage, NotFoundPage, OrdersPage, ProfilePage, RegisterPage, ResetPasswordPage, FeedPage } from '../../pages';
 
 import Modal from '../modal/Modal';
 import Layout from '../layout/Layout';
@@ -50,6 +50,7 @@ return (
           </Route>
           <Route />
           <Route path='ingredients/:id' element={<IngredientPage />} />
+          <Route path='feed' element={<FeedPage />} />
           <Route path='*' element={<NotFoundPage />} />
         </Route>
       </Routes>

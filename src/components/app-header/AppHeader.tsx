@@ -11,7 +11,7 @@ import styles from "./AppHeader.module.css"
 const AppHeader = (): React.JSX.Element => {
     const user = useAppSelector(getUserInfo)
     const chooseTextStyle = (isActive: boolean) => {
-        return `text text_type_main-small ${isActive ? '' : 'text_color_inactive'}`
+        return `text text_type_main-default ${isActive ? '' : 'text_color_inactive'}`
     }
 
     return (
@@ -34,7 +34,7 @@ const AppHeader = (): React.JSX.Element => {
                         )}
                     </NavLink>
                     <NavLink
-                        to="/orders-list"
+                        to="/feed"
                         className={`${styles.header_button} pl-5 pr-5 pb-4 pt-4`}
                     >
                         {({ isActive }) => (

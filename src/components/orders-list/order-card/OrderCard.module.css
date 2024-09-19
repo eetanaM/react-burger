@@ -1,0 +1,32 @@
+.order_card {
+    box-sizing: border-box;
+
+    border-radius: 40px;
+    background-color: #1C1C21;
+}
+
+.order_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.order_ingredients {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order_ingredients_icons {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    margin: 0;
+    padding: 0;
+}
+
+.total_price {
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
