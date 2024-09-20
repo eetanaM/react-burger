@@ -31,3 +31,10 @@
 
     height: 54px;
 }
+
+.icon_cover_text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}

@@ -2,8 +2,47 @@
     position: relative;
     display: flex;
     flex-direction: column;
-
+    justify-content: start;
     min-width: 580px;
     height: calc(100vh - 130px);
-    border: 1px solid white;
+}
+
+.orders_info_status {
+    display: flex;
+    flex-direction: row;
+}
+
+.orders_info_status_done {
+    width: 272px;
+}
+
+.orders_info_status_done_list {
+    display: flex;
+    flex-flow: column wrap;
+    gap: 8px;
+    max-height: 225px;
+    color: #00CCCC
+}
+
+.orders_info_status_in_work {
+    width: 272px;
+}
+
+.orders_info_status_in_work_list{
+    display: flex;
+    flex-flow: column wrap;
+    gap: 8px;
+    max-height: 225px;
+}
+
+.orders_info_done_all {
+    display: flex;
+    flex-direction: column;
+    height: 150px;
+}
+
+.orders_info_done_today {
+    display: flex;
+    flex-direction: column;
+    height: 150px;
 }

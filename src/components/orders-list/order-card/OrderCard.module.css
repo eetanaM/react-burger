@@ -5,6 +5,10 @@
     background-color: #1C1C21;
 }
 
+.order_card:hover {
+    cursor: pointer;
+}
+
 .order_header {
     display: flex;
     flex-direction: row;

@@ -33,8 +33,15 @@ const FeedPage = (): React.JSX.Element => {
     return (
         <>
             <div className={styles.feed_page_container}>
-                <OrdersList />
-                <OrderInfo />
+              <div>
+                <h1 className={`text text_type_main-large mt-10 mb-4`}>
+                    Лента заказов
+                </h1>
+                <div className={styles.feed_page_list_container}>
+                  <OrdersList />
+                </div>
+              </div>
+              <OrderInfo />
             </div>
         </>
     )

@@ -5,8 +5,26 @@ import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burge
 import styles from "./OrderCard.module.css"
 import IngredientIcon from "./ingredient-icon/IngredientIcon";
 
-const OrderCard = (): React.JSX.Element => {
-    const today = new Date()
+const OrderCard = ({ withStatus = false}: { withStatus?: boolean }): React.JSX.Element => {
+    const today = new Date();
+    let orderStatus = "Выполнен";
+    let statusTextColor;
+
+    switch (orderStatus) {
+        case "Выполнен":
+            statusTextColor = {color: "#00CCCC"};
+            break;
+        case "Готовится":
+            statusTextColor = {color: "#ffffff"};
+            break;
+        case "Отменен":
+            statusTextColor = {color: "#ce0c0c"};
+            break;
+        case "Создан":
+            statusTextColor = {color: "#ffffff"};
+            break;
+    }
+
     const ingredients = [
         {
             _id:"643d69a5c3f7b9001cfa093c",
@@ -100,6 +118,24 @@ const OrderCard = (): React.JSX.Element => {
           },
     ]
 
+    const getIngredientsToRender = () => {
+        if (ingredients.length > 5) {
+            let ingredientsToRender = ingredients.slice(0,6)
+            const restAmount = ingredients.length - (ingredientsToRender.length - 1);
+            return ingredientsToRender.map((ingredient, index) => {
+                if (index < ingredientsToRender.length - 1) {
+                    return <IngredientIcon image={ingredient.image} key={ingredient._id}/>
+                } else {
+                    return <IngredientIcon image={ingredient.image} key={ingredient._id} restAmount={restAmount}/>
+                }
+            }).reverse()
+        } else {
+            return ingredients.map((ingredient) => (
+                <IngredientIcon image={ingredient.image} key={ingredient._id}/>
+            )).reverse();
+        }
+    }
+
     const totalPrice = useMemo(() => {
         const result = ingredients.reduce((acc, current) => acc + current.price, 0)
         return result;
@@ -126,12 +162,20 @@ const OrderCard = (): React.JSX.Element => {
                 </p>
             </div>
             <p className="text text_type_main-medium mt-6">Death Star Starship Main бургер</p>
+            {
+                withStatus
+                ? <p
+                    className="text text_type_main-small mt-2"
+                    style={statusTextColor}
+                >
+                    {orderStatus}
+                </p>
+                : null
+            }
             <div className={`${styles.order_ingredients} mt-6`}>
                 <ul className={styles.order_ingredients_icons}>
                 {/* reverse() для корректного наложения иконок при flex-direction: row-reverse */}
-                    {ingredients.map((ingredient) => (
-                        <IngredientIcon ingredient={ingredient}/>
-                    )).reverse()}
+                    {getIngredientsToRender()}
                 </ul>
                 <div className={styles.total_price}>
                     <span className="text text_type_digits-default">

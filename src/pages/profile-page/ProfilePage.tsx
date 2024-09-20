@@ -38,7 +38,7 @@ const ProfilePage = (): React.JSX.Element => {
 
     return (
         <>
-            <form onSubmit={e => submitChanges(e)} onReset={e => resetChanges(e)}>
+            <form onSubmit={e => submitChanges(e)} onReset={e => resetChanges(e)} className='mt-25'>
                 <Input
                     type={'text'}
                     placeholder={'Имя'}

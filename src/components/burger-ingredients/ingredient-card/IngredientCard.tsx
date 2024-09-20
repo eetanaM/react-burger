@@ -22,12 +22,6 @@ const IngredientCard = ({ ingredient }: Pick<IIngredientCardProps<IIngredient>, 
     });
 
     const openModal = useCallback((ingredient: IIngredient) => {
-        dispatch({
-            type: 'ingredient-details/showIngredient',
-            payload: {
-                ...ingredient,
-            }
-        });
         navigate(`/ingredients/${ingredient._id}`, { state: { backgroundLocation: location, type: "ingredient"}})
     }, [dispatch])
 

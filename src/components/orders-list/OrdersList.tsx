@@ -4,16 +4,26 @@ import OrderCard from "./order-card/OrderCard";
 
 import styles from "./OrdersList.module.css"
 
-const OrdersList = () => {
+const OrdersList = ({ withStatus = false}: { withStatus?: boolean }): React.JSX.Element => {
     return (
-        <section className={`${styles.orders_list_container} pt-10`}>
-            <h1 className={`text text_type_main-large mb-4`}>
-                Лента заказов
-            </h1>
-            <OrderCard />
-            <OrderCard />
-            <OrderCard />
-            <OrderCard />
+        <section className={`${styles.orders_list_container}`}>
+            {withStatus ?
+            <>
+                <OrderCard withStatus={true}/>
+                <OrderCard withStatus={true}/>
+                <OrderCard withStatus={true}/>
+                <OrderCard withStatus={true}/>
+                <OrderCard withStatus={true}/>
+            </>
+            :
+            <>
+                <OrderCard />
+                <OrderCard />
+                <OrderCard />
+                <OrderCard />
+                <OrderCard />
+            </>
+            }
         </section>
     )
 }

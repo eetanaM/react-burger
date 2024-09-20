@@ -20,7 +20,7 @@ const ProfilePageLayout = (): React.JSX.Element => {
     return (
         <>
             <div className={styles.profile_container}>
-                <ul className={`${styles.menu_bar} mr-15`}>
+                <ul className={`${styles.menu_bar} mt-25 mr-15`}>
                     <NavLink to='/profile' end>
                         {({ isActive }) => (
                         <h2

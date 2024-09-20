@@ -1,12 +1,9 @@
-.orders_container {
-    border: 1px solid white;
-    border-radius: 15px;
-    padding: 5px 20px 5px 20px;
-
-    min-height: 250px;
-
+.orders_page_list_container {
+    position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    overflow-y: scroll;
+
+    min-width: 600px;
+    height: calc(100vh - 148px);
 }
