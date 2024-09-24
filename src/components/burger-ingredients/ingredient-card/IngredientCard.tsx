@@ -1,6 +1,5 @@
 import React, { useCallback } from "react";
 import { useDrag, DragPreviewImage } from "react-dnd";
-import { useAppDispatch } from "../../../hooks/preTypedHooks";
 import { Location, useLocation, useNavigate } from "react-router";
 
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -12,7 +11,6 @@ import styles from "./IngredientCard.module.css"
 const IngredientCard = ({ ingredient }: Pick<IIngredientCardProps<IIngredient>, 'ingredient'>): React.JSX.Element => {
     const navigate = useNavigate();
     const location = useLocation() as Location<{ backgroundLocation: Location }>;
-    const dispatch = useAppDispatch();
     const [, dragRef, preview] = useDrag<{ id: string }, unknown, unknown>({
         type: 'ingredient',
         item: {id: ingredient._id},
@@ -22,8 +20,8 @@ const IngredientCard = ({ ingredient }: Pick<IIngredientCardProps<IIngredient>, 
     });
 
     const openModal = useCallback((ingredient: IIngredient) => {
-        navigate(`/ingredients/${ingredient._id}`, { state: { backgroundLocation: location, type: "ingredient"}})
-    }, [dispatch])
+        navigate(`/ingredients/${ingredient._id}`, { state: { backgroundLocation: location }})
+    }, [])
 
     return (
         <>

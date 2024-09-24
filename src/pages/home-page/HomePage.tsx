@@ -5,7 +5,7 @@ import { useAppSelector } from '../../hooks/preTypedHooks';
 import BurgerIngredients from '../../components/burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../../components/burger-constructor/BurgerConstructor';
 
-import { getAllIngredients } from '../../services/burger-ingredients/reducer';
+import { getAllIngredients } from '../../services/burger-ingredients/slice';
 
 import styles from './HomePage.module.css'
 import Preloader from '../../components/preloader/Preloader';

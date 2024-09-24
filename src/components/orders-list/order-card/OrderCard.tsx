@@ -1,11 +1,18 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./OrderCard.module.css"
 import IngredientIcon from "./ingredient-icon/IngredientIcon";
+import { useAppDispatch } from "../../../hooks/preTypedHooks";
+import { Location, useLocation, useNavigate } from "react-router";
+import { IIngredient } from "../../../utils/types/type";
 
 const OrderCard = ({ withStatus = false}: { withStatus?: boolean }): React.JSX.Element => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const location = useLocation() as Location<{ backgroundLocation: Location }>;
+
     const today = new Date();
     let orderStatus = "Выполнен";
     let statusTextColor;
@@ -118,20 +125,37 @@ const OrderCard = ({ withStatus = false}: { withStatus?: boolean }): React.JSX.E
           },
     ]
 
+    const order = {
+        ingredients: ingredients,
+        status: "Выполнен",
+        number: '034533',
+        name: "Death Star Starship Main бургер",
+    }
+
     const getIngredientsToRender = () => {
         if (ingredients.length > 5) {
             let ingredientsToRender = ingredients.slice(0,6)
             const restAmount = ingredients.length - (ingredientsToRender.length - 1);
             return ingredientsToRender.map((ingredient, index) => {
                 if (index < ingredientsToRender.length - 1) {
-                    return <IngredientIcon image={ingredient.image} key={ingredient._id}/>
+                    return (
+                        <li key={ingredient._id}>
+                            <IngredientIcon image={ingredient.image} key={ingredient._id}/>
+                        </li>
+                    )
                 } else {
-                    return <IngredientIcon image={ingredient.image} key={ingredient._id} restAmount={restAmount}/>
+                    return (
+                        <li key={ingredient._id}>
+                            <IngredientIcon image={ingredient.image} key={ingredient._id} restAmount={restAmount}/>
+                        </li>
+                    )
                 }
             }).reverse()
         } else {
             return ingredients.map((ingredient) => (
-                <IngredientIcon image={ingredient.image} key={ingredient._id}/>
+                <li key={ingredient._id}>
+                    <IngredientIcon image={ingredient.image} key={ingredient._id}/>
+                </li>
             )).reverse();
         }
     }
@@ -141,12 +165,22 @@ const OrderCard = ({ withStatus = false}: { withStatus?: boolean }): React.JSX.E
         return result;
     }, [ingredients])
 
+    const openModal = useCallback((orderInfo: { number:string, ingredients: IIngredient[] }) => {
+        dispatch({
+            type: "order-details/showOrder",
+            payload: orderInfo
+        });
+        navigate(`${orderInfo.number}`, { state: { backgroundLocation: location }});
+    }, [dispatch])
 
     return (
-        <div className={`${styles.order_card} pl-6 pr-6 pt-6 pb-6 mb-4 mr-2`}>
+        <li
+            className={`${styles.order_card} pl-6 pr-6 pt-6 pb-6 mb-4 mr-2`}
+            onClick={() => openModal(order)}
+        >
             <div className={styles.order_header}>
-                <p className="text text_type_digits-default">#034535</p>
-                <p className="text text_type_main-default text_color_inactive">
+                <span className="text text_type_digits-default">{`#${order.number}`}</span>
+                <span className="text text_type_main-default text_color_inactive">
                     <FormattedDate
                         date={
                             new Date(
@@ -159,17 +193,17 @@ const OrderCard = ({ withStatus = false}: { withStatus?: boolean }): React.JSX.E
                             )
                         }
                     />
-                </p>
+                </span>
             </div>
-            <p className="text text_type_main-medium mt-6">Death Star Starship Main бургер</p>
+            <h2 className="text text_type_main-medium mt-6">Death Star Starship Main бургер</h2>
             {
                 withStatus
-                ? <p
+                ? <span
                     className="text text_type_main-small mt-2"
                     style={statusTextColor}
                 >
                     {orderStatus}
-                </p>
+                </span>
                 : null
             }
             <div className={`${styles.order_ingredients} mt-6`}>
@@ -184,7 +218,7 @@ const OrderCard = ({ withStatus = false}: { withStatus?: boolean }): React.JSX.E
                     <CurrencyIcon type="primary"/>
                 </div>
             </div>
-        </div>
+        </li>
     )
 }
 

@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 import { Logo, BurgerIcon, ListIcon, ProfileIcon  } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { getUserInfo } from "../../services/profile/reducer";
+import { getUserInfo } from "../../services/profile/slice";
 
 import styles from "./AppHeader.module.css"
 

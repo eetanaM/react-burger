@@ -1,15 +1,9 @@
 .icon_layout {
     position: relative;
-    display: inline-block;
-
     background: linear-gradient(45deg, #801AB2, #4C4CFF);
-    width: 64px;
-    height: 64px;
+    min-width: 64px;
+    min-height: 64px;
     border-radius: 50%;
-}
-
-.icon_layout:not(:last-child) {
-    margin-left: -20px;
 }
 
 .ingredient_icon {

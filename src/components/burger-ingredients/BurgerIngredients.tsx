@@ -4,7 +4,7 @@ import { useAppSelector } from "../../hooks/preTypedHooks";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientCard from "./ingredient-card/IngredientCard";
 
-import { getAllIngredients } from '../../services/burger-ingredients/reducer';
+import { getAllIngredients } from '../../services/burger-ingredients/slice';
 
 import styles from "./BurgerIngredients.module.css"
 

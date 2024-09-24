@@ -3,7 +3,7 @@ import { useAppSelector } from '../../hooks/preTypedHooks'
 
 import IngredientDetails from '../../components/ingredient-details/IngredientDetails'
 
-import { getAllIngredients } from '../../services/burger-ingredients/reducer'
+import { getAllIngredients } from '../../services/burger-ingredients/slice'
 
 const IngredientPage = (): React.JSX.Element => {
 

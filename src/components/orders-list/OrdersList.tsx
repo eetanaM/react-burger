@@ -6,7 +6,7 @@ import styles from "./OrdersList.module.css"
 
 const OrdersList = ({ withStatus = false}: { withStatus?: boolean }): React.JSX.Element => {
     return (
-        <section className={`${styles.orders_list_container}`}>
+        <ul className={`${styles.orders_list_container} custom-scroll`}>
             {withStatus ?
             <>
                 <OrderCard withStatus={true}/>
@@ -24,7 +24,7 @@ const OrdersList = ({ withStatus = false}: { withStatus?: boolean }): React.JSX.
                 <OrderCard />
             </>
             }
-        </section>
+        </ul>
     )
 }
 

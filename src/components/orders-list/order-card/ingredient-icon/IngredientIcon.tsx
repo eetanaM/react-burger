@@ -1,10 +1,10 @@
-import { IIngredient, IIngredientIconProps } from "../../../../utils/types/type"
+import { IIngredientIconProps } from "../../../../utils/types/type"
 
 import styles from "./IngredientIcon.module.css"
 
 const IngredientIcon = ({ image, restAmount }:  IIngredientIconProps): React.JSX.Element => {
     return (
-        <li className={styles.icon_layout}>
+        <div className={styles.icon_layout}>
             <div className={styles.ingredient_icon}>
                 {!restAmount ? <img src={image} alt='ingredient icon'/>
                 : <>
@@ -17,7 +17,7 @@ const IngredientIcon = ({ image, restAmount }:  IIngredientIconProps): React.JSX
                   </>
                 }
             </div>
-        </li>
+        </div>
     )
 }
 

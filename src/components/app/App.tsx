@@ -15,6 +15,7 @@ import { getUser } from '../../services/profile/actions';
 import ProfilePageLayout from '../profile-page-layout/ProfilePageLayout';
 import OrderDetails from '../order-details/OrderDetails';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
+import FeedOrderDetails from '../feed-order-details/FeedOrderDetails';
 
 const App = (): React.JSX.Element => {
   const dispatch = useAppDispatch();
@@ -46,11 +47,12 @@ return (
           <Route path='profile' element={<OnlyAuth element={<ProfilePageLayout />} />} >
             <Route index={true} element={<ProfilePage />} />
             <Route path='orders' element={<OrdersPage />} />
-            <Route path='orders/:id' element={<NotFoundPage />} />
           </Route>
           <Route />
           <Route path='ingredients/:id' element={<IngredientPage />} />
           <Route path='feed' element={<FeedPage />} />
+          <Route path='feed/:id' element={<FeedOrderDetails />} />
+          <Route path='profile/orders/:id' element={<OnlyAuth element={<FeedOrderDetails />}/>} />
           <Route path='*' element={<NotFoundPage />} />
         </Route>
       </Routes>
@@ -61,7 +63,6 @@ return (
             path='/ingredients/:id'
             element={
               <Modal
-                header="Детали ингредиента"
                 onClose={() => hideModal('ingredient-details/hideIngredient')}
               >
                 <IngredientDetails />
@@ -75,6 +76,26 @@ return (
                 onClose={() => hideModal('order-details/hideOrder')}
               >
                 <OrderDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path='/feed/:id'
+            element={
+              <Modal
+                onClose={() => hideModal('order-details/hideOrder')}
+              >
+                <FeedOrderDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path='/profile/orders/:id'
+            element={
+              <Modal
+                onClose={() => hideModal('order-details/hideOrder')}
+              >
+                <FeedOrderDetails />
               </Modal>
             }
           />

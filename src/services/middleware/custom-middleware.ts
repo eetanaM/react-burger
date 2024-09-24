@@ -28,10 +28,7 @@ const customMiddleware: Middleware<{}, RootState> = store => next => (action: an
     }
 
     // Перехватываются отклоненные запросы с истёкшим временем жизни токена доступа для обновления токена и повторного запроса при наличии рефреш токена
-    if ((action.type === getUser.rejected.type
-        || action.type === configureUser.rejected.type
-        || action.type === loadOrder.rejected.type)
-        && action.error.message === "jwt expired") {
+    if ((action.type === getUser.rejected.type || action.type === configureUser.rejected.type || action.type === loadOrder.rejected.type) && action.error.message === "jwt expired") {
         console.log("Refreshing token")
         const storedRefreshToken = getStoredToken('refreshToken')
         const interceptedPayload = action.meta.arg;

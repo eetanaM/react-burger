@@ -5,8 +5,8 @@ import done from '../../images/done.svg'
 
 import Preloader from '../preloader/Preloader';
 
-import { getOrderInfo } from '../../services/order-details/reducer';
-import { getAllIngredientsToOrder } from '../../services/burger-constructor/reducer';
+import { getOrderInfo } from '../../services/order-details/slice';
+import { getAllIngredientsToOrder } from '../../services/burger-constructor/slice';
 import { loadOrder } from '../../services/order-details/action';
 
 import styles from './OrderDetails.module.css'

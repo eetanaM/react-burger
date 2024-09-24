@@ -13,8 +13,9 @@ export const profileSlice = createSlice({
     name: "profile",
     initialState: initialState,
     reducers: {
-        resetUser: (state) => {
-            state = initialState
+        resetUser: state => {
+            state = initialState;
+            state.isAuthChecked;
         }
     },
     extraReducers: builder => {

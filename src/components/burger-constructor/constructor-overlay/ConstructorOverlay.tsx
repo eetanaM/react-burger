@@ -4,8 +4,8 @@ import { Location, useLocation, useNavigate } from 'react-router-dom';
 
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
-import { getAllIngredientsToOrder} from "../../../services/burger-constructor/reducer";
-import { getUserInfo } from '../../../services/profile/reducer';
+import { getAllIngredientsToOrder} from "../../../services/burger-constructor/slice";
+import { getUserInfo } from '../../../services/profile/slice';
 
 import { IConstructorOverlayProps } from '../../../utils/types/type'
 
@@ -24,10 +24,10 @@ const ConstructorOverlay = ({ children }: IConstructorOverlayProps): React.JSX.E
 
     const getOrderInfo = () => {
         if (!user) {
-            navigate('/login', { state: { previousLocation: location } })
+            navigate('/login', { state: { previousLocation: location }})
             return
         }
-        navigate('/order', { state: { backgroundLocation: location, type: "order" }});
+        navigate('/order', { state: { backgroundLocation: location }});
     };
 
     return (

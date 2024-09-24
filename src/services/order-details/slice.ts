@@ -13,10 +13,14 @@ export const orderDetailsSlice = createSlice({
     name: "order-details",
     initialState: initialState,
     reducers: {
-        hideOrder: () => initialState
+        showOrder: (state, action) => {
+            state.success = true;
+            state.order = action.payload
+        },
+        hideOrder: state => state = initialState
     },
     selectors: {
-        getOrderInfo: (state) => state
+        getOrderInfo: state => state
     },
     extraReducers: builder => {
         builder
