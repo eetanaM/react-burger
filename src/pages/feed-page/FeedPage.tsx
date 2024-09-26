@@ -1,13 +1,25 @@
-import React from "react"
+import React, { useEffect } from "react"
 
-import OrdersList from "../../components/orders-list/OrdersList"
-import OrderInfo from "../../components/orders-info/OrdersInfo";
-import styles from "./FeedPage.module.css"
 import Preloader from "../../components/preloader/Preloader";
+import Feed from "../../components/feed/Feed";
+
+import { useAppDispatch } from "../../hooks/preTypedHooks";
+import { wsConnect, wsDisconnect } from "../../services/feed/actions";
+
+import styles from "./FeedPage.module.css"
 
 const FeedPage = (): React.JSX.Element => {
     const loading = false;
     const error = false;
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+      dispatch(wsConnect('wss://norma.nomoreparties.space/orders/all'))
+
+      return () => {
+        dispatch(wsDisconnect())
+       }
+    }, [])
 
     if (loading) {
         return (
@@ -33,15 +45,7 @@ const FeedPage = (): React.JSX.Element => {
     return (
         <>
             <div className={styles.feed_page_container}>
-              <div>
-                <h1 className={`text text_type_main-large mt-10 mb-4`}>
-                    Лента заказов
-                </h1>
-                <div className={styles.feed_page_list_container}>
-                  <OrdersList />
-                </div>
-              </div>
-              <OrderInfo />
+              <Feed />
             </div>
         </>
     )

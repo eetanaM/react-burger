@@ -1,4 +1,5 @@
-import OrdersList from '../../components/orders-list/OrdersList'
+import OrdersList from '../../components/feed/orders-list/OrdersList'
+
 import styles from './OrdersPage.module.css'
 
 const OrdersPage = (): React.JSX.Element => {
