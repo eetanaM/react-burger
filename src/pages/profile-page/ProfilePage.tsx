@@ -6,9 +6,9 @@ import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burg
 
 import { configureUser } from '../../services/profile/actions'
 
-import styles from './ProfilePage.module.css'
-
 import { IRegister } from '../../utils/types/type'
+
+import styles from './ProfilePage.module.css'
 
 const ProfilePage = (): React.JSX.Element => {
     const dispatch = useAppDispatch()

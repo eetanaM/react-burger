@@ -1,9 +1,10 @@
 import { FormEvent } from 'react'
+import { useForm } from '../../hooks/useForm'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
-import { Link, useNavigate } from 'react-router-dom'
+
 import { resetPassword } from '../../utils/api'
-import { useForm } from '../../hooks/useForm'
 
 
 const ForgotPasswordPage = (): React.JSX.Element => {

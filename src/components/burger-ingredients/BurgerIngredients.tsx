@@ -4,14 +4,14 @@ import { useAppSelector } from "../../hooks/preTypedHooks";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientCard from "./ingredient-card/IngredientCard";
 
-import { getAllIngredients } from '../../services/burger-ingredients/slice';
+import { getIngredinetsState } from '../../services/burger-ingredients/slice';
 
 import styles from "./BurgerIngredients.module.css"
 
 const BurgerIngredients = (): React.JSX.Element => {
     const [current, setCurrent] = useState('buns')
 
-    const { ingredients } = useAppSelector(getAllIngredients);
+    const { ingredients } = useAppSelector(getIngredinetsState);
 
     const tabsRef = useRef<HTMLDivElement>(null);
     const bunsScrollRef = useRef<HTMLHeadingElement>(null);

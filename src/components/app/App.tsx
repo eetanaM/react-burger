@@ -23,11 +23,13 @@ const App = (): React.JSX.Element => {
   const navigate = useNavigate();
   const state = location.state;
 
-  const hideModal = useCallback((dispatchType: string) => {
+  const hideModal = useCallback((dispatchType?: string) => {
     navigate(-1)
-    dispatch({
-      type: dispatchType
-    })
+    if (dispatchType) {
+      dispatch({
+        type: dispatchType
+      })
+    }
   }, [dispatch])
 
   React.useEffect(() => {
@@ -63,7 +65,7 @@ return (
             path='/ingredients/:id'
             element={
               <Modal
-                onClose={() => hideModal('ingredient-details/hideIngredient')}
+                onClose={() => hideModal()}
               >
                 <IngredientDetails />
               </Modal>

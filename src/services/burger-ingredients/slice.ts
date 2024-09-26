@@ -41,7 +41,7 @@ export const ingredientsSlice = createSlice({
         }
     },
     selectors: {
-        getAllIngredients: state => state
+        getIngredinetsState: state => state
     },
     extraReducers: builder => {
         builder
@@ -62,4 +62,6 @@ export const ingredientsSlice = createSlice({
         }
 })
 
-export const { getAllIngredients } = ingredientsSlice.selectors;
+export const { incrementCount, decrementCount, clearCounts } = ingredientsSlice.actions
+
+export const { getIngredinetsState } = ingredientsSlice.selectors;

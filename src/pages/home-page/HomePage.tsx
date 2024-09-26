@@ -4,15 +4,15 @@ import { useAppSelector } from '../../hooks/preTypedHooks';
 
 import BurgerIngredients from '../../components/burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../../components/burger-constructor/BurgerConstructor';
+import Preloader from '../../components/preloader/Preloader';
 
-import { getAllIngredients } from '../../services/burger-ingredients/slice';
+import { getIngredinetsState } from '../../services/burger-ingredients/slice';
 
 import styles from './HomePage.module.css'
-import Preloader from '../../components/preloader/Preloader';
 
 
 const HomePage = (): React.JSX.Element => {
-  const { ingredients, loading, error } = useAppSelector(getAllIngredients)
+  const { ingredients, loading, error } = useAppSelector(getIngredinetsState)
 
   if (loading) {
     return (

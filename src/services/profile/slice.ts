@@ -69,4 +69,6 @@ export const profileSlice = createSlice({
     }
 })
 
+export const { resetUser } = profileSlice.actions;
+
 export const { getUserInfo, getIsAuthChecked } = profileSlice.selectors

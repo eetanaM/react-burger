@@ -45,7 +45,7 @@ export const constructorSlice = createSlice({
             const ingredients = state.fillerToOrder;
             ingredients[dragIndex] = [ingredients[hoverIndex], ingredients[hoverIndex] = ingredients[dragIndex]][0];
         },
-        clearIngredients: (state) => state = initialState
+        clearIngredients: () => initialState
     },
     selectors: {
         getAllIngredientsToOrder: state => state,
@@ -54,5 +54,6 @@ export const constructorSlice = createSlice({
     },
 })
 
+export const { addIngredientToOrder, removeIngredientFromOrder, moveIngredient, clearIngredients } = constructorSlice.actions
+
 export const { getAllIngredientsToOrder, getBunsToOrder, getFillerToOrder } = constructorSlice.selectors;
-export const { addIngredientToOrder } = constructorSlice.actions;

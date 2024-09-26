@@ -1,12 +1,12 @@
 import { useDrop } from "react-dnd";
 import { useAppDispatch, useAppSelector } from "./preTypedHooks";
 
-import { getAllIngredients } from "../services/burger-ingredients/slice";
+import { getIngredinetsState } from "../services/burger-ingredients/slice";
 import { addIngredientToOrder } from "../services/burger-constructor/slice";
 
 const useBunDrop = () => {
     const dispatch = useAppDispatch();
-    const { ingredients } = useAppSelector(getAllIngredients);
+    const { ingredients } = useAppSelector(getIngredinetsState);
     const [{ canDrop }, bunDropRef] = useDrop<{ id: string }, unknown, { canDrop: boolean }>(() => ({
     accept: "ingredient",
     drop: (dragItem) => {

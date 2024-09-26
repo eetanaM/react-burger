@@ -6,6 +6,7 @@ import { Link, Location, useLocation, useNavigate } from 'react-router-dom'
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 
 import { loginUser } from '../../services/profile/actions'
+
 import { ILogin } from '../../utils/types/type'
 
 const LoginPage = (): React.JSX.Element => {

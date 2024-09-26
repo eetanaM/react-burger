@@ -17,7 +17,7 @@ export const orderDetailsSlice = createSlice({
             state.success = true;
             state.order = action.payload
         },
-        hideOrder: state => state = initialState
+        hideOrder: () => initialState
     },
     selectors: {
         getOrderInfo: state => state
@@ -31,4 +31,5 @@ export const orderDetailsSlice = createSlice({
         }
 })
 
+export const { showOrder, hideOrder } = orderDetailsSlice.actions
 export const { getOrderInfo } = orderDetailsSlice.selectors;
