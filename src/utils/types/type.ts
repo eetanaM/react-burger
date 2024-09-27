@@ -1,4 +1,5 @@
 import { SerializedError } from "@reduxjs/toolkit";
+
 // Структура ингредиента
 interface IIngredient {
     _id: string;
@@ -29,7 +30,12 @@ interface IIngredientsConstructorState {
 // Интерфейс хранилища слайса информации о заказе
 interface IOrderDetailsState {
     order: {
+        ingredients: IIngredient[];
         number: number;
+        status: string;
+        name: string;
+        _id: string;
+        createdAt: string;
     } | null;
     success: boolean;
 }
@@ -43,7 +49,6 @@ interface IIngredientCardProps<T> {
 // Интерфейс пропсов модального окна
 interface IModalProps {
     children?: React.JSX.Element;
-    header?: string;
     onClose: () => void;
 }
 
@@ -58,9 +63,17 @@ interface IConstructorOverlayProps {
     children: React.JSX.Element | React.JSX.Element[];
 }
 
+interface IOrderCardProps {
+    ingredientsIds: Array<string>,
+    orderCreatedAt: string,
+    orderName: string,
+    orderNumber: number,
+    orderStatus: string,
+    orderId: string
+}
+
 // Интерфейс пропсов иконки ингредиента
 interface IIngredientIconProps {
-    key: string;
     image: string;
     restAmount?: number
 }
@@ -114,6 +127,7 @@ export type {
     IModalProps,
     IProtectedRouteElementProps,
     IConstructorOverlayProps,
+    IOrderCardProps,
     IIngredientIconProps,
     IIngredientsState,
     IUserDataState,

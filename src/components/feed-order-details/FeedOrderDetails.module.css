@@ -11,6 +11,10 @@
     max-width: 640px;
 }
 
+.order_details_container > h2 {
+    align-self: center;
+}
+
 .order_details_number {
     align-self: center;
 }

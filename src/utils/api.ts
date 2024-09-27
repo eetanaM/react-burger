@@ -1,5 +1,6 @@
 import {
   IAuthResponse,
+  IGetCurrentOrderData,
   IGetIngredients,
   IGetOrderData,
   IGetUserData,
@@ -61,6 +62,17 @@ export const getOrderData = async (ingredientsToOrder: string[], signal: AbortSi
     },
     body: JSON.stringify({ ingredients: ingredientsToOrder }),
     signal: signal
+  })
+};
+
+
+//TODO: доделать подгрузку заказа, если не найдет в списке, возвращенном из сокета
+export const getCurrentOrderData = async (orderId: string): Promise<IGetCurrentOrderData> => {
+  return request<IGetCurrentOrderData>(`orders/${orderId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
   })
 };
 

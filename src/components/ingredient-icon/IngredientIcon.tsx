@@ -1,4 +1,4 @@
-import { IIngredientIconProps } from "../../../../../utils/types/type"
+import { IIngredientIconProps } from "../../utils/types/type"
 
 import styles from "./IngredientIcon.module.css"
 

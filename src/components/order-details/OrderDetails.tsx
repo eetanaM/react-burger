@@ -33,7 +33,7 @@ const OrderDetails = (): React.JSX.Element => {
     useEffect(() => {
         const abortController = new AbortController()
         const signal = abortController.signal
-        dispatch(loadOrder({ingredients:ingredientsToOrder, signal}))
+        dispatch(loadOrder({ ingredients: ingredientsToOrder, signal }))
         return () => {
             abortController.abort()
         }

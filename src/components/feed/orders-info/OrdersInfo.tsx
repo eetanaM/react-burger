@@ -1,3 +1,4 @@
+import React from "react"
 import { useAppSelector } from "../../../hooks/preTypedHooks"
 import { getOrders, getTotal, getTotalToday } from "../../../services/feed/slice"
 
@@ -15,11 +16,11 @@ const OrderInfo = () => {
     })
 
     const finishedOrdersElements = finishedOrders.map(order => {
-        return <p className='text text_type_digits-default'>{order.number}</p>
+        return <p className='text text_type_digits-default' key={order._id}>{order.number}</p>
     })
 
     const inWorkOrdersElements = inWorkOrders.map(order => {
-        return <p className='text text_type_digits-default'>{order.number}</p>
+        return <p className='text text_type_digits-default' key={order._id}>{order.number}</p>
     })
 
     return (
@@ -50,4 +51,4 @@ const OrderInfo = () => {
     )
 }
 
-export default OrderInfo;
+export default React.memo(OrderInfo);

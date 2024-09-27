@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 import { loadOrder } from './action'
 
@@ -13,7 +13,7 @@ export const orderDetailsSlice = createSlice({
     name: "order-details",
     initialState: initialState,
     reducers: {
-        showOrder: (state, action) => {
+        showOrder: (state, action: PayloadAction<IOrderDetailsState["order"]>) => {
             state.success = true;
             state.order = action.payload
         },
@@ -25,7 +25,15 @@ export const orderDetailsSlice = createSlice({
     extraReducers: builder => {
         builder
             .addCase(loadOrder.fulfilled, (state, action) => {
-                state.order = action.payload.order
+                const { ingredients, number, status, name, _id, createdAt } = action.payload.order
+                state.order = {
+                    ingredients: ingredients,
+                    number: number,
+                    status: status,
+                    name: name,
+                    _id: _id,
+                    createdAt: createdAt,
+                }
                 state.success = true;
             })
         }

@@ -6,7 +6,7 @@ import { socketMiddleware } from "./middleware/socket-middleware";
 import { profileSocketMiddleware } from "./middleware/profile-socket-middleware";
 
 import { wsConnect, wsDisconnect } from "./feed/actions";
-import { cleanOrders, wsError, wsMessage } from "./feed/slice";
+import { wsError, wsMessage } from "./feed/slice";
 
 import { profileWsConnect, profileWsDisconnect } from "./profile-feed/actions";
 import { profileWsError, profileWsMessage } from "./profile-feed/slice";
@@ -18,7 +18,6 @@ const feedMiddleware = socketMiddleware<unknown, IOrdersResponse>({
   disconnect: wsDisconnect,
   onError: wsError,
   onMessage: wsMessage,
-  onClose: cleanOrders,
 })
 
 const profileFeedMiddleware = profileSocketMiddleware<unknown, IOrdersResponse>({
@@ -26,7 +25,6 @@ const profileFeedMiddleware = profileSocketMiddleware<unknown, IOrdersResponse>(
   disconnect: profileWsDisconnect,
   onError: profileWsError,
   onMessage: profileWsMessage,
-  onClose: cleanOrders,
 })
 
 export const store = createStore({

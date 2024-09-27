@@ -1,19 +1,25 @@
 import React, { useCallback, useMemo } from "react";
 import { Location, useLocation, useNavigate } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../../../hooks/preTypedHooks";
+import { nanoid } from "@reduxjs/toolkit";
 
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
-import IngredientIcon from "./ingredient-icon/IngredientIcon";
+import IngredientIcon from "../../../ingredient-icon/IngredientIcon";
 
 import { getIngredinetsState } from "../../../../services/burger-ingredients/slice";
 import { showOrder } from "../../../../services/order-details/slice";
 
-import { IIngredient, IOrderCardProps } from "../../../../utils/types/type";
+import { IIngredient, IOrderCardProps, IOrderDetailsState } from "../../../../utils/types/type";
 
 import styles from "./OrderCard.module.css"
-import { nanoid } from "@reduxjs/toolkit";
 
-const OrderCard = ({ ingredientsIds, createdAt, name, number, withStatus = false, status }: IOrderCardProps): React.JSX.Element => {
+const OrderCard = ({
+        ingredientsIds,
+        orderCreatedAt,
+        orderName,
+        orderNumber,
+        orderStatus,
+    }: IOrderCardProps): React.JSX.Element => {
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -24,29 +30,32 @@ const OrderCard = ({ ingredientsIds, createdAt, name, number, withStatus = false
         return ingredients.find(ingredient => ingredient._id === id)
     }) as IIngredient[]
 
-    const creationDate = new Date(createdAt)
-
+    let statusText;
     let statusTextColor;
 
-    switch (status) {
-        case "Выполнен":
+    switch (orderStatus) {
+        case "done":
             statusTextColor = {color: "#00CCCC"};
+            statusText = "Выполнен";
             break;
-        case "Готовится":
+        case "pending":
             statusTextColor = {color: "#ffffff"};
+            statusText = "Готовится";
             break;
-        case "Отменен":
+        case "canceled":
             statusTextColor = {color: "#ce0c0c"};
+            statusText = "Отменен";
             break;
-        case "Создан":
+        case "created":
             statusTextColor = {color: "#ffffff"};
+            statusText = "Создан";
             break;
     }
 
 
     const getIngredientsToRender = () => {
-        console.log(orderIngredients)
         if (orderIngredients.length > 5) {
+            // Если ингредиентов больше 5, показываем первые 5 и скрываем оставшиеся
             const ingredientsToRender = orderIngredients.slice(0,6)
             const restAmount = orderIngredients.length - (ingredientsToRender.length - 1);
             return ingredientsToRender.map((ingredient, index) => {
@@ -63,6 +72,7 @@ const OrderCard = ({ ingredientsIds, createdAt, name, number, withStatus = false
                         </li>
                     )
                 }
+            // reverse для корректного порядка отображения при flex-flow: row-reverse
             }).reverse()
         } else {
             return orderIngredients.map((ingredient) => (
@@ -78,43 +88,27 @@ const OrderCard = ({ ingredientsIds, createdAt, name, number, withStatus = false
         return result;
     }, [ingredients])
 
-    const openModal = useCallback((orderInfo: { orderNumber: number, ingredients: IIngredient[] }) => {
-        dispatch(showOrder(orderInfo));
-        navigate(`${orderInfo.orderNumber}`, { state: { backgroundLocation: location }});
+    const openModal = useCallback((orderNumber: number) => {
+        navigate(`${orderNumber}`, { state: { backgroundLocation: location }});
     }, [dispatch])
 
     return (
         <li
             className={`${styles.order_card} pl-6 pr-6 pt-6 pb-6 mb-4 mr-2`}
-            onClick={() => openModal({ orderNumber: number, ingredients: orderIngredients})}
+            onClick={() => openModal(orderNumber)}
         >
             <div className={styles.order_header}>
-                <span className="text text_type_digits-default">{`#${number}`}</span>
+                <span className="text text_type_digits-default">{`#${orderNumber}`}</span>
                 <span className="text text_type_main-default text_color_inactive">
-                    <FormattedDate
-                        date={
-                            new Date(
-                                creationDate.getFullYear(),
-                                creationDate.getMonth(),
-                                creationDate.getDate(),
-                                creationDate.getHours(),
-                                creationDate.getMinutes() - 2,
-                                0,
-                            )
-                        }
-                    />
+                    <FormattedDate date={new Date(orderCreatedAt)}/>
                 </span>
             </div>
-            <h2 className="text text_type_main-medium mt-6">{name}</h2>
+            <h2 className="text text_type_main-medium mt-6">{orderName}</h2>
             {
-                withStatus
-                ? <span
-                    className="text text_type_main-small mt-2"
-                    style={statusTextColor}
-                >
-                    {status}
+                <span className="text text_type_main-small mt-2" style={statusTextColor}>
+                    {statusText}
                 </span>
-                : null
+
             }
             <div className={`${styles.order_ingredients} mt-6`}>
                 <ul className={styles.order_ingredients_icons}>

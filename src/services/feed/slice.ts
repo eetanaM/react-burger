@@ -10,8 +10,8 @@ const initialState: IOrdersState = {
     connectionError: null,
 }
 
-export const ordersSlice = createSlice({
-    name: "orders",
+export const feedSlice = createSlice({
+    name: "feed",
     initialState,
     reducers: {
         wsError: (state, action: PayloadAction<string>) => {
@@ -24,7 +24,6 @@ export const ordersSlice = createSlice({
             state.totalToday = action.payload.totalToday;
             state.connectionError = null;
         },
-        cleanOrders: () => initialState
     },
     selectors: {
         getOrders: (state) => state.orders,
@@ -33,5 +32,5 @@ export const ordersSlice = createSlice({
     }
 })
 
-export const { wsError, wsMessage, cleanOrders } = ordersSlice.actions;
-export const { getOrders, getTotal, getTotalToday } = ordersSlice.selectors
+export const { wsError, wsMessage } = feedSlice.actions;
+export const { getOrders, getTotal, getTotalToday } = feedSlice.selectors

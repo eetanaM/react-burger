@@ -1,10 +1,11 @@
 import { Middleware } from "redux"
-import { TWsActionTypes } from "../../utils/types/web-socket"
+import { TProfileWsActionTypes } from "../../utils/types/web-socket"
 import { RootState } from "../store"
+import { refreshToken } from "../../utils/api";
 
 const RECONNECT_PERIOD = 2000;
 
-export const socketMiddleware = <S, R>(wsActions: TWsActionTypes<S, R>): Middleware<{}, RootState> => {
+export const profileSocketMiddleware = <S, R>(wsProfileActions: TProfileWsActionTypes<S, R>): Middleware<{}, RootState> => {
 
     return store => {
         let socket: WebSocket | null = null;
@@ -16,7 +17,7 @@ export const socketMiddleware = <S, R>(wsActions: TWsActionTypes<S, R>): Middlew
             disconnect,
             onError,
             onMessage,
-        } = wsActions
+        } = wsProfileActions
 
         return next => {
             return action => {
@@ -35,7 +36,25 @@ export const socketMiddleware = <S, R>(wsActions: TWsActionTypes<S, R>): Middlew
                         const { data } = e;
 
                         try {
-                            const parsedData = JSON.parse(data)
+                            const parsedData = JSON.parse(data);
+
+                            if (parsedData.message === "Invalid or missing token") {
+                                refreshToken()
+                                    .then(refreshData => {
+                                        const wssUrl = new URL(url);
+                                        wssUrl.searchParams.set(
+                                            "token",
+                                            refreshData.accessToken.replace("Bearer ", "")
+                                        );
+                                        dispatch(connect(wssUrl.toString()))
+                                    })
+                                    .catch(err => {
+                                        onError && dispatch(onError((err as Error).message))
+                                    })
+                                dispatch(disconnect());
+                                return
+                            }
+
                             onMessage && dispatch(onMessage(parsedData))
                         } catch (err) {
                             onError && dispatch(onError((err as Error).message))

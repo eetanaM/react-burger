@@ -53,8 +53,8 @@ return (
           <Route />
           <Route path='ingredients/:id' element={<IngredientPage />} />
           <Route path='feed' element={<FeedPage />} />
-          <Route path='feed/:id' element={<FeedOrderDetails />} />
-          <Route path='profile/orders/:id' element={<OnlyAuth element={<FeedOrderDetails />}/>} />
+          <Route path='feed/:number' element={<FeedOrderDetails />} />
+          <Route path='profile/orders/:number' element={<OnlyAuth element={<FeedOrderDetails />}/>} />
           <Route path='*' element={<NotFoundPage />} />
         </Route>
       </Routes>
@@ -82,7 +82,7 @@ return (
             }
           />
           <Route
-            path='/feed/:id'
+            path='/feed/:number'
             element={
               <Modal
                 onClose={() => hideModal('order-details/hideOrder')}
@@ -92,7 +92,7 @@ return (
             }
           />
           <Route
-            path='/profile/orders/:id'
+            path='/profile/orders/:number'
             element={
               <Modal
                 onClose={() => hideModal('order-details/hideOrder')}
