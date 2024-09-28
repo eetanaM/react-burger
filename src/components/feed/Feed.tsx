@@ -6,14 +6,14 @@ import styles from "./Feed.module.css"
 const Feed = () => {
     return (
         <>
-            <div>
+            <section>
                 <h1 className={`text text_type_main-large mt-10 mb-4`}>
                     Лента заказов
                 </h1>
                 <div className={styles.feed_list_container}>
                     <OrdersList />
                 </div>
-            </div>
+            </section>
             <OrderInfo />
         </>
     )

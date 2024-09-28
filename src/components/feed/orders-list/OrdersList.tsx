@@ -31,6 +31,35 @@ const OrdersList = (): React.JSX.Element => {
         }
     }, [])
 
+    if (!isOnProfileFeedPage && orders.length === 0) {
+        return (
+            <ul className={`${styles.orders_list_container} custom-scroll`}>
+                <li className={`${styles.orders_list_empty_card} pl-6 pr-6 pt-6 pb-6 mb-4 mr-2`}>
+                </li>
+                <li className={`${styles.orders_list_empty_card} pl-6 pr-6 pt-6 pb-6 mb-4 mr-2`}>
+                </li>
+                <li className={`${styles.orders_list_empty_card} pl-6 pr-6 pt-6 pb-6 mb-4 mr-2`}>
+                </li>
+                <li className={`${styles.orders_list_empty_card} pl-6 pr-6 pt-6 pb-6 mb-4 mr-2`}>
+                </li>
+            </ul>
+        )
+    }
+    if (isOnProfileFeedPage && profileOrders.length === 0) {
+        return (
+            <ul className={`${styles.orders_list_container_profile} custom-scroll`}>
+                <li className={`${styles.orders_list_empty_card} pl-6 pr-6 pt-6 pb-6 mb-4 mr-2`}>
+                </li>
+                <li className={`${styles.orders_list_empty_card} pl-6 pr-6 pt-6 pb-6 mb-4 mr-2`}>
+                </li>
+                <li className={`${styles.orders_list_empty_card} pl-6 pr-6 pt-6 pb-6 mb-4 mr-2`}>
+                </li>
+                <li className={`${styles.orders_list_empty_card} pl-6 pr-6 pt-6 pb-6 mb-4 mr-2`}>
+                </li>
+            </ul>
+        )
+    }
+
     const ordersToRender = isOnProfileFeedPage ? profileOrders.map(order => {
         return <OrderCard
                     ingredientsIds={order.ingredients}

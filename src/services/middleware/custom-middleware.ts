@@ -1,4 +1,5 @@
-import { Middleware } from "redux";
+import { Middleware, UnknownAction } from "redux";
+import { isAnyOf } from "@reduxjs/toolkit";
 
 import { RootState } from "../store";
 
@@ -10,7 +11,6 @@ import { getUser, configureUser } from "../profile/actions";
 import { loadOrder } from "../order-details/action";
 
 import { getStoredToken, refreshToken } from "../../utils/api";
-import { isAnyOf } from "@reduxjs/toolkit";
 
 const customMiddleware: Middleware<{}, RootState> = store => next => action => {
     const { dispatch, getState } = store;
@@ -26,8 +26,8 @@ const customMiddleware: Middleware<{}, RootState> = store => next => action => {
 
     // Перехватывается экшен при успешном заказе и очищаются добавленные в конструктор ингредиенты и обнуляются счётчики в списке ингредиентов
     if (loadOrder.fulfilled.match(action)) {
-        dispatch<any>(clearIngredients())
-        dispatch<any>(clearCounts())
+        dispatch<UnknownAction>(clearIngredients())
+        dispatch<UnknownAction>(clearCounts())
     }
 
     // Перехватываются отклоненные запросы с истёкшим временем жизни токена доступа для обновления токена и повторного запроса при наличии рефреш токена
@@ -53,7 +53,7 @@ const customMiddleware: Middleware<{}, RootState> = store => next => action => {
                     }
             } catch (e) {
                 console.log('Failed to refresh token')
-                dispatch<any>(resetUser)
+                dispatch<any>(resetUser())
             }
         }
 

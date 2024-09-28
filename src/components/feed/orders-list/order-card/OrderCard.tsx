@@ -7,9 +7,8 @@ import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burge
 import IngredientIcon from "../../../ingredient-icon/IngredientIcon";
 
 import { getIngredinetsState } from "../../../../services/burger-ingredients/slice";
-import { showOrder } from "../../../../services/order-details/slice";
 
-import { IIngredient, IOrderCardProps, IOrderDetailsState } from "../../../../utils/types/type";
+import { IIngredient, IOrderCardProps } from "../../../../utils/types/type";
 
 import styles from "./OrderCard.module.css"
 
@@ -72,7 +71,7 @@ const OrderCard = ({
                         </li>
                     )
                 }
-            // reverse для корректного порядка отображения при flex-flow: row-reverse
+            // reverse() для корректного порядка отображения при flex-flow: row-reverse
             }).reverse()
         } else {
             return orderIngredients.map((ingredient) => (
