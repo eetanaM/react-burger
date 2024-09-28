@@ -9,8 +9,6 @@ import { wsConnect, wsDisconnect } from "../../services/feed/actions";
 import styles from "./FeedPage.module.css"
 
 const FeedPage = (): React.JSX.Element => {
-    const loading = false;
-    const error = false;
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -20,27 +18,6 @@ const FeedPage = (): React.JSX.Element => {
         dispatch(wsDisconnect())
        }
     }, [])
-
-    if (loading) {
-        return (
-          <>
-            <div className={styles.loading_container}>
-              <h1 className="text text_type_main-large"> Загрузка... </h1>
-              <Preloader />
-            </div>
-          </>
-        )
-      }
-
-      if (!loading && error) {
-        return (
-          <>
-            <div className={styles.loading_container}>
-                <h1 className="text text_type_main-large">Ошибка загрузки данных</h1>
-            </div>
-          </>
-        )
-      }
 
     return (
         <>
