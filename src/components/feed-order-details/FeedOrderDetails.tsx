@@ -5,6 +5,7 @@ import { useAppSelector } from '../../hooks/preTypedHooks'
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import IngredientIcon from '../ingredient-icon/IngredientIcon'
 import Preloader from '../preloader/Preloader'
+import { NotFoundPage } from '../../pages'
 
 import { getIngredinetsState } from '../../services/burger-ingredients/slice'
 import { getOrders } from '../../services/feed/slice'
@@ -26,9 +27,10 @@ const FeedOrderDetails = (): React.JSX.Element => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [error, setError] = useState<Error | null>(null)
     const isOnProfilePage = useMatch('profile/orders/:number')
+    const orderNumberRegex = /\d{5}/g
 
     useEffect(() => {
-        if (number && ingredients.length > 0) {
+        if (number && ingredients.length > 0 && orderNumberRegex.test(number)) {
             // Ищем заказ в массиве заказов, полученных по web-socket
             let currentOrder = isOnProfilePage
             ? profileOrders.find(order => order.number === +number)
@@ -79,12 +81,9 @@ const FeedOrderDetails = (): React.JSX.Element => {
     }
 
     if (!isLoading && error) {
-        return (
-            <div className={styles.order_details_container}>
-                <h2 className='text text_type_main-large'>Что-то пошло не так</h2>
-            </div>
-        )
+        return <NotFoundPage />
     }
+
 
     if (!order) {
         return (
