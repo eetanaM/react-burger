@@ -11,6 +11,7 @@ import {
 } from "./types/api-types";
 
 const BASE_URL = "https://norma.nomoreparties.space/api/"
+export const NORMA_WEB_SOCKET_URL = 'wss://norma.nomoreparties.space/orders'
 
 const checkResponse = <T>(res: Response): Promise<T & IRequest> => {
   if (res.ok) {

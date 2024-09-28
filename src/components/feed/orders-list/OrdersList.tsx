@@ -9,9 +9,10 @@ import { getProfileOrders } from "../../../services/profile-feed/slice";
 
 import { profileWsConnect, profileWsDisconnect } from "../../../services/profile-feed/actions";
 
+import { NORMA_WEB_SOCKET_URL } from "../../../utils/api";
+
 import styles from "./OrdersList.module.css"
 
-const PROFILE_WS_URL = "wss://norma.nomoreparties.space/orders"
 
 const OrdersList = (): React.JSX.Element => {
     const dispatch = useAppDispatch()
@@ -23,7 +24,7 @@ const OrdersList = (): React.JSX.Element => {
     useEffect(() => {
         const accessToken = localStorage.getItem('access_token')
         if (isOnProfileFeedPage) {
-            dispatch(profileWsConnect(`${PROFILE_WS_URL}?token=${accessToken}`))
+            dispatch(profileWsConnect(`${NORMA_WEB_SOCKET_URL}?token=${accessToken}`))
         }
 
         return () => {

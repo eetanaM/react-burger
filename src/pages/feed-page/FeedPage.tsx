@@ -1,10 +1,11 @@
 import React, { useEffect } from "react"
 
-import Preloader from "../../components/preloader/Preloader";
 import Feed from "../../components/feed/Feed";
 
 import { useAppDispatch } from "../../hooks/preTypedHooks";
 import { wsConnect, wsDisconnect } from "../../services/feed/actions";
+
+import { NORMA_WEB_SOCKET_URL } from "../../utils/api";
 
 import styles from "./FeedPage.module.css"
 
@@ -12,7 +13,7 @@ const FeedPage = (): React.JSX.Element => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-      dispatch(wsConnect('wss://norma.nomoreparties.space/orders/all'))
+      dispatch(wsConnect(`${NORMA_WEB_SOCKET_URL}/all`))
 
       return () => {
         dispatch(wsDisconnect())
