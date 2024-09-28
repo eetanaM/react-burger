@@ -3,7 +3,6 @@ import { rootReducer } from "./rootReducer";
 
 import customMiddleware from "./middleware/custom-middleware";
 import { socketMiddleware } from "./middleware/socket-middleware";
-import { profileSocketMiddleware } from "./middleware/profile-socket-middleware";
 
 import { wsConnect, wsDisconnect } from "./feed/actions";
 import { wsError, wsMessage } from "./feed/slice";
@@ -20,7 +19,7 @@ const feedMiddleware = socketMiddleware<unknown, IOrdersResponse>({
   onMessage: wsMessage,
 })
 
-const profileFeedMiddleware = profileSocketMiddleware<unknown, IOrdersResponse>({
+const profileFeedMiddleware = socketMiddleware<unknown, IOrdersResponse>({
   connect: profileWsConnect,
   disconnect: profileWsDisconnect,
   onError: profileWsError,

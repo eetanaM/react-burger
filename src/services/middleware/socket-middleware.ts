@@ -1,6 +1,7 @@
 import { Middleware } from "redux"
 import { TWsActionTypes } from "../../utils/types/web-socket"
 import { RootState } from "../store"
+import { refreshToken } from "../../utils/api";
 
 const RECONNECT_PERIOD = 2000;
 
@@ -35,7 +36,25 @@ export const socketMiddleware = <S, R>(wsActions: TWsActionTypes<S, R>): Middlew
                         const { data } = e;
 
                         try {
-                            const parsedData = JSON.parse(data)
+                            const parsedData = JSON.parse(data);
+
+                            if (parsedData.message === "Invalid or missing token") {
+                                refreshToken()
+                                    .then(refreshData => {
+                                        const wssUrl = new URL(url);
+                                        wssUrl.searchParams.set(
+                                            "token",
+                                            refreshData.accessToken.replace("Bearer ", "")
+                                        );
+                                        dispatch(connect(wssUrl.toString()))
+                                    })
+                                    .catch(err => {
+                                        onError && dispatch(onError((err as Error).message))
+                                    })
+                                dispatch(disconnect());
+                                return
+                            }
+
                             onMessage && dispatch(onMessage(parsedData))
                         } catch (err) {
                             onError && dispatch(onError((err as Error).message))

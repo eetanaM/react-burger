@@ -31,14 +31,3 @@ export type TWsActionTypes<S, R> = {
     onError?: ActionCreatorWithPayload<string>;
     onMessage?: ActionCreatorWithPayload<R>;
 }
-
-export type TProfileWsActionTypes<S, R> = {
-    connect: ActionCreatorWithPayload<string>;
-    disconnect: ActionCreatorWithoutPayload;
-    sendMessage?: ActionCreatorWithPayload<S>;
-    onConnecting?: ActionCreatorWithoutPayload;
-    onOpen?: ActionCreatorWithoutPayload;
-    onClose?: ActionCreatorWithoutPayload;
-    onError?: ActionCreatorWithPayload<string>;
-    onMessage?: ActionCreatorWithPayload<R>;
-}
