@@ -4,6 +4,9 @@ import { useAppDispatch } from '../../../hooks/preTypedHooks';
 
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
+import { moveIngredient, removeIngredientFromOrder } from '../../../services/burger-constructor/slice';
+import { decrementCount } from '../../../services/burger-ingredients/slice';
+
 import { IDraggableIngredient, IIngredientCardProps, IDragItem } from "../../../utils/types/type";
 import { Identifier } from 'dnd-core';
 
@@ -13,11 +16,8 @@ const CardListElement = ({ingredient, index}: IIngredientCardProps<IDraggableIng
     const dispatch = useAppDispatch();
     const ref = useRef<HTMLLIElement>(null)
 
-    const moveIngredient = (dragIndex: number, hoverIndex: number) => {
-        dispatch({
-            type: 'burger-constructor/moveIngredient',
-            payload: { dragIndex, hoverIndex },
-        })
+    const handleIngredientMove = (dragIndex: number, hoverIndex: number) => {
+        dispatch(moveIngredient({ dragIndex, hoverIndex }))
     }
 
     const [, dragRef] = useDrag<IDragItem, unknown, unknown>({
@@ -69,7 +69,7 @@ const CardListElement = ({ingredient, index}: IIngredientCardProps<IDraggableIng
                 return
             }
 
-            moveIngredient(dragIndex, hoverIndex);
+            handleIngredientMove(dragIndex, hoverIndex);
 
             item.index = hoverIndex;
         }
@@ -77,19 +77,9 @@ const CardListElement = ({ingredient, index}: IIngredientCardProps<IDraggableIng
 
     dragRef(dropRef(ref))
 
-    const removeHandler = useCallback(() => {
-        dispatch({
-            type:"burger-constructor/removeIngredientFromOrder",
-            payload: {
-                id: ingredient.key
-            }
-        });
-        dispatch({
-            type: 'burger-ingredients/decrementCount',
-            payload: {
-                id: ingredient._id
-            }
-        })
+    const handleIngredientRemove = useCallback(() => {
+        dispatch(removeIngredientFromOrder({ id: ingredient.key }));
+        dispatch(decrementCount({ id: ingredient._id }))
     }, [dispatch])
 
 
@@ -100,7 +90,7 @@ const CardListElement = ({ingredient, index}: IIngredientCardProps<IDraggableIng
                 text={ingredient.name}
                 price={ingredient.price}
                 thumbnail={ingredient.image}
-                handleClose={removeHandler}
+                handleClose={handleIngredientRemove}
             />
         </li>
     )

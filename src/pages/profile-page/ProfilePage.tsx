@@ -6,9 +6,9 @@ import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burg
 
 import { configureUser } from '../../services/profile/actions'
 
-import styles from './ProfilePage.module.css'
-
 import { IRegister } from '../../utils/types/type'
+
+import styles from './ProfilePage.module.css'
 
 const ProfilePage = (): React.JSX.Element => {
     const dispatch = useAppDispatch()
@@ -38,7 +38,7 @@ const ProfilePage = (): React.JSX.Element => {
 
     return (
         <>
-            <form onSubmit={e => submitChanges(e)} onReset={e => resetChanges(e)}>
+            <form onSubmit={e => submitChanges(e)} onReset={e => resetChanges(e)} className='mt-25'>
                 <Input
                     type={'text'}
                     placeholder={'Имя'}

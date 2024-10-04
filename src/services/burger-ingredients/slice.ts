@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { loadIngredients } from './actions'
 import { IIngredientsState } from '../../utils/types/type';
 
@@ -12,7 +12,7 @@ export const ingredientsSlice = createSlice({
     name: "burger-ingredients",
     initialState: initialState,
     reducers: {
-        incrementCount: (state, action) => {
+        incrementCount: (state, action: PayloadAction<{ id: string }>) => {
             if (state.ingredients.length === 0) return;
             const currentIndex = state.ingredients.findIndex(
                 ingredient => ingredient._id === action.payload.id
@@ -24,7 +24,7 @@ export const ingredientsSlice = createSlice({
                 state.ingredients[currentIndex].counter++;
             }
         },
-        decrementCount: (state, action) => {
+        decrementCount: (state, action: PayloadAction<{ id: string }>) => {
             if (state.ingredients.length === 0) return;
             const currentIndex = state.ingredients.findIndex(
                 ingredient => ingredient._id === action.payload.id
@@ -41,7 +41,7 @@ export const ingredientsSlice = createSlice({
         }
     },
     selectors: {
-        getAllIngredients: state => state
+        getIngredinetsState: state => state
     },
     extraReducers: builder => {
         builder
@@ -62,4 +62,6 @@ export const ingredientsSlice = createSlice({
         }
 })
 
-export const { getAllIngredients } = ingredientsSlice.selectors;
+export const { incrementCount, decrementCount, clearCounts } = ingredientsSlice.actions
+
+export const { getIngredinetsState } = ingredientsSlice.selectors;

@@ -1,6 +1,5 @@
-import { createSlice, nanoid } from '@reduxjs/toolkit'
+import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit'
 import { IDraggableIngredient, IIngredientsConstructorState, IIngredient } from '../../utils/types/type'
-import { PayloadAction } from '@reduxjs/toolkit'
 
 const initialState: IIngredientsConstructorState = {
     fillerToOrder: [],
@@ -32,7 +31,7 @@ export const constructorSlice = createSlice({
                 }
             }
         },
-        removeIngredientFromOrder: (state, action) => {
+        removeIngredientFromOrder: (state, action: PayloadAction<{ id: string }>) => {
             const index = state.fillerToOrder.findIndex(
                 ingredient => ingredient.key === action.payload.id
             )
@@ -40,13 +39,13 @@ export const constructorSlice = createSlice({
                 state.fillerToOrder.splice(index, 1)
             }
         },
-        moveIngredient: (state, action) => {
+        moveIngredient: (state, action: PayloadAction<{ dragIndex: number, hoverIndex: number }>) => {
             const dragIndex = action.payload.dragIndex;
             const hoverIndex = action.payload.hoverIndex;
             const ingredients = state.fillerToOrder;
             ingredients[dragIndex] = [ingredients[hoverIndex], ingredients[hoverIndex] = ingredients[dragIndex]][0];
         },
-        clearIngredients: (state) => state = initialState
+        clearIngredients: () => initialState
     },
     selectors: {
         getAllIngredientsToOrder: state => state,
@@ -55,5 +54,6 @@ export const constructorSlice = createSlice({
     },
 })
 
+export const { addIngredientToOrder, removeIngredientFromOrder, moveIngredient, clearIngredients } = constructorSlice.actions
+
 export const { getAllIngredientsToOrder, getBunsToOrder, getFillerToOrder } = constructorSlice.selectors;
-export const { addIngredientToOrder, removeIngredientFromOrder } = constructorSlice.actions;

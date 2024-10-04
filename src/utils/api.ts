@@ -1,5 +1,6 @@
 import {
   IAuthResponse,
+  IGetCurrentOrderData,
   IGetIngredients,
   IGetOrderData,
   IGetUserData,
@@ -10,6 +11,7 @@ import {
 } from "./types/api-types";
 
 const BASE_URL = "https://norma.nomoreparties.space/api/"
+export const NORMA_WEB_SOCKET_URL = 'wss://norma.nomoreparties.space/orders'
 
 const checkResponse = <T>(res: Response): Promise<T & IRequest> => {
   if (res.ok) {
@@ -61,6 +63,17 @@ export const getOrderData = async (ingredientsToOrder: string[], signal: AbortSi
     },
     body: JSON.stringify({ ingredients: ingredientsToOrder }),
     signal: signal
+  })
+};
+
+
+//TODO: доделать подгрузку заказа, если не найдет в списке, возвращенном из сокета
+export const getCurrentOrderData = async (orderId: string): Promise<IGetCurrentOrderData> => {
+  return request<IGetCurrentOrderData>(`orders/${orderId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
   })
 };
 

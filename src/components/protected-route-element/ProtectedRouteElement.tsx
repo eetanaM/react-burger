@@ -3,7 +3,7 @@ import { useAppSelector } from "../../hooks/preTypedHooks";
 
 import Preloader from "../preloader/Preloader";
 
-import { getIsAuthChecked, getUserInfo } from "../../services/profile/reducer";
+import { getIsAuthChecked, getUserInfo } from "../../services/profile/slice";
 
 import { IProtectedRouteElementProps } from "../../utils/types/type";
 

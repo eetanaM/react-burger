@@ -1,6 +1,6 @@
 import React from "react";
 import { useAppSelector } from "../../hooks/preTypedHooks";
-import { getAllIngredients } from "../../services/burger-ingredients/reducer";
+import { getIngredinetsState } from "../../services/burger-ingredients/slice";
 
 import styles from "./IngredientDetails.module.css"
 import { useParams } from "react-router";
@@ -8,12 +8,17 @@ import { useParams } from "react-router";
 const IngredientDetails = (): React.JSX.Element | null => {
     const { id } = useParams<"id">()
 
-    const { ingredients } = useAppSelector(getAllIngredients);
+    const { ingredients } = useAppSelector(getIngredinetsState);
 
     const currentIngredient = ingredients.find(ingredient => ingredient._id === id);
 
     return (currentIngredient ?
         <div className={`${styles.content_main}`}>
+            <h1
+                className={`${styles.content_main_header} text text_type_main-large mt-10 pt-3 pb-3`}
+            >
+                Детали ингредиента
+            </h1>
             <img
                 src={currentIngredient.image_large}
                 alt={currentIngredient.name}

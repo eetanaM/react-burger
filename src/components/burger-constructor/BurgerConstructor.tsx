@@ -6,7 +6,7 @@ import CardListElement from "./card-list-element/CardListElement";
 import ConstructorOverlay from "./constructor-overlay/ConstructorOverlay";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { getAllIngredientsToOrder } from "../../services/burger-constructor/reducer";
+import { getAllIngredientsToOrder } from "../../services/burger-constructor/slice";
 
 import { IDraggableIngredient } from "../../utils/types/type";
 

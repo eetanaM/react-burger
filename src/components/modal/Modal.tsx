@@ -9,7 +9,7 @@ import { IModalProps } from "../../utils/types/type"
 
 const modalRoot = document.querySelector('#react-modals') as HTMLDivElement
 
-const Modal = ({ children, header, onClose }: IModalProps): React.JSX.Element => {
+const Modal = ({ children, onClose }: IModalProps): React.JSX.Element => {
 
     useEffect(() => {
         function closeByEscape(e:KeyboardEvent) {
@@ -26,12 +26,9 @@ const Modal = ({ children, header, onClose }: IModalProps): React.JSX.Element =>
             <>
                 <ModalOverlay onClose={onClose}/>
                 <div className={`${styles.modal_content} pr-10 pl-10`}>
-                    <div className={`${styles.content_header} ${header? "mt-10" : "mt-15"} pt-3 pb-3`}>
-                        <h2 className="text text_type_main-large">{header}</h2>
-                        <button onClick={onClose}>
-                            <CloseIcon type="primary"/>
-                        </button>
-                    </div>
+                    <button onClick={onClose}>
+                        <CloseIcon type="primary"/>
+                    </button>
                     {children}
                 </div>
             </>

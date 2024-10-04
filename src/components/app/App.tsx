@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../hooks/preTypedHooks';
 
 import { OnlyAuth, OnlyUnAuth } from '../protected-route-element/ProtectedRouteElement';
 
-import { ForgotPasswordPage, HomePage, IngredientPage, LoginPage, NotFoundPage, OrdersPage, ProfilePage, RegisterPage, ResetPasswordPage } from '../../pages';
+import { ForgotPasswordPage, HomePage, IngredientPage, LoginPage, NotFoundPage, OrdersPage, ProfilePage, RegisterPage, ResetPasswordPage, FeedPage } from '../../pages';
 
 import Modal from '../modal/Modal';
 import Layout from '../layout/Layout';
@@ -15,6 +15,7 @@ import { getUser } from '../../services/profile/actions';
 import ProfilePageLayout from '../profile-page-layout/ProfilePageLayout';
 import OrderDetails from '../order-details/OrderDetails';
 import IngredientDetails from '../ingredient-details/IngredientDetails';
+import FeedOrderDetails from '../feed-order-details/FeedOrderDetails';
 
 const App = (): React.JSX.Element => {
   const dispatch = useAppDispatch();
@@ -22,11 +23,13 @@ const App = (): React.JSX.Element => {
   const navigate = useNavigate();
   const state = location.state;
 
-  const hideModal = useCallback((dispatchType: string) => {
+  const hideModal = useCallback((dispatchType?: string) => {
     navigate(-1)
-    dispatch({
-      type: dispatchType
-    })
+    if (dispatchType) {
+      dispatch({
+        type: dispatchType
+      })
+    }
   }, [dispatch])
 
   React.useEffect(() => {
@@ -46,10 +49,12 @@ return (
           <Route path='profile' element={<OnlyAuth element={<ProfilePageLayout />} />} >
             <Route index={true} element={<ProfilePage />} />
             <Route path='orders' element={<OrdersPage />} />
-            <Route path='orders/:id' element={<NotFoundPage />} />
           </Route>
           <Route />
           <Route path='ingredients/:id' element={<IngredientPage />} />
+          <Route path='feed' element={<FeedPage />} />
+          <Route path='feed/:number' element={<FeedOrderDetails />} />
+          <Route path='profile/orders/:number' element={<OnlyAuth element={<FeedOrderDetails />}/>} />
           <Route path='*' element={<NotFoundPage />} />
         </Route>
       </Routes>
@@ -60,8 +65,7 @@ return (
             path='/ingredients/:id'
             element={
               <Modal
-                header="Детали ингредиента"
-                onClose={() => hideModal('ingredient-details/hideIngredient')}
+                onClose={() => hideModal()}
               >
                 <IngredientDetails />
               </Modal>
@@ -74,6 +78,26 @@ return (
                 onClose={() => hideModal('order-details/hideOrder')}
               >
                 <OrderDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path='/feed/:number'
+            element={
+              <Modal
+                onClose={() => hideModal('order-details/hideOrder')}
+              >
+                <FeedOrderDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <Modal
+                onClose={() => hideModal('order-details/hideOrder')}
+              >
+                <FeedOrderDetails />
               </Modal>
             }
           />

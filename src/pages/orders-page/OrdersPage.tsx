@@ -1,9 +1,11 @@
+import OrdersList from '../../components/feed/orders-list/OrdersList'
+
 import styles from './OrdersPage.module.css'
 
 const OrdersPage = (): React.JSX.Element => {
     return (
-        <div className={styles.orders_container}>
-            <h2>Orders info will come here soon...</h2>
+        <div className={`${styles.orders_page_list_container} mt-15`}>
+            <OrdersList />
         </div>
     )
 }

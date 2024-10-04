@@ -3,13 +3,13 @@ import { useAppSelector } from '../../hooks/preTypedHooks'
 
 import IngredientDetails from '../../components/ingredient-details/IngredientDetails'
 
-import { getAllIngredients } from '../../services/burger-ingredients/reducer'
+import { getIngredinetsState } from '../../services/burger-ingredients/slice'
 
 const IngredientPage = (): React.JSX.Element => {
 
     const { id } = useParams<"id">()
 
-    const { ingredients } = useAppSelector(getAllIngredients);
+    const { ingredients } = useAppSelector(getIngredinetsState);
 
     const currentIngredient = ingredients.find(ingredient => ingredient._id === id);
 

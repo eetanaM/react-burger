@@ -1,0 +1,45 @@
+.orders_info_container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    min-width: 580px;
+    height: calc(100vh - 130px);
+}
+
+.orders_info_status {
+    display: flex;
+    flex-direction: row;
+}
+
+.orders_info_status_done_list {
+    display: flex;
+    flex-flow: column wrap;
+    gap: 8px;
+    width: 240px;
+    height: 225px;
+    overflow: hidden;
+    color: #00CCCC
+}
+
+
+.orders_info_status_in_work_list{
+    display: flex;
+    flex-flow: column wrap;
+    gap: 8px;
+    width: 240px;
+    height: 225px;
+    overflow: hidden;
+}
+
+.orders_info_done_all {
+    display: flex;
+    flex-direction: column;
+    height: 150px;
+}
+
+.orders_info_done_today {
+    display: flex;
+    flex-direction: column;
+    height: 150px;
+}

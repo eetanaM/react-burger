@@ -1,67 +1,73 @@
-import { Middleware } from "redux";
+import { Middleware, UnknownAction } from "redux";
+import { isAnyOf } from "@reduxjs/toolkit";
+
 import { RootState } from "../store";
-import { getStoredToken, refreshToken } from "../../utils/api";
+
+import { addIngredientToOrder, clearIngredients } from "../burger-constructor/slice";
+import { clearCounts, decrementCount } from "../burger-ingredients/slice";
+import { resetUser } from "../profile/slice";
+
 import { getUser, configureUser } from "../profile/actions";
 import { loadOrder } from "../order-details/action";
 
-const customMiddleware: Middleware<{}, RootState> = store => next => (action: any) => {
+import { getStoredToken, refreshToken } from "../../utils/api";
+
+const customMiddleware: Middleware<{}, RootState> = store => next => action => {
+    const { dispatch, getState } = store;
+    const isRejectedAction = isAnyOf(getUser.rejected, configureUser.rejected, loadOrder.rejected);
+
     // Перехватываются экшены, добавляющие булки в конструктор, и удаляются добавленные ранее булки
-    if (action.type === "burger-constructor/addIngredientToOrder" &&
-    action.payload.type === "bun") {
-        if(store.getState()["burger-constructor"].bunsToOrder.length > 0) {
-            const id = store.getState()["burger-constructor"].bunsToOrder[0]._id;
-            store.dispatch({
-                type: "burger-ingredients/decrementCount",
-                payload: { id: id },
-            })
+    if (addIngredientToOrder.match(action) && action.payload.type === "bun") {
+        if(getState()["burger-constructor"].bunsToOrder.length > 0) {
+            const id = getState()["burger-constructor"].bunsToOrder[0]._id;
+            dispatch(decrementCount({ id: id }))
         }
     }
 
     // Перехватывается экшен при успешном заказе и очищаются добавленные в конструктор ингредиенты и обнуляются счётчики в списке ингредиентов
-    if (action.type === loadOrder.fulfilled.type) {
-        store.dispatch({
-            type: "burger-constructor/clearIngredients"
-        })
-        store.dispatch({
-            type: "burger-ingredients/clearCounts"
-        })
+    if (loadOrder.fulfilled.match(action)) {
+        dispatch<UnknownAction>(clearIngredients())
+        dispatch<UnknownAction>(clearCounts())
     }
 
     // Перехватываются отклоненные запросы с истёкшим временем жизни токена доступа для обновления токена и повторного запроса при наличии рефреш токена
-    if ((action.type === getUser.rejected.type
-        || action.type === configureUser.rejected.type
-        || action.type === loadOrder.rejected.type)
-        && action.error.message === "jwt expired") {
-        console.log("Refreshing token")
-        const storedRefreshToken = getStoredToken('refreshToken')
-        const interceptedPayload = action.meta.arg;
-        if (storedRefreshToken) {
-            (async () => {
-                try {
-                    const newAccessToken = (await refreshToken()).accessToken;
-                    if(newAccessToken) {
-                        switch (action.type) {
-                            case getUser.rejected.type: {
-                                store.dispatch<any>(getUser())
-                                break;
-                            };
-                            case configureUser.rejected.type: {
-                                store.dispatch<any>(configureUser(interceptedPayload))
-                                break;
-                            };
-                            case loadOrder.rejected.type: {
-                                store.dispatch<any>(loadOrder(interceptedPayload))
-                                break;
-                            };
+
+    if (isRejectedAction(action)) {
+        const refreshWithStoredToken = async () => {
+            try {
+                const newAccessToken = (await refreshToken()).accessToken;
+                if(newAccessToken) {
+                    if (getUser.rejected.match(action)) {
+                        dispatch<any>(getUser())
+                    }
+                    if (configureUser.rejected.match(action) || loadOrder.rejected.match(action)) {
+                        if (configureUser.rejected.match(action)) {
+                            const { arg } = action.meta
+                            dispatch<any>(configureUser(arg))
+                        }
+                        if (loadOrder.rejected.match(action)) {
+                            const { arg } = action.meta
+                            dispatch<any>(loadOrder(arg))
                         }
                     }
-                } catch (e) {
-                  console.log('Failed to refresh token')
-                  store.dispatch({type: 'profile/resetUser'})
-                }
-            })()
+                    }
+            } catch (e) {
+                console.log('Failed to refresh token')
+                dispatch<any>(resetUser())
+            }
+        }
+
+        if (action.error.message === "jwt expired") {
+            console.log("Refreshing token")
+            const storedRefreshToken = getStoredToken('refreshToken')
+            if (storedRefreshToken) {
+               refreshWithStoredToken()
+            }
         }
     }
+
+
+
     return next(action);
 }
 

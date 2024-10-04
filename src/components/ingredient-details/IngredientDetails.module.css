@@ -3,6 +3,10 @@
     width:100%;
 }
 
+.content_main_header {
+    text-align: start;
+}
+
 .content_main_info_list {
     list-style: none;
     padding-inline-start: 0;

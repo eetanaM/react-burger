@@ -4,15 +4,15 @@ import { useAppSelector } from '../../hooks/preTypedHooks';
 
 import BurgerIngredients from '../../components/burger-ingredients/BurgerIngredients';
 import BurgerConstructor from '../../components/burger-constructor/BurgerConstructor';
+import Preloader from '../../components/preloader/Preloader';
 
-import { getAllIngredients } from '../../services/burger-ingredients/reducer';
+import { getIngredinetsState } from '../../services/burger-ingredients/slice';
 
 import styles from './HomePage.module.css'
-import Preloader from '../../components/preloader/Preloader';
 
 
 const HomePage = (): React.JSX.Element => {
-  const { ingredients, loading, error } = useAppSelector(getAllIngredients)
+  const { ingredients, loading, error } = useAppSelector(getIngredinetsState)
 
   if (loading) {
     return (
@@ -28,7 +28,9 @@ const HomePage = (): React.JSX.Element => {
   if (!loading && error) {
     return (
       <>
-        <h1 className="text text_type_main-large">Ошибка загрузки данных</h1>
+        <div className={styles.loading_container}>
+          <h1 className="text text_type_main-large">Ошибка загрузки данных</h1>
+        </div>
       </>
     )
   }
