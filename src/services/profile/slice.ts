@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { IUserDataState } from '../../utils/types/type'
 import { configureUser, getUser, loginUser, logoutUser, registerUser } from './actions'
 
-const initialState: IUserDataState = {
+export const initialState: IUserDataState = {
     user: null,
     isAuthChecked: false,
     authError: null,
@@ -71,4 +71,6 @@ export const profileSlice = createSlice({
 
 export const { resetUser } = profileSlice.actions;
 
-export const { getUserInfo, getIsAuthChecked } = profileSlice.selectors
+export const { getUserInfo, getIsAuthChecked } = profileSlice.selectors;
+
+export const profileReducer = profileSlice.reducer

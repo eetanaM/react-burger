@@ -4,7 +4,7 @@ import { loadOrder } from './action'
 
 import { IOrderDetailsState } from '../../utils/types/type'
 
-const initialState: IOrderDetailsState = {
+export const initialState: IOrderDetailsState = {
     order: null,
     success: false,
 }
@@ -39,5 +39,8 @@ export const orderDetailsSlice = createSlice({
         }
 })
 
-export const { showOrder, hideOrder } = orderDetailsSlice.actions
+export const { showOrder, hideOrder } = orderDetailsSlice.actions;
+
 export const { getOrderInfo } = orderDetailsSlice.selectors;
+
+export const orderDetailsReducer = orderDetailsSlice.reducer

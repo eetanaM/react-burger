@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { loadIngredients } from './actions'
 import { IIngredientsState } from '../../utils/types/type';
 
-const initialState: IIngredientsState = {
+export const initialState: IIngredientsState = {
     ingredients: [],
     loading: false,
     error: null
@@ -65,3 +65,5 @@ export const ingredientsSlice = createSlice({
 export const { incrementCount, decrementCount, clearCounts } = ingredientsSlice.actions
 
 export const { getIngredinetsState } = ingredientsSlice.selectors;
+
+export const ingredientsReducer = ingredientsSlice.reducer

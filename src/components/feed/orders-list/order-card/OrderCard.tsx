@@ -25,6 +25,8 @@ const OrderCard = ({
     const location = useLocation() as Location<{ backgroundLocation: Location }>;
 
     const { ingredients } = useAppSelector(getIngredinetsState);
+
+    // TODO: Обработать возможность прихода с бэкенда массива nullable или undefined айди ингредиентов!!!
     const orderIngredients = ingredientsIds.map(id => {
         return ingredients.find(ingredient => ingredient._id === id)
     }) as IIngredient[]
