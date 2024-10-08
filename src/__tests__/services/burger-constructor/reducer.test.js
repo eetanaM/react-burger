@@ -23,12 +23,22 @@ const mockIngredient = {
   key: "asd1234",
 };
 
-describe("Burger constructor reducer tests", () => {
-  it("should return initial state", () => {
-    expect(constructorReducer(undefined, {})).toEqual({ ...initialState });
+describe("Burger constructor reducers tests", () => {
+  const UNKNOWN_ACTION = "UNKNOWN_ACTION";
+
+  it("should return initial state with EMPTY action passed", () => {
+    expect(constructorReducer({ ...initialState }, {})).toEqual({
+      ...initialState,
+    });
   });
 
-  it("should handle addIngredientToOrder action (might add 2 items in bunsToOrder field if it's type bun)", () => {
+  it("should return initial state with UNKNOWN action passed", () => {
+    expect(
+      constructorReducer({ ...initialState }, { type: UNKNOWN_ACTION })
+    ).toEqual({ ...initialState });
+  });
+
+  it("should handle addIngredientToOrder action: must add TWO (2) items in bunsToOrder array if item's type IS bun)", () => {
     expect(
       constructorReducer(
         { ...initialState },
@@ -43,7 +53,7 @@ describe("Burger constructor reducer tests", () => {
     });
   });
 
-  it("should handle addIngredientsToOrder action (might add 1 item in ingredientsToOrder field if it's type not bun", () => {
+  it("should handle addIngredientsToOrder action: must add ONE (1) item in ingredientsToOrder array if item's type IS NOT bun", () => {
     expect(
       constructorReducer(
         { ...initialState },
