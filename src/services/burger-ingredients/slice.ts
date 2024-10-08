@@ -57,7 +57,6 @@ export const ingredientsSlice = createSlice({
             .addCase(loadIngredients.rejected, (state, action) => {
                 state.error = action.error;
                 state.loading = false;
-                state = initialState;
             })
         }
 })
