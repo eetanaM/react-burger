@@ -15,7 +15,6 @@ export const profileSlice = createSlice({
     reducers: {
         resetUser: state => {
             state = initialState;
-            state.isAuthChecked;
         }
     },
     extraReducers: builder => {
@@ -50,10 +49,7 @@ export const profileSlice = createSlice({
                 state.isAuthChecked = true;
                 state.authError = action.error;
             })
-            .addCase(logoutUser.fulfilled, (state) => {
-                state.user = initialState.user;
-                state.isAuthChecked = true;
-            })
+            .addCase(logoutUser.fulfilled, () => initialState)
             .addCase(configureUser.fulfilled, (state, action) => {
                 state.authError = null;
                 state.user = action.payload.user;
