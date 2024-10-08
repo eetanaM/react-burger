@@ -38,6 +38,7 @@ interface IOrderDetailsState {
         createdAt: string;
     } | null;
     success: boolean;
+    error: SerializedError | null;
 }
 
 // Интерфейс пропсов карточки ингредиента в BurgerIngredients компоненте

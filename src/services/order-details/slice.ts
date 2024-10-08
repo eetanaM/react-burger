@@ -7,6 +7,7 @@ import { IOrderDetailsState } from '../../utils/types/type'
 export const initialState: IOrderDetailsState = {
     order: null,
     success: false,
+    error: null,
 }
 
 export const orderDetailsSlice = createSlice({
@@ -24,6 +25,9 @@ export const orderDetailsSlice = createSlice({
     },
     extraReducers: builder => {
         builder
+            .addCase(loadOrder.pending, (state) => {
+                state.error = null
+            })
             .addCase(loadOrder.fulfilled, (state, action) => {
                 const { ingredients, number, status, name, _id, createdAt } = action.payload.order
                 state.order = {
@@ -35,6 +39,10 @@ export const orderDetailsSlice = createSlice({
                     createdAt: createdAt,
                 }
                 state.success = true;
+            })
+            .addCase(loadOrder.rejected, (state, action) => {
+                state.success = false;
+                state.error = action.error
             })
         }
 })

@@ -12,7 +12,7 @@ import { loadOrder } from '../../services/order-details/action';
 import styles from './OrderDetails.module.css'
 
 const OrderDetails = (): React.JSX.Element => {
-    const { order, success } = useAppSelector(getOrderInfo)
+    const { order, success, error } = useAppSelector(getOrderInfo)
     const { fillerToOrder, bunsToOrder } = useAppSelector(getAllIngredientsToOrder);
     const dispatch = useAppDispatch()
 
@@ -39,12 +39,20 @@ const OrderDetails = (): React.JSX.Element => {
         }
     }, [])
 
-    if (!success) return (
+    if (!success && !error) return (
         <div className={styles.content_container}>
             <span className="text text_type_main-medium">
                 Дождитесь окончания оформления заказа...
             </span>
             <Preloader />
+        </div>
+    )
+
+    if (!success && error) return (
+        <div className={styles.content_container}>
+            <span className="text text_type_main-medium">
+                Произошла ошибка. Попробуйте снова
+            </span>
         </div>
     )
 
