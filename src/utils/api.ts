@@ -13,7 +13,7 @@ import {
 const BASE_URL = "https://norma.nomoreparties.space/api/"
 export const NORMA_WEB_SOCKET_URL = 'wss://norma.nomoreparties.space/orders'
 
-const checkResponse = <T>(res: Response): Promise<T & IRequest> => {
+export const checkResponse = <T>(res: Response): Promise<T & IRequest> => {
   if (res.ok) {
     return res.json();
   }
@@ -23,17 +23,17 @@ const checkResponse = <T>(res: Response): Promise<T & IRequest> => {
   return Promise.reject(`Ошибка ${res.status}`)
 }
 
-const checkSuccess = <T>(res: T & IRequest): Promise<T> => {
+export const checkSuccess = <T>(res: T & IRequest): Promise<T> => {
   if (res && res.success) {
     return res as unknown as Promise<T>
   }
-  return Promise.reject(`Не получен успешный ответ: ${res}`);
+  return Promise.reject(`Не получен успешный ответ`);
 };
 
-const request = async <T>(endpoint: string, options: RequestInit): Promise<T> => {
+export const request = async <T>(endpoint: string, options: RequestInit): Promise<T> => {
   return fetch(`${BASE_URL}${endpoint}`, options)
-    .then(checkResponse<T>)
-    .then(checkSuccess<T>)
+          .then(checkResponse<T>)
+          .then(checkSuccess<T>)
 }
 
 const saveTokens = (accessToken: string, refreshToken: string) => {
@@ -66,8 +66,6 @@ export const getOrderData = async (ingredientsToOrder: string[], signal: AbortSi
   })
 };
 
-
-//TODO: доделать подгрузку заказа, если не найдет в списке, возвращенном из сокета
 export const getCurrentOrderData = async (orderId: string): Promise<IGetCurrentOrderData> => {
   return request<IGetCurrentOrderData>(`orders/${orderId}`, {
     method: "GET",
