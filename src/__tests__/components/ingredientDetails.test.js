@@ -5,6 +5,7 @@ import { store } from "../../services/store";
 import { loadIngredients } from "../../services/burger-ingredients/actions";
 import IngredientDetails from "../../components/ingredient-details/IngredientDetails";
 
+// Test case for IngredientDetails component using react-test-renderer
 describe("check ingredientDetails component", () => {
   it("should be equal to snapshot", async () => {
     // Arrange (loading ingredients into store)
