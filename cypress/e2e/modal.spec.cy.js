@@ -75,4 +75,42 @@ describe("modal element tests", () => {
     cy.url().should("eq", "http://localhost:3000/");
     cy.get("[data-testid=modal_test_element]").should("not.exist");
   });
+
+  it("should show ingredient details in modal", () => {
+    // Arrange
+    const ingredientElement = cy.get("[data-testid=ingredient_test_element_1]");
+
+    // Act
+    ingredientElement.click();
+
+    // Assert
+    cy.get("[data-testid=ingredient_details_header_test_element]").should(
+      "have.text",
+      "Детали ингредиента"
+    );
+    cy.get("[data-testid=ingredient_details_image_test_element]").should(
+      "have.attr",
+      "src",
+      "https://code.s3.yandex.net/react/code/bun-02-large.png"
+    );
+    cy.get("[data-testid=ingredient_details_name_test_element]").should(
+      "have.text",
+      "Краторная булка N-200i"
+    );
+    cy.get("[data-testid=ingredeint_details_calories_test_element]").should(
+      "have.text",
+      420
+    );
+    cy.get("[data-testid=ingredient_details_proteins_test_element]").should(
+      "have.text",
+      80
+    );
+    cy.get("[data-testid=ingredient_details_fat_test_element]").should(
+      "have.text",
+      24
+    );
+    cy.get(
+      "[data-testid=ingredient_details_carbohydrates_test_element]"
+    ).should("have.text", 53);
+  });
 });
