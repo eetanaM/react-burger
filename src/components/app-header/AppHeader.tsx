@@ -66,6 +66,7 @@ const AppHeader = (): React.JSX.Element => {
                         <ProfileIcon type={isActive ? "primary" : "secondary"}/>
                         <span
                             className={chooseTextStyle(isActive)}
+                            data-testid="user_name_element"
                         >
                             {user ? user.name :"Личный кабинет"}
                         </span>

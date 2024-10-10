@@ -35,3 +35,21 @@
 //     }
 //   }
 // }
+
+Cypress.Commands.add("prepareintercepts", () => {
+  cy.intercept("POST", "login", { fixture: "login" });
+  cy.intercept("GET", "ingredients", { fixture: "ingredients" }).as(
+    "getIngredients"
+  );
+  cy.intercept("POST", "orders", { fixture: "order" });
+  window.localStorage.setItem("refreshToken", "refresh-token");
+});
+
+Cypress.Commands.add("userlogin", (email, password) => {
+  cy.visit("/login");
+  const emailInput = cy.get("[data-testid=email_input]");
+  const passwordInput = cy.get("[data-testid=password_input]");
+
+  emailInput.type(`${email}`);
+  passwordInput.type(`${password}{enter}`);
+});

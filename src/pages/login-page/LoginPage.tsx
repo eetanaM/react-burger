@@ -35,12 +35,14 @@ const LoginPage = (): React.JSX.Element => {
                         name='email'
                         value={values.email ?? ""}
                         extraClass="ml-1 mt-6"
+                        data-testid = "email_input"
                     />
                     <PasswordInput
                         onChange={e => handleChange(e)}
                         name='password'
                         value={values.password ?? ""}
                         extraClass="mb-2 mt-6"
+                        data-testid = "password_input"
                     />
                     <Button
                         htmlType="submit"

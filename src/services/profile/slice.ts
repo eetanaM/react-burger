@@ -49,7 +49,7 @@ export const profileSlice = createSlice({
                 state.isAuthChecked = true;
                 state.authError = action.error;
             })
-            .addCase(logoutUser.fulfilled, () => initialState)
+            .addCase(logoutUser.fulfilled, () => ({...initialState, isAuthChecked: true}))
             .addCase(configureUser.fulfilled, (state, action) => {
                 state.authError = null;
                 state.user = action.payload.user;

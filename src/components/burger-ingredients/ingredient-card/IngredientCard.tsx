@@ -30,6 +30,7 @@ const IngredientCard = ({ ingredient }: Pick<IIngredientCardProps<IIngredient>, 
                 <div
                     className={styles.ingredient_card_details}
                     onClick={() => openModal(ingredient)}
+                    data-testid={`ingredient_test_element_${ingredient._id}`}
                 >
                     <img src={ingredient.image} alt={`${ingredient.name} preview`} className="ml-4 mr-4" />
                     <div className={`${styles.currency}`}>
