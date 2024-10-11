@@ -48,6 +48,7 @@ const ConstructorOverlay = ({ children }: IConstructorOverlayProps): React.JSX.E
                     size="medium"
                     onClick={getOrderInfo}
                     {...(bunsToOrder.length === 0 && {disabled: true})}
+                    data-testid="order_button_test_element"
                 >
                     Оформить заказ
                 </Button>
