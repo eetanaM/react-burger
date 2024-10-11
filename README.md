@@ -77,6 +77,30 @@
 <br>
 <hr>
 
+### Инициализация проекта:
+
+Скопируйте репозиторий:
+<br>
+`git clone https://github.com/eetanaM/react-burger.git`
+<br>
+<br>
+Установите зависимости:
+<br>
+`npm install`
+<br>
+<br>
+Разверните проект:
+<br>
+`npm run start`
+<br>
+<br>
+Для сборки готового для деплоя проекта:
+<br>
+`npm run build`
+<br>
+
+<hr>
+
 ### Технологический стек:
 
 <div align="left">
