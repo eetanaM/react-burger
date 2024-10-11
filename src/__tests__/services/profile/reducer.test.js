@@ -137,7 +137,7 @@ describe("Profile reducers tests", () => {
         { ...initialState, user: mockUser },
         { type: logoutUser.fulfilled.type }
       )
-    ).toEqual(initialState);
+    ).toEqual({ ...initialState, isAuthChecked: true });
   });
 
   it("should handle configureUser.fulfilled action", () => {
