@@ -1,46 +1,92 @@
-# Getting Started with Create React App
+<div align="center">
+  <h1>Космическая бургерная (Stellar burger)</h1>
+</div>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Описание:
 
-## Available Scripts
+Проект Stellar Burger - результат проектной работы курса "React-разработчик" от Yandex Practicum. Проект представляет собой сайт межгалактической бургерной, с помощью которого пользователь может:
 
-In the project directory, you can run:
+- сформировать заказ, собрав бургер из ингредиентов с помощью конструктора бургера, на странице "Конструктор";
+- посмотреть информацию о каждом ингредиенте, кликнув на интересующий ингредиент из перечня доступных;
+- отслеживать в режиме реального времени заказы, сформированные всеми пользователями, на странице "Лента заказов";
+- посмотреть детальную информацию о каждом заказе, кликнув на интересующий заказ в ленте;
+- отслеживать в режиме реального времени заказы, сформированные самим пользователем, на странцие личного кабинета в разделе "История заказов";
+- конфигурировать свои данные (имя пользователя, email, пароль) на странице личного кабинета в разделе "Профиль"
+<br>
+<br>
+Ознакомиться с демо можно по ссылке: [здесь](http://manatee.stellar.nomorepartiesco.ru)
+<br>
+<hr>
 
-### `npm start`
+### Регистрация, авторизация и восстановление пароля:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+С целью ограничения доступа на защищенные маршруты сайта реализованы процедуры регистрации и авторизации пользователей, а также восстановления пароля для зарегистрированных пользователей.
+<br>
+<br>
+Попытка доступа на защищенные маршруты неавторизованного пользователя приводит к автоматическому перенаправлению на машрут авторизации.
+<br>
+<br>
+Регистрация и восстановление пароля доступны по клику на соответствующие ссылки на странице авторизации.
+<br>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<hr>
 
-### `npm test`
+### Страница "Конструктор":
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Страница представляет собой конструктор бургера, с помощью которого пользователь имеет возможность на своё усмотрение собрать бургер из доступных на выбор ингредиентов.
+<br>
+<br>
+Перечень доступных к выбору ингредиентов размещен в секции под заголовком "Соберите бургер" и представляен в виде скролл-меню с карточками ингредиентов, отсортированных по типу ингредиента (булки, соусы, начинки). При клике на карточку открывается модальное окно с детальной информацией об ингредиенте. Для перехода к нужному разделу с желаемым типом ингредиента внутри скролл-меню можно воспользоваться соответствующими названиям типов ингредиентов кнопками в верхней части секции.
+<br>
+<br>
+Перечень добавленных в бургер ингредиентов можно условно разделить на три секции: "Верхняя булка", "Начинка" и "Нижняя булка".
+<br>
+<br>
+Чтобы добавить ингредиент в конструктор, пользователю необходимо перетащить его из перечня доступных ингредиентов в соответствующую секцию конструктора (такая секция будет подсвечена зеленой рамкой после того, как пользователь начнёт перетаскивать ингредиент).
+<br>
+<br>
+Когда бургер в конструкторе будет готов, станет активной кнопка "Оформить заказ", по нажатию которой заказ будет сформирован, а информация по заказу будет отображена в открывшемся модальном окне.
+<br>
+<br>
+**_Оформить заказ может только авторизованный пользователь. При попытке оформить заказ, будучи неавторизованным, произойдет переадресация на маршрут авторазиции, после чего, в случае успешной авторизации, обратная переадресация на страницу "Конструктор". При этом состояние конструктора останется как до перехода на маршрут авторизации._**
+<br>
+**_Оформить заказ можно только при наличии булок в конструкторе. При этом наличие начинок и соусов в констркуторе необязательно._**
+<br>
 
-### `npm run build`
+<hr>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Страница "Лента заказов":
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+На данной странице пользователю доступна информация о последних заказах, сформированных всеми пользователями, а также информационные колонки с номерами последних завершенных заказов и заказов, находящихся на данный момент в работе (колонки "Готовы:" и "В работе:"). Информация на странице обновляется в режиме реального времени.
+<br>
+<br>
+При клике на карточку заказа в ленте открывается модальное окно с детальной информацией о заказе.
+<br>
+<br>
+Дополнительно на странице выводится справочная информация о количестве выполненных заказах в полях "Выполнено за всё время:" и "Выполнено за сегодня:".
+<br>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<hr>
 
-### `npm run eject`
+### Личный кабинет:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Страница личного кабинета состоит из двух блоков:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Блок "Профиль" - содержит форму, позволяющую изменить данные пользователя (имя пользователя, email, пароль). При вводе новых данных в форму появляются кнопки "Отмена" и "Сохранить", позволяющие отменить изменения, внесенные в форму, и сохранить изменения соответственно.
+- Блок "История заказов" - содержит ленту, аналогичную общей ленте на странице "Лента заказов", но отображает только заказы, сформированные текущим пользователем.
+<br>
+<hr>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Технологический стек:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+<div align="left">
+  <br/>
+  <img src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original.svg" title="HTML5" alt="HTML" width="40" height="40"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original-wordmark.svg" title="React" alt="React" width="40" height="40"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/redux/redux-original.svg" title="Redux" alt="Redux" width="40" height="40"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/typescript/typescript-plain.svg" title="TypeScript" alt="TypeScript" width="40" height="40"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-plain.svg" title="JavaScript" alt="JavaScript" width="40" height="40"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/cypressio/cypressio-original.svg" title="Cypress" alt="Cypress" width="40" height="40"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/jest/jest-plain.svg" title="Jest" alt="Jest" width="40" height="40"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/figma/figma-original.svg" title="Figma" alt="Figma" width="40" height="40"/>&nbsp;
+</div>
