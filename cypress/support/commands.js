@@ -54,3 +54,23 @@ Cypress.Commands.add("userlogin", (email, password) => {
   emailInput.type(`${email}`);
   passwordInput.type(`${password}{enter}`);
 });
+
+Cypress.Commands.add("getBunTestElement", (id) => {
+  return cy.get(`[data-testid=bun_test_element_${id}]`);
+});
+
+Cypress.Commands.add("getSauceTestElement", (id) => {
+  return cy.get(`[data-testid=sauce_test_element_${id}]`);
+});
+
+Cypress.Commands.add("getMainTestElement", (id) => {
+  return cy.get(`[data-testid=main_test_element_${id}]`);
+});
+
+Cypress.Commands.add("getTopBunDropRef", () => {
+  return cy.get("[data-testid=top_bun_drop_test_element]");
+});
+
+Cypress.Commands.add("getFillerDropRef", () => {
+  return cy.get("[data-testid=filler_drop_test_element]");
+});

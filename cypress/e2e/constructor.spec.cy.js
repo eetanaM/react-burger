@@ -7,20 +7,14 @@ describe("burger constructor test suites", () => {
 
   it("should fill constructor with correctly dropped ingredients", () => {
     // Arrange
-    const bunIngredient = cy.get("[data-testid=ingredient_test_element_1]");
-    const sauceIngredient = cy.get("[data-testid=ingredient_test_element_4]");
-    const mainIngredient = cy.get("[data-testid=ingredient_test_element_2]");
-    const topBunDropRef = cy.get("[data-testid=top_bun_drop_test_element]");
-    let fillerDropRef = cy.get("[data-testid=filler_drop_test_element]");
 
     // Act
-    bunIngredient.trigger("dragstart");
-    topBunDropRef.trigger("drop");
-    sauceIngredient.trigger("dragstart");
-    fillerDropRef.trigger("drop");
-    fillerDropRef = cy.get("[data-testid=filler_drop_test_element]");
-    mainIngredient.trigger("dragstart");
-    fillerDropRef.trigger("drop");
+    cy.getBunTestElement(1).trigger("dragstart");
+    cy.getTopBunDropRef().trigger("drop");
+    cy.getSauceTestElement(4).trigger("dragstart");
+    cy.getFillerDropRef().trigger("drop");
+    cy.getMainTestElement(2).trigger("dragstart");
+    cy.getFillerDropRef().trigger("drop");
 
     // Assert
     // Проверяем, что элемент верхней булки конструктора заполнен корректными данными
@@ -86,19 +80,14 @@ describe("burger constructor test suites", () => {
 
   it("should not fill constructor with incorrectly dropped ingredients", () => {
     // Arrange
-    const bunIngredient = cy.get("[data-testid=ingredient_test_element_1]");
-    const sauceIngredient = cy.get("[data-testid=ingredient_test_element_4]");
-    const mainIngredient = cy.get("[data-testid=ingredient_test_element_2]");
-    const topBunDropRef = cy.get("[data-testid=top_bun_drop_test_element]");
-    let fillerDropRef = cy.get("[data-testid=filler_drop_test_element]");
 
     // Act
-    bunIngredient.trigger("dragstart");
-    fillerDropRef.trigger("drop");
-    sauceIngredient.trigger("dragstart");
-    topBunDropRef.trigger("drop");
-    mainIngredient.trigger("dragstart");
-    topBunDropRef.trigger("drop");
+    cy.getBunTestElement(1).trigger("dragstart");
+    cy.getFillerDropRef().trigger("drop");
+    cy.getSauceTestElement(4).trigger("dragstart");
+    cy.getTopBunDropRef().trigger("drop");
+    cy.getMainTestElement(2).trigger("dragstart");
+    cy.getTopBunDropRef().trigger("drop");
 
     // Assert
     // Проверяем, что элементы конструктора пустые

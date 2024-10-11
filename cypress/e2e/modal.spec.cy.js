@@ -14,10 +14,9 @@ describe("modal element tests", () => {
 
   it("should open modal by clicking on ingredient card", () => {
     // Arrange
-    const ingredientElement = cy.get("[data-testid=ingredient_test_element_1]");
 
     // Act
-    ingredientElement.click();
+    cy.getBunTestElement(1).click();
 
     // Assert
     cy.url().should("contain", "ingredients/1");
@@ -31,10 +30,9 @@ describe("modal element tests", () => {
 
   it("should close modal by clicking on close button", () => {
     // Arrange
-    const ingredientElement = cy.get("[data-testid=ingredient_test_element_1]");
 
     // Act
-    ingredientElement.click();
+    cy.getBunTestElement(1).click();
     cy.url().should("contain", "ingredients/1");
     cy.get("[data-testid=modal_test_element]").should("exist");
     cy.get("[data-testid=modal_test_close_button]").click();
@@ -46,10 +44,9 @@ describe("modal element tests", () => {
 
   it("should close modal by clicking on overlay", () => {
     // Arrange
-    const ingredientElement = cy.get("[data-testid=ingredient_test_element_1]");
 
     // Act
-    ingredientElement.click();
+    cy.getBunTestElement(1).click();
     cy.url().should("contain", "ingredients/1");
     cy.get("[data-testid=modal_test_element]").should("exist");
     cy.get("[data-testid=modal_overlay_test_element]").click("topLeft", {
@@ -63,10 +60,9 @@ describe("modal element tests", () => {
 
   it("should close modal by clicking Esc button", () => {
     // Arrange
-    const ingredientElement = cy.get("[data-testid=ingredient_test_element_1]");
 
     // Act
-    ingredientElement.click();
+    cy.getBunTestElement(1).click();
     cy.url().should("contain", "ingredients/1");
     cy.get("[data-testid=modal_test_element]").should("exist");
     cy.get("body").type("{esc}");
@@ -78,10 +74,9 @@ describe("modal element tests", () => {
 
   it("should show ingredient details in modal", () => {
     // Arrange
-    const ingredientElement = cy.get("[data-testid=ingredient_test_element_1]");
 
     // Act
-    ingredientElement.click();
+    cy.getBunTestElement(1).click();
 
     // Assert
     cy.get("[data-testid=ingredient_details_header_test_element]").should(

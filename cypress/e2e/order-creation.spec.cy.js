@@ -7,22 +7,15 @@ describe("order creation tests", () => {
 
   it("should redirect to /login page if user is not logged in", () => {
     // Arrange
-    const bunIngredient = cy.get("[data-testid=ingredient_test_element_1]");
-    const sauceIngredient = cy.get("[data-testid=ingredient_test_element_4]");
-    const mainIngredient = cy.get("[data-testid=ingredient_test_element_2]");
-    const topBunDropRef = cy.get("[data-testid=top_bun_drop_test_element]");
-    const orderButton = cy.get("[data-testid=order_button_test_element]");
-    let fillerDropRef = cy.get("[data-testid=filler_drop_test_element]");
 
     // Act
-    bunIngredient.trigger("dragstart");
-    topBunDropRef.trigger("drop");
-    sauceIngredient.trigger("dragstart");
-    fillerDropRef.trigger("drop");
-    fillerDropRef = cy.get("[data-testid=filler_drop_test_element]");
-    mainIngredient.trigger("dragstart");
-    fillerDropRef.trigger("drop");
-    orderButton.click();
+    cy.getBunTestElement(1).trigger("dragstart");
+    cy.getTopBunDropRef().trigger("drop");
+    cy.getSauceTestElement(4).trigger("dragstart");
+    cy.getFillerDropRef().trigger("drop");
+    cy.getMainTestElement(2).trigger("dragstart");
+    cy.getFillerDropRef().trigger("drop");
+    cy.get("[data-testid=order_button_test_element]").click();
 
     // Assert
     cy.url().should("contain", "/login");
@@ -31,22 +24,16 @@ describe("order creation tests", () => {
   it("should show order details modal after order was created", () => {
     // Arrange
     cy.userlogin("test@test.com", "123");
-    const bunIngredient = cy.get("[data-testid=ingredient_test_element_1]");
-    const sauceIngredient = cy.get("[data-testid=ingredient_test_element_4]");
-    const mainIngredient = cy.get("[data-testid=ingredient_test_element_2]");
-    const topBunDropRef = cy.get("[data-testid=top_bun_drop_test_element]");
-    const orderButton = cy.get("[data-testid=order_button_test_element]");
-    let fillerDropRef = cy.get("[data-testid=filler_drop_test_element]");
 
     // Act
-    bunIngredient.trigger("dragstart");
-    topBunDropRef.trigger("drop");
-    sauceIngredient.trigger("dragstart");
-    fillerDropRef.trigger("drop");
-    fillerDropRef = cy.get("[data-testid=filler_drop_test_element]");
-    mainIngredient.trigger("dragstart");
-    fillerDropRef.trigger("drop");
-    orderButton.click();
+    cy.getBunTestElement(1).trigger("dragstart");
+    cy.getTopBunDropRef().trigger("drop");
+    cy.getSauceTestElement(4).trigger("dragstart");
+    cy.getFillerDropRef().trigger("drop");
+    cy.getFillerDropRef() = cy.get("[data-testid=filler_drop_test_element]");
+    cy.getMainTestElement(2).trigger("dragstart");
+    cy.getFillerDropRef().trigger("drop");
+    cy.get("[data-testid=order_button_test_element]").click();
     cy.wait("@postOrder");
 
     // Assert
