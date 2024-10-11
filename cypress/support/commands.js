@@ -38,10 +38,11 @@
 
 Cypress.Commands.add("prepareintercepts", () => {
   cy.intercept("POST", "login", { fixture: "login" });
+  cy.intercept("GET", "user", { fixture: "user" });
   cy.intercept("GET", "ingredients", { fixture: "ingredients" }).as(
     "getIngredients"
   );
-  cy.intercept("POST", "orders", { fixture: "order" });
+  cy.intercept("POST", "orders", { fixture: "order" }).as("postOrder");
   window.localStorage.setItem("refreshToken", "refresh-token");
 });
 

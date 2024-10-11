@@ -46,6 +46,7 @@ const BurgerConstructor = (): React.JSX.Element => {
                 className={`${styles.empty_box_top} ml-8`}
                 style={bunCanDrop ? {border: "solid 1px green"} : {}}
                 ref={topBunDropRef}
+                data-testid="top_bun_drop_test_element"
             >
                 <span
                     className="text text_type_main-default"
@@ -54,7 +55,11 @@ const BurgerConstructor = (): React.JSX.Element => {
                 </span>
             </div>
             :
-            <div className="pl-8" ref={topBunDropRef}>
+            <div
+                className="pl-8"
+                ref={topBunDropRef}
+                data-testid="top_bun_drop_test_element"
+            >
                 <ConstructorElement
                     type="top"
                     isLocked={true}
@@ -68,6 +73,7 @@ const BurgerConstructor = (): React.JSX.Element => {
                 className={`${styles.empty_box_middle} ml-8 mt-4 mb-4`}
                 style={fillerCanDrop ? {border: "solid 1px green"} : {}}
                 ref={fillerDropRef}
+                data-testid="filler_drop_test_element"
             >
                 <span
                     className="text text_type_main-default"
@@ -79,6 +85,7 @@ const BurgerConstructor = (): React.JSX.Element => {
             <ul
                 className={`${styles.burger_constructor_ingredients} mb-4 custom-scroll`}
                 ref={fillerDropRef}
+                data-testid="filler_drop_test_element"
             >
                     {fillers}
                 </ul>
@@ -88,6 +95,7 @@ const BurgerConstructor = (): React.JSX.Element => {
                 className={`${styles.empty_box_bottom} ml-8`}
                 style={bunCanDrop ? {border: "solid 1px green"} : {}}
                 ref={bottomBunDropRef}
+                data-testid="bottom_bun_drop_test_element"
             >
                 <span
                     className="text text_type_main-default"
@@ -96,7 +104,11 @@ const BurgerConstructor = (): React.JSX.Element => {
                 </span>
             </div>
             :
-            <div className="pl-8" ref={bottomBunDropRef}>
+            <div
+                className="pl-8"
+                ref={bottomBunDropRef}
+                data-testid="bottom_bun_drop_test_element"
+            >
                 <ConstructorElement
                     type="bottom"
                     isLocked={true}
