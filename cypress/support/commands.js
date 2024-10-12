@@ -74,3 +74,15 @@ Cypress.Commands.add("getTopBunDropRef", () => {
 Cypress.Commands.add("getFillerDropRef", () => {
   return cy.get("[data-testid=filler_drop_test_element]");
 });
+
+Cypress.Commands.add("getBunInnerElement", (position, element) => {
+  return cy.get(
+    `[data-testid="${position}_bun_drop_test_element"] > .constructor-element > .constructor-element__row > .constructor-element__${element}`
+  );
+});
+
+Cypress.Commands.add("getFillerInnerElement", (child, element) => {
+  return cy.get(
+    `[data-testid="filler_drop_test_element"] > :nth-child(${child}) > .constructor-element > .constructor-element__row > .constructor-element__${element}`
+  );
+});

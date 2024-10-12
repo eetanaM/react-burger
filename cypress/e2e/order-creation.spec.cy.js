@@ -30,7 +30,6 @@ describe("order creation tests", () => {
     cy.getTopBunDropRef().trigger("drop");
     cy.getSauceTestElement(4).trigger("dragstart");
     cy.getFillerDropRef().trigger("drop");
-    cy.getFillerDropRef() = cy.get("[data-testid=filler_drop_test_element]");
     cy.getMainTestElement(2).trigger("dragstart");
     cy.getFillerDropRef().trigger("drop");
     cy.get("[data-testid=order_button_test_element]").click();
