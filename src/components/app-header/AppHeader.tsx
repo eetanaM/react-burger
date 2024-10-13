@@ -49,7 +49,14 @@ const AppHeader = (): React.JSX.Element => {
                         )}
                     </NavLink>
                 </nav>
-                <NavLink to='/'><Logo /></NavLink>
+                <NavLink
+                    to='/'
+                    data-testid="header_logo_home_link"
+                >
+                    <div data-testid="header_logo_element">
+                        <Logo />
+                    </div>
+                </NavLink>
                 <NavLink
                     to="/profile"
                     className={`${styles.header_button} ${styles.profile_button} pl-5 pr-5 pb-4 pt-4`}
@@ -59,6 +66,7 @@ const AppHeader = (): React.JSX.Element => {
                         <ProfileIcon type={isActive ? "primary" : "secondary"}/>
                         <span
                             className={chooseTextStyle(isActive)}
+                            data-testid="user_name_element"
                         >
                             {user ? user.name :"Личный кабинет"}
                         </span>

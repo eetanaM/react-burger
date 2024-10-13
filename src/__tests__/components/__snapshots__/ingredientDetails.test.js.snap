@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`check ingredientDetails component should be equal to snapshot 1`] = `
+<div
+  className="content_main"
+>
+  <h1
+    className="content_main_header text text_type_main-large mt-10 pt-3 pb-3"
+    data-testid="ingredient_details_header_test_element"
+  >
+    Детали ингредиента
+  </h1>
+  <img
+    alt="Краторная булка N-200i"
+    data-testid="ingredient_details_image_test_element"
+    src="https://code.s3.yandex.net/react/code/bun-02-large.png"
+  />
+  <div
+    className="mt-4 mb-15"
+  >
+    <h3
+      className="text text_type_main-medium"
+      data-testid="ingredient_details_name_test_element"
+    >
+      Краторная булка N-200i
+    </h3>
+    <ul
+      className="content_main_info_list mt-8"
+    >
+      <li>
+        <h4
+          className="text text_type_main-default text_color_inactive mb-2"
+        >
+          Калории, ккал
+        </h4>
+        <span
+          className="text text_type_digits-default text_color_inactive"
+          data-testid="ingredeint_details_calories_test_element"
+        >
+          420
+        </span>
+      </li>
+      <li>
+        <h4
+          className="text text_type_main-default text_color_inactive mb-2"
+        >
+          Белки, г
+        </h4>
+        <span
+          className="text text_type_digits-default text_color_inactive"
+          data-testid="ingredient_details_proteins_test_element"
+        >
+          80
+        </span>
+      </li>
+      <li>
+        <h4
+          className="text text_type_main-default text_color_inactive mb-2"
+        >
+          Жиры, г
+        </h4>
+        <span
+          className="text text_type_digits-default text_color_inactive"
+          data-testid="ingredient_details_fat_test_element"
+        >
+          24
+        </span>
+      </li>
+      <li>
+        <h4
+          className="text text_type_main-default text_color_inactive mb-2"
+        >
+          Углеводы, г
+        </h4>
+        <span
+          className="text text_type_digits-default text_color_inactive"
+          data-testid="ingredient_details_carbohydrates_test_element"
+        >
+          53
+        </span>
+      </li>
+    </ul>
+  </div>
+</div>
+`;

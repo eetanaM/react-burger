@@ -6,7 +6,11 @@ const ModalOverlay = ({ onClose }: IModalProps): React.JSX.Element => {
 
     return (
         <>
-            <div className={styles.modal_overlay} onClick={onClose}>
+            <div
+                className={styles.modal_overlay}
+                onClick={onClose}
+                data-testid="modal_overlay_test_element"
+            >
             </div>
         </>
     )

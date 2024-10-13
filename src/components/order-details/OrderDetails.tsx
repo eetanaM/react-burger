@@ -12,7 +12,7 @@ import { loadOrder } from '../../services/order-details/action';
 import styles from './OrderDetails.module.css'
 
 const OrderDetails = (): React.JSX.Element => {
-    const { order, success } = useAppSelector(getOrderInfo)
+    const { order, success, error } = useAppSelector(getOrderInfo)
     const { fillerToOrder, bunsToOrder } = useAppSelector(getAllIngredientsToOrder);
     const dispatch = useAppDispatch()
 
@@ -39,7 +39,7 @@ const OrderDetails = (): React.JSX.Element => {
         }
     }, [])
 
-    if (!success) return (
+    if (!success && !error) return (
         <div className={styles.content_container}>
             <span className="text text_type_main-medium">
                 Дождитесь окончания оформления заказа...
@@ -48,9 +48,20 @@ const OrderDetails = (): React.JSX.Element => {
         </div>
     )
 
+    if (!success && error) return (
+        <div className={styles.content_container}>
+            <span className="text text_type_main-medium">
+                Произошла ошибка. Попробуйте снова
+            </span>
+        </div>
+    )
+
     if (success) return (
         <>
-            <h2 className="text text_type_digits-large mt-30 mb-8">{order?.number}</h2>
+            <h2
+                className="text text_type_digits-large mt-30 mb-8"
+                data-testid="order_details_number_test_element"
+            >{order?.number}</h2>
             <span className="text text_type_main-medium mb-15">идентификатор заказа</span>
             <img src={done} alt="done icon" className="mb-15"/>
             <span className="text text_type_main-default mb-2">Ваш заказ начали готовить</span>

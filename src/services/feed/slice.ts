@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { IOrdersResponse, IOrdersState } from "../../utils/types/web-socket";
 
 
-const initialState: IOrdersState = {
+export const initialState: IOrdersState = {
     success: false,
     orders: [],
     total: 0,
@@ -33,4 +33,7 @@ export const feedSlice = createSlice({
 })
 
 export const { wsError, wsMessage } = feedSlice.actions;
+
 export const { getOrders, getTotal, getTotalToday } = feedSlice.selectors
+
+export const feedReducer = feedSlice.reducer

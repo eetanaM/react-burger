@@ -25,8 +25,14 @@ const Modal = ({ children, onClose }: IModalProps): React.JSX.Element => {
         (
             <>
                 <ModalOverlay onClose={onClose}/>
-                <div className={`${styles.modal_content} pr-10 pl-10`}>
-                    <button onClick={onClose}>
+                <div
+                    className={`${styles.modal_content} pr-10 pl-10`}
+                    data-testid="modal_test_element"
+                >
+                    <button
+                        onClick={onClose}
+                        data-testid="modal_test_close_button"
+                    >
                         <CloseIcon type="primary"/>
                     </button>
                     {children}

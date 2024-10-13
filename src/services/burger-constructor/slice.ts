@@ -1,7 +1,7 @@
 import { createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit'
 import { IDraggableIngredient, IIngredientsConstructorState, IIngredient } from '../../utils/types/type'
 
-const initialState: IIngredientsConstructorState = {
+export const initialState: IIngredientsConstructorState = {
     fillerToOrder: [],
     bunsToOrder: []
 }
@@ -57,3 +57,5 @@ export const constructorSlice = createSlice({
 export const { addIngredientToOrder, removeIngredientFromOrder, moveIngredient, clearIngredients } = constructorSlice.actions
 
 export const { getAllIngredientsToOrder, getBunsToOrder, getFillerToOrder } = constructorSlice.selectors;
+
+export const constructorReducer = constructorSlice.reducer

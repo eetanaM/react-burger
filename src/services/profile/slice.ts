@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { IUserDataState } from '../../utils/types/type'
 import { configureUser, getUser, loginUser, logoutUser, registerUser } from './actions'
 
-const initialState: IUserDataState = {
+export const initialState: IUserDataState = {
     user: null,
     isAuthChecked: false,
     authError: null,
@@ -15,7 +15,6 @@ export const profileSlice = createSlice({
     reducers: {
         resetUser: state => {
             state = initialState;
-            state.isAuthChecked;
         }
     },
     extraReducers: builder => {
@@ -50,10 +49,7 @@ export const profileSlice = createSlice({
                 state.isAuthChecked = true;
                 state.authError = action.error;
             })
-            .addCase(logoutUser.fulfilled, (state) => {
-                state.user = initialState.user;
-                state.isAuthChecked = true;
-            })
+            .addCase(logoutUser.fulfilled, () => ({...initialState, isAuthChecked: true}))
             .addCase(configureUser.fulfilled, (state, action) => {
                 state.authError = null;
                 state.user = action.payload.user;
@@ -71,4 +67,6 @@ export const profileSlice = createSlice({
 
 export const { resetUser } = profileSlice.actions;
 
-export const { getUserInfo, getIsAuthChecked } = profileSlice.selectors
+export const { getUserInfo, getIsAuthChecked } = profileSlice.selectors;
+
+export const profileReducer = profileSlice.reducer

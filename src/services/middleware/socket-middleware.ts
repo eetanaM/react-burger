@@ -1,5 +1,5 @@
 import { Middleware } from "redux"
-import { TWsActionTypes } from "../../utils/types/web-socket"
+import { IOrder, TWsActionTypes } from "../../utils/types/web-socket"
 import { RootState } from "../store"
 import { refreshToken } from "../../utils/api";
 
@@ -36,7 +36,12 @@ export const socketMiddleware = <S, R>(wsActions: TWsActionTypes<S, R>): Middlew
                         const { data } = e;
 
                         try {
-                            const parsedData = JSON.parse(data);
+                            const parsedData = JSON.parse(data)
+                            parsedData.orders.forEach((order: IOrder) => {
+                                order.ingredients = order.ingredients.filter(ingredient => {
+                                    return ingredient != null && ingredient != undefined
+                                })
+                            })
 
                             if (parsedData.message === "Invalid or missing token") {
                                 refreshToken()
